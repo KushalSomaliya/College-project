@@ -5,7 +5,7 @@ export default function HomePage() {
     <main className="min-h-screen flex items-center justify-center bg-[var(--background)] p-4">
       <div className="text-center">
         <h1 className="text-4xl sm:text-5xl font-bold text-[var(--foreground)] mb-4">
-          Student Freelancer Hub
+          Student Freelancer Gig Tracker
         </h1>
         <p className="text-lg text-[var(--foreground)]/80 mb-8 max-w-md mx-auto">
           Connect students with freelance opportunities. Find gigs, build your portfolio, and earn while you learn.
