@@ -105,26 +105,7 @@ export default function SignInPage() {
           )}
         </div>
 
-        <div className="flex items-center justify-between">
-          <label htmlFor="rememberMe" className="flex items-center">
-            <input
-              {...register("rememberMe")}
-              type="checkbox"
-              id="rememberMe"
-              className="h-4 w-4 rounded border-[var(--foreground)]/20 bg-[var(--background)] text-[var(--foreground)] focus:ring-2 focus:ring-[var(--foreground)]/50"
-            />
-            <span className="ml-2 text-sm text-[var(--foreground)]/80">
-              Remember me
-            </span>
-          </label>
-
-          <Link
-            href="/forgot-password"
-            className="text-sm text-[var(--foreground)] hover:underline"
-          >
-            Forgot password?
-          </Link>
-        </div>
+        
 
         <button
           type="submit"
