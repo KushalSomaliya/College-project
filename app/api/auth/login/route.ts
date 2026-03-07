@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
       company: user.company,
       skills: user.skills,
       rating: user.rating,
-      completedGigs: user.completedGigs,
+      completedJobs: user.completedJobs,
       verified: user.verified,
       totalHired: user.totalHired,
     }

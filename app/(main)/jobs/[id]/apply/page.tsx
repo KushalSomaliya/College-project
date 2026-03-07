@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
-interface Gig {
+interface Job {
   _id: string
   title: string
   description: string
@@ -44,9 +44,9 @@ export default function ApplyPage() {
   const params = useParams();
   const router = useRouter();
   const { user } = useAuth();
-  const gigId = params.id as string;
+  const jobId = params.id as string;
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [gig, setGig] = useState<Gig | null>(null);
+  const [job, setJob] = useState<Job | null>(null);
   const [alreadyApplied, setAlreadyApplied] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -66,22 +66,22 @@ export default function ApplyPage() {
   });
 
   useEffect(() => {
-    if (user && gigId) {
+    if (user && jobId) {
       fetchData();
     }
-  }, [user, gigId]);
+  }, [user, jobId]);
 
   const fetchData = async () => {
     try {
-      // Fetch gig details
-      const gigResponse = await fetch(`/api/gigs/${gigId}`);
-      if (gigResponse.ok) {
-        const gigData = await gigResponse.json();
-        setGig(gigData.gig);
+      // Fetch job details
+      const jobResponse = await fetch(`/api/jobs/${jobId}`);
+      if (jobResponse.ok) {
+        const jobData = await jobResponse.json();
+        setJob(jobData.job);
       }
 
       // Check if student has already applied
-      const appsResponse = await fetch(`/api/applications?studentId=${user?.id}&gigId=${gigId}`);
+      const appsResponse = await fetch(`/api/applications?studentId=${user?.id}&jobId=${jobId}`);
       if (appsResponse.ok) {
         const appsData = await appsResponse.json();
         setAlreadyApplied(appsData.applications.length > 0);
@@ -106,25 +106,25 @@ export default function ApplyPage() {
     );
   }
 
-  if (!gig) {
+  if (!job) {
     return (
       <div className="text-center py-12">
-        <p className="text-[var(--foreground)]/60 mb-4">Gig not found</p>
-        <Link href="/gigs" className="text-[var(--foreground)] hover:underline">
-          Back to Browse Gigs
+        <p className="text-[var(--foreground)]/60 mb-4">Job not found</p>
+        <Link href="/jobs" className="text-[var(--foreground)] hover:underline">
+          Back to Browse Jobs
         </Link>
       </div>
     );
   }
 
-  if (gig.status !== "active") {
+  if (job.status !== "active") {
     return (
       <div className="text-center py-12">
         <p className="text-[var(--foreground)]/60 mb-4">
-          This gig is no longer accepting applications
+          This job is no longer accepting applications
         </p>
-        <Link href="/gigs" className="text-[var(--foreground)] hover:underline">
-          Back to Browse Gigs
+        <Link href="/jobs" className="text-[var(--foreground)] hover:underline">
+          Back to Browse Jobs
         </Link>
       </div>
     );
@@ -134,7 +134,7 @@ export default function ApplyPage() {
     return (
       <div className="text-center py-12">
         <p className="text-[var(--foreground)]/60 mb-4">
-          You have already applied to this gig
+          You have already applied to this job
         </p>
         <Link
           href="/dashboard"
@@ -174,7 +174,7 @@ export default function ApplyPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          gigId: gigId,
+          jobId: jobId,
           studentId: user.id,
           coverLetter: data.coverLetter,
           proposedRate: data.proposedRate,
@@ -205,50 +205,50 @@ export default function ApplyPage() {
       {/* Header */}
       <div>
         <Link
-          href="/gigs"
+          href="/jobs"
           className="text-sm text-[var(--foreground)]/60 hover:text-[var(--foreground)] mb-2 inline-block"
         >
-          ← Back to Browse Gigs
+          ← Back to Browse Jobs
         </Link>
         <h1 className="text-2xl font-bold text-[var(--foreground)]">
-          Apply to Gig
+          Apply to Job
         </h1>
       </div>
 
-      {/* Gig Details */}
+      {/* Job Details */}
       <div className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg p-6">
         <div className="mb-4">
           <h2 className="text-xl font-semibold text-[var(--foreground)] mb-2">
-            {gig.title}
+            {job.title}
           </h2>
           <p className="text-[var(--foreground)]/60">
-            {gig.company} • {gig.employerName}
+            {job.company} • {job.employerName}
           </p>
         </div>
 
-        <p className="text-[var(--foreground)]/80 mb-4">{gig.description}</p>
+        <p className="text-[var(--foreground)]/80 mb-4">{job.description}</p>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
           <div>
             <p className="text-[var(--foreground)]/60">Budget</p>
             <p className="font-semibold text-[var(--foreground)]">
-              ${gig.budget}
+              ${job.budget}
             </p>
           </div>
           <div>
             <p className="text-[var(--foreground)]/60">Duration</p>
-            <p className="text-[var(--foreground)]">{gig.duration}</p>
+            <p className="text-[var(--foreground)]">{job.duration}</p>
           </div>
           <div>
             <p className="text-[var(--foreground)]/60">Experience</p>
             <p className="text-[var(--foreground)] capitalize">
-              {gig.experienceLevel}
+              {job.experienceLevel}
             </p>
           </div>
           <div>
             <p className="text-[var(--foreground)]/60">Posted</p>
             <p className="text-[var(--foreground)]">
-              {formatDate(gig.postedDate)}
+              {formatDate(job.postedDate)}
             </p>
           </div>
         </div>
@@ -264,7 +264,7 @@ export default function ApplyPage() {
           {/* Experience */}
           <div className="mb-6">
             <label className="block text-sm font-medium text-[var(--foreground)] mb-2">
-              Experience in {gig.category}
+              Experience in {job.category}
             </label>
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -343,7 +343,7 @@ export default function ApplyPage() {
               {...register("coverLetter")}
               id="coverLetter"
               rows={6}
-              placeholder="Explain why you're the perfect fit for this gig..."
+              placeholder="Explain why you're the perfect fit for this job..."
               className="w-full px-3 py-2 border border-[var(--foreground)]/20 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:border-transparent resize-none"
             />
             {errors.coverLetter && (
@@ -370,7 +370,7 @@ export default function ApplyPage() {
               id="proposedRate"
               min="5"
               max="10000"
-              placeholder={`Budget: $${gig.budget}`}
+              placeholder={`Budget: $${job.budget}`}
               className="w-full px-3 py-2 border border-[var(--foreground)]/20 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:border-transparent"
             />
             {errors.proposedRate && (
@@ -379,7 +379,7 @@ export default function ApplyPage() {
               </p>
             )}
             <p className="mt-1 text-sm text-[var(--foreground)]/60">
-              The employer's budget for this gig is ${gig.budget}
+              The employer's budget for this job is ${job.budget}
             </p>
           </div>
         </div>
@@ -394,7 +394,7 @@ export default function ApplyPage() {
             {isSubmitting ? "Submitting Application..." : "Apply Now"}
           </button>
           <Link
-            href="/gigs"
+            href="/jobs"
             className="px-4 py-2 border border-[var(--foreground)]/20 text-[var(--foreground)] rounded-md font-medium hover:bg-[var(--foreground)]/5 transition-colors"
           >
             Cancel

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 export interface IApplication extends mongoose.Document {
-  gigId: mongoose.Types.ObjectId
+  jobId: mongoose.Types.ObjectId
   studentId: mongoose.Types.ObjectId
   studentName: string
   studentEmail: string
@@ -16,9 +16,9 @@ export interface IApplication extends mongoose.Document {
 }
 
 const ApplicationSchema = new mongoose.Schema({
-  gigId: {
+  jobId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Gig',
+    ref: 'Job',
     required: true,
   },
   studentId: {
@@ -63,8 +63,8 @@ const ApplicationSchema = new mongoose.Schema({
   timestamps: true,
 })
 
-// Create compound index to ensure a student can only apply once per gig
-ApplicationSchema.index({ gigId: 1, studentId: 1 }, { unique: true })
+// Create compound index to ensure a student can only apply once per job
+ApplicationSchema.index({ jobId: 1, studentId: 1 }, { unique: true })
 
 const Application = mongoose.models.Application || mongoose.model<IApplication>('Application', ApplicationSchema)
 

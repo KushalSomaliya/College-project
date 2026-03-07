@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server'
 import connectDB from '@/app/lib/db'
 import User from '@/app/models/User'
-import Gig from '@/app/models/Gig'
+import Job from '@/app/models/Job'
 
 export async function GET() {
   try {
     await connectDB()
-    
+
     // Create test users
     const student = await User.findOneAndUpdate(
       { email: 'student@test.com' },
@@ -18,11 +18,11 @@ export async function GET() {
         university: 'University of Technology',
         skills: ['React', 'Node.js', 'Python'],
         rating: 4.8,
-        completedGigs: 12
+        completedJobs: 12
       },
       { upsert: true, new: true }
     )
-    
+
     const employer = await User.findOneAndUpdate(
       { email: 'employer@test.com' },
       {
@@ -36,9 +36,9 @@ export async function GET() {
       },
       { upsert: true, new: true }
     )
-    
-    // Create a sample gig
-    const gig = await Gig.findOneAndUpdate(
+
+    // Create a sample job
+    const job = await Job.findOneAndUpdate(
       { title: 'React Native Mobile App Development' },
       {
         title: 'React Native Mobile App Development',
@@ -58,8 +58,8 @@ export async function GET() {
       },
       { upsert: true, new: true }
     )
-    
-    return NextResponse.json({ 
+
+    return NextResponse.json({
       message: 'Seed data created successfully!',
       users: [
         { email: 'student@test.com', password: 'password123' },

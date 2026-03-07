@@ -1,6 +1,6 @@
 export interface Activity {
   id: string
-  type: 'application' | 'gig_posted' | 'application_accepted' | 'application_rejected' | 'payment' | 'review'
+  type: 'application' | 'job_posted' | 'application_accepted' | 'application_rejected' | 'payment' | 'review'
   title: string
   description: string
   timestamp: Date

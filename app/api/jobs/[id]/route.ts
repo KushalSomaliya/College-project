@@ -1,68 +1,68 @@
 import { NextRequest, NextResponse } from 'next/server'
 import connectDB from '@/app/lib/db'
-import Gig from '@/app/models/Gig'
+import Job from '@/app/models/Job'
 
-// GET single gig by ID
+// GET single job by ID
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB()
-    
+
     const resolvedParams = await params
-    const gig = await Gig.findById(resolvedParams.id)
-    
-    if (!gig) {
+    const job = await Job.findById(resolvedParams.id)
+
+    if (!job) {
       return NextResponse.json(
-        { error: 'Gig not found' },
+        { error: 'Job not found' },
         { status: 404 }
       )
     }
-    
-    return NextResponse.json({ gig })
+
+    return NextResponse.json({ job })
   } catch (error) {
-    console.error('Get gig error:', error)
+    console.error('Get job error:', error)
     return NextResponse.json(
-      { error: 'Failed to fetch gig' },
+      { error: 'Failed to fetch job' },
       { status: 500 }
     )
   }
 }
 
-// PATCH update gig (mainly for closing)
+// PATCH update job (mainly for closing)
 export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB()
-    
+
     const body = await request.json()
     const { status } = body
-    
+
     const resolvedParams = await params
-    const gig = await Gig.findById(resolvedParams.id)
-    
-    if (!gig) {
+    const job = await Job.findById(resolvedParams.id)
+
+    if (!job) {
       return NextResponse.json(
-        { error: 'Gig not found' },
+        { error: 'Job not found' },
         { status: 404 }
       )
     }
-    
-    // Update gig status
+
+    // Update job status
     if (status) {
-      gig.status = status
+      job.status = status
     }
-    
-    await gig.save()
-    
-    return NextResponse.json({ gig })
+
+    await job.save()
+
+    return NextResponse.json({ job })
   } catch (error) {
-    console.error('Update gig error:', error)
+    console.error('Update job error:', error)
     return NextResponse.json(
-      { error: 'Failed to update gig' },
+      { error: 'Failed to update job' },
       { status: 500 }
     )
   }

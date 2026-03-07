@@ -36,14 +36,14 @@ export default function DashboardLayout({
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-8">
               <Link href="/dashboard" className="text-xl font-bold text-[var(--foreground)]">
-                Student Freelancer Gig Tracker
+                Skill Orbit
               </Link>
               
               <div className="hidden md:flex space-x-6">
                 {user.userType === 'student' ? (
                   <>
-                    <Link href="/gigs" className="text-[var(--foreground)]/80 hover:text-[var(--foreground)] transition-colors">
-                      Browse Gigs
+                    <Link href="/jobs" className="text-[var(--foreground)]/80 hover:text-[var(--foreground)] transition-colors">
+                      Browse Jobs
                     </Link>
                     <Link href="/my-applications" className="text-[var(--foreground)]/80 hover:text-[var(--foreground)] transition-colors">
                       My Applications
@@ -51,11 +51,11 @@ export default function DashboardLayout({
                   </>
                 ) : (
                   <>
-                    <Link href="/post-gig" className="text-[var(--foreground)]/80 hover:text-[var(--foreground)] transition-colors">
-                      Post Gig
+                    <Link href="/post-job" className="text-[var(--foreground)]/80 hover:text-[var(--foreground)] transition-colors">
+                      Post Job
                     </Link>
-                    <Link href="/my-gigs" className="text-[var(--foreground)]/80 hover:text-[var(--foreground)] transition-colors">
-                      My Gigs
+                    <Link href="/my-jobs" className="text-[var(--foreground)]/80 hover:text-[var(--foreground)] transition-colors">
+                      My Jobs
                     </Link>
                   </>
                 )}

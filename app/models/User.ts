@@ -9,7 +9,7 @@ export interface IUser extends mongoose.Document {
   university?: string
   skills?: string[]
   rating?: number
-  completedGigs?: number
+  completedJobs?: number
   // Employer specific fields
   company?: string
   verified?: boolean
@@ -51,7 +51,7 @@ const UserSchema = new mongoose.Schema({
     min: 0,
     max: 5,
   },
-  completedGigs: {
+  completedJobs: {
     type: Number,
     default: 0,
   },

@@ -6,8 +6,8 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Student Freelancer Hub - Connect, Work, Grow',
-  description: 'Connect students with freelance opportunities. Find gigs, build your portfolio, and earn while you learn.',
+  title: 'Skill Orbit - Connect, Work, Grow',
+  description: 'Connect talent with freelance opportunities. Find jobs, build your portfolio, and earn while you learn.',
 }
 
 export default function RootLayout({

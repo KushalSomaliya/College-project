@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 
 interface Application {
   _id: string
-  gigId: any // Can be string or populated object
+  jobId: any // Can be string or populated object
   studentId: string
   studentName: string
   studentEmail: string
@@ -19,7 +19,7 @@ interface Application {
   experience?: string
 }
 
-interface Gig {
+interface Job {
   _id: string
   title: string
   description: string
@@ -149,15 +149,15 @@ export default function MyApplicationsPage() {
           <div className="text-center py-12 bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg">
             <p className="text-[var(--foreground)]/60">
               {activeTab === 'all' 
-                ? "You haven't applied to any gigs yet" 
+                ? "You haven't applied to any jobs yet" 
                 : `No ${activeTab} applications`}
             </p>
           </div>
         ) : (
           sortedApplications.map((application) => {
-            // Handle populated gigId
-            const gig = typeof application.gigId === 'object' ? application.gigId : null
-            if (!gig) return null
+            // Handle populated jobId
+            const job = typeof application.jobId === 'object' ? application.jobId : null
+            if (!job) return null
             
             return (
               <div key={application._id} className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg p-6">
@@ -165,10 +165,10 @@ export default function MyApplicationsPage() {
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex-1">
                     <h3 className="text-lg font-semibold text-[var(--foreground)] mb-1">
-                      {gig.title}
+                      {job.title}
                     </h3>
                     <p className="text-sm text-[var(--foreground)]/60">
-                      {gig.company} • {gig.employerName}
+                      {job.company} • {job.employerName}
                     </p>
                     <p className="text-sm text-[var(--foreground)]/60 mt-1">
                       Applied {formatDate(application.appliedDate)}
@@ -190,23 +190,23 @@ export default function MyApplicationsPage() {
                   </div>
                 </div>
 
-                {/* Gig Details */}
+                {/* Job Details */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 text-sm">
                   <div>
                     <p className="text-[var(--foreground)]/60">Category</p>
-                    <p className="text-[var(--foreground)]">{gig.category}</p>
+                    <p className="text-[var(--foreground)]">{job.category}</p>
                   </div>
                   <div>
                     <p className="text-[var(--foreground)]/60">Budget</p>
-                    <p className="text-[var(--foreground)]">${gig.budget}</p>
+                    <p className="text-[var(--foreground)]">${job.budget}</p>
                   </div>
                   <div>
                     <p className="text-[var(--foreground)]/60">Duration</p>
-                    <p className="text-[var(--foreground)]">{gig.duration}</p>
+                    <p className="text-[var(--foreground)]">{job.duration}</p>
                   </div>
                   <div>
                     <p className="text-[var(--foreground)]/60">Experience</p>
-                    <p className="text-[var(--foreground)] capitalize">{gig.experienceLevel}</p>
+                    <p className="text-[var(--foreground)] capitalize">{job.experienceLevel}</p>
                   </div>
                 </div>
 
@@ -236,7 +236,7 @@ export default function MyApplicationsPage() {
                   {application.status === 'rejected' && (
                     <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md">
                       <p className="text-sm text-red-800 dark:text-red-300">
-                        Unfortunately, your application was not selected for this gig. Keep applying to other opportunities!
+                        Unfortunately, your application was not selected for this job. Keep applying to other opportunities!
                       </p>
                     </div>
                   )}

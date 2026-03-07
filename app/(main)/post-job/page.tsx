@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useAuth } from "@/app/contexts/AuthContext";
 // Categories and experience levels
-const GIG_CATEGORIES = [
+const JOB_CATEGORIES = [
   'Web Development',
   'Mobile Development',
   'Data Science',
@@ -26,7 +26,7 @@ const EXPERIENCE_LEVELS = [
   { value: 'advanced', label: 'Advanced - Expert level needed' }
 ] as const
 
-const postGigSchema = z.object({
+const postJobSchema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z
     .string()
@@ -41,9 +41,9 @@ const postGigSchema = z.object({
   experienceLevel: z.enum(["beginner", "intermediate", "advanced"]),
 });
 
-type PostGigFormData = z.infer<typeof postGigSchema>;
+type PostJobFormData = z.infer<typeof postJobSchema>;
 
-export default function PostGigPage() {
+export default function PostJobPage() {
   const router = useRouter();
   const { user } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -53,20 +53,20 @@ export default function PostGigPage() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<PostGigFormData>({
-    resolver: zodResolver(postGigSchema),
+  } = useForm<PostJobFormData>({
+    resolver: zodResolver(postJobSchema),
     defaultValues: {
       experienceLevel: "beginner",
     },
   });
 
-  const onSubmit = async (data: PostGigFormData) => {
+  const onSubmit = async (data: PostJobFormData) => {
     if (!user) return;
 
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('/api/gigs', {
+      const response = await fetch('/api/jobs', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -80,15 +80,15 @@ export default function PostGigPage() {
       if (response.ok) {
         setSubmitSuccess(true);
         setTimeout(() => {
-          router.push("/my-gigs");
+          router.push("/my-jobs");
         }, 2000);
       } else {
         const error = await response.json();
-        alert(error.error || 'Failed to post gig');
+        alert(error.error || 'Failed to post job');
         setIsSubmitting(false);
       }
     } catch (error) {
-      console.error('Post gig error:', error);
+      console.error('Post job error:', error);
       alert('An error occurred. Please try again.');
       setIsSubmitting(false);
     }
@@ -103,13 +103,13 @@ export default function PostGigPage() {
     <div className="max-w-3xl mx-auto">
       <div className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg shadow-lg p-8">
         <h1 className="text-2xl font-bold text-[var(--foreground)] mb-6">
-          Post a New Gig
+          Post a New Job
         </h1>
 
         {submitSuccess && (
           <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-md">
             <p className="text-green-800 dark:text-green-300">
-              Gig posted successfully! Redirecting to your gigs...
+              Job posted successfully! Redirecting to your jobs...
             </p>
           </div>
         )}
@@ -121,7 +121,7 @@ export default function PostGigPage() {
               htmlFor="title"
               className="block text-sm font-medium text-[var(--foreground)] mb-1"
             >
-              Gig Title *
+              Job Title *
             </label>
             <input
               {...register("title")}
@@ -151,7 +151,7 @@ export default function PostGigPage() {
               className="w-full px-3 py-2 border border-[var(--foreground)]/20 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:border-transparent"
             >
               <option value="">Select a category</option>
-              {GIG_CATEGORIES.map((category) => (
+              {JOB_CATEGORIES.map((category) => (
                 <option key={category} value={category}>
                   {category}
                 </option>
@@ -259,7 +259,7 @@ export default function PostGigPage() {
               disabled={isSubmitting}
               className="flex-1 py-2 px-4 bg-[var(--foreground)] text-[var(--background)] rounded-md font-medium hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:ring-offset-2 focus:ring-offset-[var(--background)] disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
             >
-              {isSubmitting ? "Posting..." : "Post Gig"}
+              {isSubmitting ? "Posting..." : "Post Job"}
             </button>
             <button
               type="button"

@@ -8,7 +8,7 @@ interface EmployerDashboardProps {
   user: User
 }
 
-interface Gig {
+interface Job {
   _id: string
   title: string
   description: string
@@ -26,7 +26,7 @@ interface Gig {
 
 interface Application {
   _id: string
-  gigId: any
+  jobId: any
   studentId: string
   studentName: string
   studentEmail: string
@@ -37,7 +37,7 @@ interface Application {
 }
 
 export function EmployerDashboard({ user }: EmployerDashboardProps) {
-  const [myGigs, setMyGigs] = useState<Gig[]>([])
+  const [myJobs, setMyJobs] = useState<Job[]>([])
   const [applications, setApplications] = useState<Application[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -47,11 +47,11 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
 
   const fetchData = async () => {
     try {
-      // Fetch employer's gigs
-      const gigsResponse = await fetch(`/api/gigs?employerId=${user.id}`)
-      if (gigsResponse.ok) {
-        const gigsData = await gigsResponse.json()
-        setMyGigs(gigsData.gigs)
+      // Fetch employer's jobs
+      const jobsResponse = await fetch(`/api/jobs?employerId=${user.id}`)
+      if (jobsResponse.ok) {
+        const jobsData = await jobsResponse.json()
+        setMyJobs(jobsData.jobs)
       }
 
       // Fetch all applications
@@ -68,18 +68,18 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
   }
 
   // Calculate employer stats
-  const activeGigs = myGigs.filter(gig => gig.status === 'active').length
-  const totalApplications = myGigs.reduce((sum, gig) => sum + gig.applicationsCount, 0)
-  const totalSpent = myGigs.filter(gig => gig.status === 'completed').reduce((sum, gig) => sum + gig.budget, 0)
+  const activeJobs = myJobs.filter(job => job.status === 'active').length
+  const totalApplications = myJobs.reduce((sum, job) => sum + job.applicationsCount, 0)
+  const totalSpent = myJobs.filter(job => job.status === 'completed').reduce((sum, job) => sum + job.budget, 0)
 
-  // Get recent applications for review (only for this employer's active gigs)
-  const myActiveGigIds = myGigs
-    .filter(gig => gig.status === 'active')
-    .map(gig => gig._id)
+  // Get recent applications for review (only for this employer's active jobs)
+  const myActiveJobIds = myJobs
+    .filter(job => job.status === 'active')
+    .map(job => job._id)
   const recentApplications = applications
     .filter(app => {
-      const gigId = typeof app.gigId === 'string' ? app.gigId : app.gigId?._id
-      return app.status === 'pending' && myActiveGigIds.includes(gigId)
+      const jobId = typeof app.jobId === 'string' ? app.jobId : app.jobId?._id
+      return app.status === 'pending' && myActiveJobIds.includes(jobId)
     })
     .sort((a, b) => new Date(b.appliedDate).getTime() - new Date(a.appliedDate).getTime())
     .slice(0, 5)
@@ -101,22 +101,22 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
             Welcome back, {user.name}!
           </h1>
           <p className="text-[var(--foreground)]/60 mt-1">
-            Manage your gigs and find talented students
+            Manage your jobs and find talented students
           </p>
         </div>
         <Link
-          href="/post-gig"
+          href="/post-job"
           className="px-4 py-2 bg-[var(--foreground)] text-[var(--background)] rounded-md font-medium hover:opacity-90 transition-opacity"
         >
-          Post New Gig
+          Post New Job
         </Link>
       </div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <StatsCard
-          title="Active Gigs"
-          value={activeGigs}
+          title="Active Jobs"
+          value={activeJobs}
           description="Currently hiring"
           icon={
             <svg className="w-6 h-6 text-[var(--foreground)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -128,7 +128,7 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
         <StatsCard
           title="Total Applications"
           value={totalApplications}
-          description="Across all gigs"
+          description="Across all jobs"
           trend={{ value: 25, isPositive: true }}
           icon={
             <svg className="w-6 h-6 text-[var(--foreground)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -151,7 +151,7 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
         <StatsCard
           title="Total Spent"
           value={`$${totalSpent.toLocaleString()}`}
-          description="On completed gigs"
+          description="On completed jobs"
           icon={
             <svg className="w-6 h-6 text-[var(--foreground)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
@@ -160,36 +160,36 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
         />
       </div>
 
-      {/* Active Gigs */}
+      {/* Active Jobs */}
       <div className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg p-6">
-        <h3 className="text-lg font-semibold text-[var(--foreground)] mb-4">Your Active Gigs</h3>
+        <h3 className="text-lg font-semibold text-[var(--foreground)] mb-4">Your Active Jobs</h3>
         <div className="space-y-4">
-          {myGigs.filter(gig => gig.status === 'active').map((gig) => (
-            <div key={gig._id} className="border-b border-[var(--foreground)]/10 pb-4 last:border-0">
+          {myJobs.filter(job => job.status === 'active').map((job) => (
+            <div key={job._id} className="border-b border-[var(--foreground)]/10 pb-4 last:border-0">
               <div className="flex justify-between items-start mb-2">
-                <h4 className="font-medium text-[var(--foreground)]">{gig.title}</h4>
+                <h4 className="font-medium text-[var(--foreground)]">{job.title}</h4>
                 <span className="text-sm px-2 py-1 bg-green-100 text-green-800 rounded-full">
                   Active
                 </span>
               </div>
-              <p className="text-sm text-[var(--foreground)]/60 mb-3">{gig.description}</p>
+              <p className="text-sm text-[var(--foreground)]/60 mb-3">{job.description}</p>
               <div className="flex items-center justify-between text-sm">
                 <div className="flex gap-4">
                   <span className="text-[var(--foreground)]/60">
-                    <strong className="text-[var(--foreground)]">{gig.applicationsCount}</strong> applications
+                    <strong className="text-[var(--foreground)]">{job.applicationsCount}</strong> applications
                   </span>
                   <span className="text-[var(--foreground)]/60">
-                    Budget: <strong className="text-[var(--foreground)]">${gig.budget}</strong>
+                    Budget: <strong className="text-[var(--foreground)]">${job.budget}</strong>
                   </span>
                 </div>
-                <Link href={`/gigs/${gig._id}`} className="text-[var(--foreground)] hover:underline">
+                <Link href={`/jobs/${job._id}`} className="text-[var(--foreground)] hover:underline">
                   View Details →
                 </Link>
               </div>
             </div>
           ))}
-          {myGigs.filter(gig => gig.status === 'active').length === 0 && (
-            <p className="text-[var(--foreground)]/60 text-sm">No active gigs. Post a new gig to get started!</p>
+          {myJobs.filter(job => job.status === 'active').length === 0 && (
+            <p className="text-[var(--foreground)]/60 text-sm">No active jobs. Post a new job to get started!</p>
           )}
         </div>
       </div>
@@ -205,7 +205,7 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
                   Student
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-[var(--foreground)]/60 uppercase tracking-wider">
-                  Gig
+                  Job
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-[var(--foreground)]/60 uppercase tracking-wider">
                   Proposed Rate
@@ -220,15 +220,15 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
             </thead>
             <tbody className="divide-y divide-[var(--foreground)]/10">
               {recentApplications.map((app) => {
-                const gigId = typeof app.gigId === 'string' ? app.gigId : app.gigId?._id
-                const gig = typeof app.gigId === 'object' ? app.gigId : myGigs.find(g => g._id === gigId)
+                const jobId = typeof app.jobId === 'string' ? app.jobId : app.jobId?._id
+                const job = typeof app.jobId === 'object' ? app.jobId : myJobs.find(g => g._id === jobId)
                 return (
                   <tr key={app._id}>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-medium text-[var(--foreground)]">{app.studentName}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-[var(--foreground)]/80">{gig?.title}</div>
+                      <div className="text-sm text-[var(--foreground)]/80">{job?.title}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-[var(--foreground)]">${app.proposedRate}</div>
@@ -240,7 +240,7 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <Link 
-                        href={`/gigs/${gigId}`} 
+                        href={`/jobs/${jobId}`} 
                         className="text-sm text-[var(--foreground)] hover:underline"
                       >
                         Review →

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-export interface IGig extends mongoose.Document {
+export interface IJob extends mongoose.Document {
   title: string
   description: string
   requirements: string
@@ -23,7 +23,7 @@ export interface IGig extends mongoose.Document {
   updatedAt: Date
 }
 
-const GigSchema = new mongoose.Schema({
+const JobSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -109,6 +109,6 @@ const GigSchema = new mongoose.Schema({
   timestamps: true,
 })
 
-const Gig = mongoose.models.Gig || mongoose.model<IGig>('Gig', GigSchema)
+const Job = mongoose.models.Job || mongoose.model<IJob>('Job', JobSchema)
 
-export default Gig
+export default Job

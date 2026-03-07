@@ -8,7 +8,7 @@ export default function AuthLayout({
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-[var(--foreground)] mb-2">
-            Student Freelancer Gig Tracker
+            Skill Orbit
           </h1>
           <p className="text-sm text-[var(--foreground)]/60">
             Connect. Work. Grow.

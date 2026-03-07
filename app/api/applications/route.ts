@@ -1,32 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server'
 import connectDB from '@/app/lib/db'
 import Application from '@/app/models/Application'
-import Gig from '@/app/models/Gig'
+import Job from '@/app/models/Job'
 import User from '@/app/models/User'
 
-// GET applications (by gig, by student, or all)
+// GET applications (by job, by student, or all)
 export async function GET(request: NextRequest) {
   try {
     await connectDB()
-    
+
     const { searchParams } = new URL(request.url)
-    const gigId = searchParams.get('gigId')
+    const jobId = searchParams.get('jobId')
     const studentId = searchParams.get('studentId')
-    
+
     let query: any = {}
-    
-    if (gigId) {
-      query.gigId = gigId
+
+    if (jobId) {
+      query.jobId = jobId
     }
-    
+
     if (studentId) {
       query.studentId = studentId
     }
-    
+
     const applications = await Application.find(query)
       .sort({ createdAt: -1 })
-      .populate('gigId')
-    
+      .populate('jobId')
+
     return NextResponse.json({ applications })
   } catch (error) {
     console.error('Get applications error:', error)
@@ -41,19 +41,19 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     await connectDB()
-    
+
     const body = await request.json()
-    const { gigId, studentId, coverLetter, proposedRate, experience } = body
-    
+    const { jobId, studentId, coverLetter, proposedRate, experience } = body
+
     // Check if student has already applied
-    const existingApplication = await Application.findOne({ gigId, studentId })
+    const existingApplication = await Application.findOne({ jobId, studentId })
     if (existingApplication) {
       return NextResponse.json(
-        { error: 'You have already applied to this gig' },
+        { error: 'You have already applied to this job' },
         { status: 400 }
       )
     }
-    
+
     // Get student details
     const student = await User.findById(studentId)
     if (!student || student.userType !== 'student') {
@@ -62,19 +62,19 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       )
     }
-    
-    // Check if gig exists and is active
-    const gig = await Gig.findById(gigId)
-    if (!gig || gig.status !== 'active') {
+
+    // Check if job exists and is active
+    const job = await Job.findById(jobId)
+    if (!job || job.status !== 'active') {
       return NextResponse.json(
-        { error: 'Gig not available for applications' },
+        { error: 'Job not available for applications' },
         { status: 400 }
       )
     }
-    
+
     // Create application
     const application = await Application.create({
-      gigId,
+      jobId,
       studentId,
       studentName: student.name,
       studentEmail: student.email,
@@ -84,12 +84,12 @@ export async function POST(request: NextRequest) {
       experience,
       appliedDate: new Date(),
     })
-    
-    // Update gig application count
-    await Gig.findByIdAndUpdate(gigId, { 
-      $inc: { applicationsCount: 1 } 
+
+    // Update job application count
+    await Job.findByIdAndUpdate(jobId, {
+      $inc: { applicationsCount: 1 }
     })
-    
+
     return NextResponse.json({ application }, { status: 201 })
   } catch (error) {
     console.error('Create application error:', error)

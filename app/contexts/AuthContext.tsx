@@ -14,7 +14,7 @@ export interface User {
   university?: string
   skills?: string[]
   rating?: number
-  completedGigs?: number
+  completedJobs?: number
   // Employer specific fields
   company?: string
   verified?: boolean
@@ -40,7 +40,7 @@ const mockUsers: Record<string, User> = {
     university: 'University of Technology',
     skills: ['React', 'Node.js', 'Python', 'UI/UX Design'],
     rating: 4.8,
-    completedGigs: 12
+    completedJobs: 12
   },
   'employer@example.com': {
     id: '2',

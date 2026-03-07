@@ -5,10 +5,10 @@ export default function HomePage() {
     <main className="min-h-screen flex items-center justify-center bg-[var(--background)] p-4">
       <div className="text-center">
         <h1 className="text-4xl sm:text-5xl font-bold text-[var(--foreground)] mb-4">
-          Student Freelancer Gig Tracker
+          Skill Orbit
         </h1>
         <p className="text-lg text-[var(--foreground)]/80 mb-8 max-w-md mx-auto">
-          Connect students with freelance opportunities. Find gigs, build your portfolio, and earn while you learn.
+          Connect students with freelance opportunities. Find jobs, build your portfolio, and earn while you learn.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -28,7 +28,7 @@ export default function HomePage() {
         
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
           <div className="p-6 border border-[var(--foreground)]/10 rounded-lg">
-            <h3 className="font-semibold text-[var(--foreground)] mb-2">Find Gigs</h3>
+            <h3 className="font-semibold text-[var(--foreground)] mb-2">Find Jobs</h3>
             <p className="text-sm text-[var(--foreground)]/60">
               Browse freelance opportunities tailored for students
             </p>

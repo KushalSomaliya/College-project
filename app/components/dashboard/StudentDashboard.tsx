@@ -7,7 +7,7 @@ interface StudentDashboardProps {
   user: User
 }
 
-interface Gig {
+interface Job {
   _id: string
   title: string
   description: string
@@ -19,7 +19,7 @@ interface Gig {
 
 interface Application {
   _id: string
-  gigId: any
+  jobId: any
   studentId: string
   studentName: string
   studentEmail: string
@@ -30,7 +30,7 @@ interface Application {
 
 export function StudentDashboard({ user }: StudentDashboardProps) {
   const [applications, setApplications] = useState<Application[]>([])
-  const [recentGigs, setRecentGigs] = useState<Gig[]>([])
+  const [recentJobs, setRecentGigs] = useState<Job[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -49,21 +49,21 @@ export function StudentDashboard({ user }: StudentDashboardProps) {
         setApplications(fetchedApplications)
       }
 
-      // Fetch recent active gigs
-      const gigsResponse = await fetch('/api/gigs?status=active')
-      if (gigsResponse.ok) {
-        const gigsData = await gigsResponse.json()
-        const allGigs = gigsData.gigs
+      // Fetch recent active jobs
+      const jobsResponse = await fetch('/api/jobs?status=active')
+      if (jobsResponse.ok) {
+        const jobsData = await jobsResponse.json()
+        const allJobs = jobsData.jobs
         
-        // Filter out gigs the student has already applied to
-        const appliedGigIds = fetchedApplications.map(app => 
-          typeof app.gigId === 'string' ? app.gigId : app.gigId._id
+        // Filter out jobs the student has already applied to
+        const appliedJobIds = fetchedApplications.map(app => 
+          typeof app.jobId === 'string' ? app.jobId : app.jobId._id
         )
-        const availableGigs = allGigs.filter((gig: Gig) => 
-          !appliedGigIds.includes(gig._id)
+        const availableJobs = allJobs.filter((job: Job) => 
+          !appliedJobIds.includes(job._id)
         ).slice(0, 3)
         
-        setRecentGigs(availableGigs)
+        setRecentGigs(availableJobs)
       }
     } catch (error) {
       console.error('Error fetching data:', error)
@@ -74,7 +74,7 @@ export function StudentDashboard({ user }: StudentDashboardProps) {
 
   // Calculate stats
   const activeApplications = applications.filter(app => app.status === 'pending').length
-  const acceptedGigs = applications.filter(app => app.status === 'accepted').length
+  const acceptedJobs = applications.filter(app => app.status === 'accepted').length
   const totalEarnings = applications
     .filter(app => app.status === 'accepted')
     .reduce((sum, app) => sum + app.proposedRate, 0)
@@ -105,8 +105,8 @@ export function StudentDashboard({ user }: StudentDashboardProps) {
         />
         
         <StatsCard
-          title="Completed Gigs"
-          value={user.completedGigs || 0}
+          title="Completed Jobs"
+          value={user.completedJobs || 0}
           trend={{ value: 15, isPositive: true }}
           icon={
             <svg className="w-6 h-6 text-[var(--foreground)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -142,18 +142,18 @@ export function StudentDashboard({ user }: StudentDashboardProps) {
       {/* Quick Apply Section */}
       <div>
         <h2 className="text-xl font-semibold text-[var(--foreground)] mb-4">New Opportunities</h2>
-        {recentGigs.length > 0 ? (
+        {recentJobs.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {recentGigs.map((gig) => (
-              <div key={gig._id} className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg p-4 hover:shadow-lg transition-shadow">
-                <h3 className="font-medium text-[var(--foreground)] mb-2">{gig.title}</h3>
-                <p className="text-sm text-[var(--foreground)]/60 mb-3 line-clamp-2">{gig.description}</p>
+            {recentJobs.map((job) => (
+              <div key={job._id} className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg p-4 hover:shadow-lg transition-shadow">
+                <h3 className="font-medium text-[var(--foreground)] mb-2">{job.title}</h3>
+                <p className="text-sm text-[var(--foreground)]/60 mb-3 line-clamp-2">{job.description}</p>
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-sm font-medium text-[var(--foreground)]">${gig.budget}</span>
-                  <span className="text-sm text-[var(--foreground)]/60">{gig.duration}</span>
+                  <span className="text-sm font-medium text-[var(--foreground)]">${job.budget}</span>
+                  <span className="text-sm text-[var(--foreground)]/60">{job.duration}</span>
                 </div>
                 <Link 
-                  href={`/gigs/${gig._id}/apply`}
+                  href={`/jobs/${job._id}/apply`}
                   className="w-full block text-center py-2 px-4 bg-[var(--foreground)] text-[var(--background)] rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
                 >
                   Quick Apply
@@ -164,8 +164,8 @@ export function StudentDashboard({ user }: StudentDashboardProps) {
         ) : (
           <div className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg p-8 text-center">
             <p className="text-[var(--foreground)]/60 mb-4">No new opportunities at the moment</p>
-            <Link href="/gigs" className="text-[var(--foreground)] hover:underline font-medium">
-              Browse All Gigs
+            <Link href="/jobs" className="text-[var(--foreground)] hover:underline font-medium">
+              Browse All Jobs
             </Link>
           </div>
         )}
@@ -179,17 +179,17 @@ export function StudentDashboard({ user }: StudentDashboardProps) {
             .sort((a, b) => new Date(b.appliedDate).getTime() - new Date(a.appliedDate).getTime())
             .slice(0, 5)
             .map((application) => {
-              // Handle populated gigId
-              const gig = typeof application.gigId === 'object' ? application.gigId : null
-              if (!gig) return null
+              // Handle populated jobId
+              const job = typeof application.jobId === 'object' ? application.jobId : null
+              if (!job) return null
               
               return (
                 <div key={application._id} className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg p-4">
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
-                      <h4 className="font-medium text-[var(--foreground)]">{gig.title}</h4>
+                      <h4 className="font-medium text-[var(--foreground)]">{job.title}</h4>
                       <p className="text-sm text-[var(--foreground)]/60 mt-1">
-                        {gig.company} • Applied {new Date(application.appliedDate).toLocaleDateString('en-GB')}
+                        {job.company} • Applied {new Date(application.appliedDate).toLocaleDateString('en-GB')}
                       </p>
                     </div>
                     <span className={`px-2 py-1 text-xs rounded-full ${
@@ -209,7 +209,7 @@ export function StudentDashboard({ user }: StudentDashboardProps) {
           }
           {applications.length === 0 && (
             <div className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg p-8 text-center">
-              <p className="text-[var(--foreground)]/60">You haven't applied to any gigs yet</p>
+              <p className="text-[var(--foreground)]/60">You haven't applied to any jobs yet</p>
             </div>
           )}
         </div>

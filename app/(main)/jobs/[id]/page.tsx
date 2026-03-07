@@ -6,7 +6,7 @@ import { useAuth } from '@/app/contexts/AuthContext'
 import { formatDate } from '@/app/lib/utils'
 import Link from 'next/link'
 
-interface Gig {
+interface Job {
   _id: string
   title: string
   description: string
@@ -24,7 +24,7 @@ interface Gig {
 
 interface Application {
   _id: string
-  gigId: string
+  jobId: string
   studentId: string
   studentName: string
   studentEmail: string
@@ -38,14 +38,14 @@ interface Application {
 
 type TabType = 'all' | 'pending' | 'accepted' | 'rejected'
 
-export default function GigDetailsPage() {
+export default function JobDetailsPage() {
   const params = useParams()
   const router = useRouter()
   const { user } = useAuth()
-  const gigId = params.id as string
+  const jobId = params.id as string
   
   const [activeTab, setActiveTab] = useState<TabType>('all')
-  const [gig, setGig] = useState<Gig | null>(null)
+  const [job, setJob] = useState<Job | null>(null)
   const [applicationsList, setApplicationsList] = useState<Application[]>([])
   const [processingId, setProcessingId] = useState<string | null>(null)
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
@@ -54,22 +54,22 @@ export default function GigDetailsPage() {
   const [loading, setLoading] = useState(true)
   
   useEffect(() => {
-    if (user && gigId) {
+    if (user && jobId) {
       fetchData()
     }
-  }, [user, gigId])
+  }, [user, jobId])
 
   const fetchData = async () => {
     try {
-      // Fetch gig details
-      const gigResponse = await fetch(`/api/gigs/${gigId}`)
-      if (gigResponse.ok) {
-        const gigData = await gigResponse.json()
-        setGig(gigData.gig)
+      // Fetch job details
+      const jobResponse = await fetch(`/api/jobs/${jobId}`)
+      if (jobResponse.ok) {
+        const jobData = await jobResponse.json()
+        setJob(jobData.job)
       }
 
-      // Fetch applications for this gig
-      const appsResponse = await fetch(`/api/applications?gigId=${gigId}`)
+      // Fetch applications for this job
+      const appsResponse = await fetch(`/api/applications?jobId=${jobId}`)
       if (appsResponse.ok) {
         const appsData = await appsResponse.json()
         setApplicationsList(appsData.applications)
@@ -93,19 +93,19 @@ export default function GigDetailsPage() {
     )
   }
   
-  if (!gig) {
+  if (!job) {
     return (
       <div className="text-center py-12">
-        <p className="text-[var(--foreground)]/60 mb-4">Gig not found</p>
-        <Link href="/my-gigs" className="text-[var(--foreground)] hover:underline">
-          Back to My Gigs
+        <p className="text-[var(--foreground)]/60 mb-4">Job not found</p>
+        <Link href="/my-jobs" className="text-[var(--foreground)] hover:underline">
+          Back to My Jobs
         </Link>
       </div>
     )
   }
   
-  // Only employers who own the gig can view details
-  if (user.userType !== 'employer' || gig.employerId !== user.id) {
+  // Only employers who own the job can view details
+  if (user.userType !== 'employer' || job.employerId !== user.id) {
     router.push('/dashboard')
     return null
   }
@@ -151,11 +151,11 @@ export default function GigDetailsPage() {
     setProcessingId(null)
   }
 
-  const handleCloseGig = async () => {
+  const handleCloseJob = async () => {
     setIsClosing(true)
     
     try {
-      const response = await fetch(`/api/gigs/${gigId}`, {
+      const response = await fetch(`/api/jobs/${jobId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -164,11 +164,11 @@ export default function GigDetailsPage() {
       })
       
       if (response.ok) {
-        // Update local gig state
-        if (gig) {
-          setGig({ ...gig, status: 'closed' })
+        // Update local job state
+        if (job) {
+          setJob({ ...job, status: 'closed' })
         }
-        setSuccessMessage('Gig closed successfully')
+        setSuccessMessage('Job closed successfully')
         
         // Clear success message after 3 seconds
         setTimeout(() => {
@@ -176,7 +176,7 @@ export default function GigDetailsPage() {
         }, 3000)
       }
     } catch (error) {
-      console.error('Error closing gig:', error)
+      console.error('Error closing job:', error)
     }
     
     setIsClosing(false)
@@ -202,19 +202,19 @@ export default function GigDetailsPage() {
       {/* Header */}
       <div className="flex justify-between items-start">
         <div>
-          <Link href="/my-gigs" className="text-sm text-[var(--foreground)]/60 hover:text-[var(--foreground)] mb-2 inline-block">
-            ← Back to My Gigs
+          <Link href="/my-jobs" className="text-sm text-[var(--foreground)]/60 hover:text-[var(--foreground)] mb-2 inline-block">
+            ← Back to My Jobs
           </Link>
-          <h1 className="text-2xl font-bold text-[var(--foreground)]">{gig.title}</h1>
-          <p className="text-[var(--foreground)]/60 mt-1">Posted on {formatDate(gig.postedDate)}</p>
+          <h1 className="text-2xl font-bold text-[var(--foreground)]">{job.title}</h1>
+          <p className="text-[var(--foreground)]/60 mt-1">Posted on {formatDate(job.postedDate)}</p>
         </div>
-        {gig.status === 'active' ? (
+        {job.status === 'active' ? (
           <button
             onClick={() => setShowCloseConfirmation(true)}
             disabled={isClosing}
             className="px-4 py-2 border border-red-500/50 text-red-600 dark:text-red-400 rounded-md text-sm font-medium hover:bg-red-500/10 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isClosing ? 'Closing...' : 'Close Gig'}
+            {isClosing ? 'Closing...' : 'Close Job'}
           </button>
         ) : (
           <span className="px-3 py-1 text-sm rounded-full bg-gray-100 dark:bg-gray-900/20 text-gray-800 dark:text-gray-300">
@@ -223,32 +223,32 @@ export default function GigDetailsPage() {
         )}
       </div>
 
-      {/* Gig Details */}
+      {/* Job Details */}
       <div className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg p-6">
-        <h2 className="text-lg font-semibold text-[var(--foreground)] mb-4">Gig Details</h2>
+        <h2 className="text-lg font-semibold text-[var(--foreground)] mb-4">Job Details</h2>
         
         <div className="space-y-4">
           <div>
             <h3 className="text-sm font-medium text-[var(--foreground)]/60 mb-1">Description</h3>
-            <p className="text-[var(--foreground)]">{gig.description}</p>
+            <p className="text-[var(--foreground)]">{job.description}</p>
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             <div>
               <h3 className="text-sm font-medium text-[var(--foreground)]/60 mb-1">Category</h3>
-              <p className="text-[var(--foreground)]">{gig.category}</p>
+              <p className="text-[var(--foreground)]">{job.category}</p>
             </div>
             <div>
               <h3 className="text-sm font-medium text-[var(--foreground)]/60 mb-1">Budget</h3>
-              <p className="text-[var(--foreground)] font-semibold">${gig.budget}</p>
+              <p className="text-[var(--foreground)] font-semibold">${job.budget}</p>
             </div>
             <div>
               <h3 className="text-sm font-medium text-[var(--foreground)]/60 mb-1">Duration</h3>
-              <p className="text-[var(--foreground)]">{gig.duration}</p>
+              <p className="text-[var(--foreground)]">{job.duration}</p>
             </div>
             <div>
               <h3 className="text-sm font-medium text-[var(--foreground)]/60 mb-1">Experience Level</h3>
-              <p className="text-[var(--foreground)] capitalize">{gig.experienceLevel}</p>
+              <p className="text-[var(--foreground)] capitalize">{job.experienceLevel}</p>
             </div>
             <div>
               <h3 className="text-sm font-medium text-[var(--foreground)]/60 mb-1">Applications</h3>
@@ -264,10 +264,10 @@ export default function GigDetailsPage() {
           Applications ({applicationsList.length})
         </h2>
 
-        {gig.status === 'closed' && (
+        {job.status === 'closed' && (
           <div className="mb-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-md">
             <p className="text-sm text-yellow-800 dark:text-yellow-300">
-              This gig is closed. You can no longer accept or reject applications.
+              This job is closed. You can no longer accept or reject applications.
             </p>
           </div>
         )}
@@ -344,7 +344,7 @@ export default function GigDetailsPage() {
                   </div>
                 </div>
 
-                {application.status === 'pending' && gig.status === 'active' && (
+                {application.status === 'pending' && job.status === 'active' && (
                   <div className="flex gap-2 mt-4 pt-4 border-t border-[var(--foreground)]/10">
                     <button 
                       onClick={() => handleStatusUpdate(application._id, 'accepted')}
@@ -373,10 +373,10 @@ export default function GigDetailsPage() {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-[var(--background)] border border-[var(--foreground)]/20 rounded-lg p-6 max-w-md w-full">
             <h3 className="text-lg font-semibold text-[var(--foreground)] mb-3">
-              Close Gig
+              Close Job
             </h3>
             <p className="text-[var(--foreground)]/80 mb-6">
-              Are you sure you want to close this gig? This action cannot be undone and the gig will no longer accept applications.
+              Are you sure you want to close this job? This action cannot be undone and the job will no longer accept applications.
             </p>
             <div className="flex gap-3 justify-end">
               <button
@@ -386,11 +386,11 @@ export default function GigDetailsPage() {
                 Cancel
               </button>
               <button
-                onClick={handleCloseGig}
+                onClick={handleCloseJob}
                 disabled={isClosing}
                 className="px-4 py-2 bg-red-600 text-white rounded-md font-medium hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isClosing ? 'Closing...' : 'Yes, Close Gig'}
+                {isClosing ? 'Closing...' : 'Yes, Close Job'}
               </button>
             </div>
           </div>
