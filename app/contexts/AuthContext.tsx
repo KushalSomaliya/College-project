@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useState, ReactNode } from 'react'
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 
 export type UserType = 'student' | 'employer'
 
@@ -30,36 +30,31 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-// Mock users data
-const mockUsers: Record<string, User> = {
-  'test@example.com': {
-    id: '1',
-    name: 'John Doe',
-    email: 'test@example.com',
-    userType: 'student',
-    university: 'University of Technology',
-    skills: ['React', 'Node.js', 'Python', 'UI/UX Design'],
-    rating: 4.8,
-    completedJobs: 12
-  },
-  'employer@example.com': {
-    id: '2',
-    name: 'Sarah Johnson',
-    email: 'employer@example.com',
-    userType: 'employer',
-    company: 'TechStart Inc.',
-    verified: true,
-    totalHired: 8
+function getStoredUser(): User | null {
+  if (typeof window === 'undefined') return null
+  try {
+    const stored = localStorage.getItem('skill-orbit-user')
+    return stored ? JSON.parse(stored) : null
+  } catch {
+    return null
   }
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const stored = getStoredUser()
+    if (stored) {
+      setUser(stored)
+    }
+    setIsLoading(false)
+  }, [])
 
   const login = async (email: string, password: string): Promise<boolean> => {
     setIsLoading(true)
-    
+
     try {
       const response = await fetch('/api/auth/login', {
         method: 'POST',
@@ -68,14 +63,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         },
         body: JSON.stringify({ email, password }),
       })
-      
+
       if (response.ok) {
         const data = await response.json()
         setUser(data.user)
+        localStorage.setItem('skill-orbit-user', JSON.stringify(data.user))
         setIsLoading(false)
         return true
       }
-      
+
       setIsLoading(false)
       return false
     } catch (error) {
@@ -87,6 +83,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = () => {
     setUser(null)
+    localStorage.removeItem('skill-orbit-user')
   }
 
   return (

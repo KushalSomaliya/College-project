@@ -84,7 +84,7 @@ export default function SignUpPage() {
   }
 
   return (
-    <div className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg shadow-lg p-8">
+    <div className="bg-[var(--background)] border border-gray-200 rounded-lg shadow-lg p-8">
       <h2 className="text-2xl font-semibold text-[var(--foreground)] mb-6 text-center">
         Create your account
       </h2>
@@ -98,7 +98,7 @@ export default function SignUpPage() {
             {...register('name')}
             type="text"
             id="name"
-            className="w-full px-3 py-2 border border-[var(--foreground)]/20 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
             placeholder="John Doe"
           />
           {errors.name && (
@@ -114,7 +114,7 @@ export default function SignUpPage() {
             {...register('email')}
             type="email"
             id="email"
-            className="w-full px-3 py-2 border border-[var(--foreground)]/20 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
             placeholder="john@example.com"
           />
           {errors.email && (
@@ -129,7 +129,7 @@ export default function SignUpPage() {
           <select
             {...register('userType')}
             id="userType"
-            className="w-full px-3 py-2 border border-[var(--foreground)]/20 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
           >
             <option value="student">Student looking for work</option>
             <option value="employer">Employer hiring students</option>
@@ -149,7 +149,7 @@ export default function SignUpPage() {
               {...register('university')}
               type="text"
               id="university"
-              className="w-full px-3 py-2 border border-[var(--foreground)]/20 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
               placeholder="University of Technology"
             />
             {errors.university && (
@@ -165,7 +165,7 @@ export default function SignUpPage() {
               {...register('company')}
               type="text"
               id="company"
-              className="w-full px-3 py-2 border border-[var(--foreground)]/20 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
               placeholder="Tech Startup Inc."
             />
             {errors.company && (
@@ -182,7 +182,7 @@ export default function SignUpPage() {
             {...register('password')}
             type="password"
             id="password"
-            className="w-full px-3 py-2 border border-[var(--foreground)]/20 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
             placeholder="••••••••"
           />
           {errors.password && (
@@ -198,7 +198,7 @@ export default function SignUpPage() {
             {...register('confirmPassword')}
             type="password"
             id="confirmPassword"
-            className="w-full px-3 py-2 border border-[var(--foreground)]/20 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
             placeholder="••••••••"
           />
           {errors.confirmPassword && (
@@ -209,18 +209,18 @@ export default function SignUpPage() {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full py-2 px-4 bg-[var(--foreground)] text-[var(--background)] rounded-md font-medium hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:ring-offset-2 focus:ring-offset-[var(--background)] disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+          className="w-full py-2 px-4 bg-primary text-white rounded-md font-medium hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           {isLoading ? 'Creating account...' : 'Sign up'}
         </button>
       </form>
 
       <div className="mt-6 text-center">
-        <p className="text-sm text-[var(--foreground)]/60">
+        <p className="text-sm text-gray-500">
           Already have an account?{' '}
           <Link 
             href="/sign-in" 
-            className="text-[var(--foreground)] hover:underline font-medium"
+            className="text-primary hover:underline font-medium"
           >
             Sign in
           </Link>

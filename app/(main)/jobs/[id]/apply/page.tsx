@@ -101,7 +101,7 @@ export default function ApplyPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <p className="text-[var(--foreground)]/60">Loading...</p>
+        <p className="text-gray-500">Loading...</p>
       </div>
     );
   }
@@ -109,8 +109,8 @@ export default function ApplyPage() {
   if (!job) {
     return (
       <div className="text-center py-12">
-        <p className="text-[var(--foreground)]/60 mb-4">Job not found</p>
-        <Link href="/jobs" className="text-[var(--foreground)] hover:underline">
+        <p className="text-gray-500 mb-4">Job not found</p>
+        <Link href="/jobs" className="text-primary hover:underline">
           Back to Browse Jobs
         </Link>
       </div>
@@ -120,10 +120,10 @@ export default function ApplyPage() {
   if (job.status !== "active") {
     return (
       <div className="text-center py-12">
-        <p className="text-[var(--foreground)]/60 mb-4">
+        <p className="text-gray-500 mb-4">
           This job is no longer accepting applications
         </p>
-        <Link href="/jobs" className="text-[var(--foreground)] hover:underline">
+        <Link href="/jobs" className="text-primary hover:underline">
           Back to Browse Jobs
         </Link>
       </div>
@@ -133,12 +133,12 @@ export default function ApplyPage() {
   if (alreadyApplied) {
     return (
       <div className="text-center py-12">
-        <p className="text-[var(--foreground)]/60 mb-4">
+        <p className="text-gray-500 mb-4">
           You have already applied to this job
         </p>
         <Link
           href="/dashboard"
-          className="text-[var(--foreground)] hover:underline"
+          className="text-primary hover:underline"
         >
           Back to Dashboard
         </Link>
@@ -206,7 +206,7 @@ export default function ApplyPage() {
       <div>
         <Link
           href="/jobs"
-          className="text-sm text-[var(--foreground)]/60 hover:text-[var(--foreground)] mb-2 inline-block"
+          className="text-sm text-gray-500 hover:text-[var(--foreground)] mb-2 inline-block"
         >
           ← Back to Browse Jobs
         </Link>
@@ -216,37 +216,37 @@ export default function ApplyPage() {
       </div>
 
       {/* Job Details */}
-      <div className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg p-6">
+      <div className="bg-[var(--background)] border border-gray-200 rounded-lg p-6">
         <div className="mb-4">
           <h2 className="text-xl font-semibold text-[var(--foreground)] mb-2">
             {job.title}
           </h2>
-          <p className="text-[var(--foreground)]/60">
+          <p className="text-gray-500">
             {job.company} • {job.employerName}
           </p>
         </div>
 
-        <p className="text-[var(--foreground)]/80 mb-4">{job.description}</p>
+        <p className="text-gray-600 mb-4">{job.description}</p>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
           <div>
-            <p className="text-[var(--foreground)]/60">Budget</p>
+            <p className="text-gray-500">Budget</p>
             <p className="font-semibold text-[var(--foreground)]">
               ${job.budget}
             </p>
           </div>
           <div>
-            <p className="text-[var(--foreground)]/60">Duration</p>
+            <p className="text-gray-500">Duration</p>
             <p className="text-[var(--foreground)]">{job.duration}</p>
           </div>
           <div>
-            <p className="text-[var(--foreground)]/60">Experience</p>
+            <p className="text-gray-500">Experience</p>
             <p className="text-[var(--foreground)] capitalize">
               {job.experienceLevel}
             </p>
           </div>
           <div>
-            <p className="text-[var(--foreground)]/60">Posted</p>
+            <p className="text-gray-500">Posted</p>
             <p className="text-[var(--foreground)]">
               {formatDate(job.postedDate)}
             </p>
@@ -256,7 +256,7 @@ export default function ApplyPage() {
 
       {/* Application Form */}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <div className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg p-6">
+        <div className="bg-[var(--background)] border border-gray-200 rounded-lg p-6">
           <h3 className="text-lg font-semibold text-[var(--foreground)] mb-4">
             Your Application
           </h3>
@@ -270,7 +270,7 @@ export default function ApplyPage() {
               <div>
                 <label
                   htmlFor="experienceYears"
-                  className="block text-sm text-[var(--foreground)]/60 mb-1"
+                  className="block text-sm text-gray-500 mb-1"
                 >
                   Years
                 </label>
@@ -280,7 +280,7 @@ export default function ApplyPage() {
                   id="experienceYears"
                   min="0"
                   max="50"
-                  className="w-full px-3 py-2 border border-[var(--foreground)]/20 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
                 />
                 {errors.experienceYears && (
                   <p className="mt-1 text-sm text-red-500">
@@ -291,7 +291,7 @@ export default function ApplyPage() {
               <div>
                 <label
                   htmlFor="experienceMonths"
-                  className="block text-sm text-[var(--foreground)]/60 mb-1"
+                  className="block text-sm text-gray-500 mb-1"
                 >
                   Months
                 </label>
@@ -301,7 +301,7 @@ export default function ApplyPage() {
                   id="experienceMonths"
                   min="0"
                   max="11"
-                  className="w-full px-3 py-2 border border-[var(--foreground)]/20 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
                 />
                 {errors.experienceMonths && (
                   <p className="mt-1 text-sm text-red-500">
@@ -310,7 +310,7 @@ export default function ApplyPage() {
                 )}
               </div>
             </div>
-            <p className="mt-2 text-sm text-[var(--foreground)]/60">
+            <p className="mt-2 text-sm text-gray-500">
               {experienceYears === 0 && experienceMonths === 0
                 ? "No prior experience"
                 : `${
@@ -344,14 +344,14 @@ export default function ApplyPage() {
               id="coverLetter"
               rows={6}
               placeholder="Explain why you're the perfect fit for this job..."
-              className="w-full px-3 py-2 border border-[var(--foreground)]/20 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:border-transparent resize-none"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent resize-none"
             />
             {errors.coverLetter && (
               <p className="mt-1 text-sm text-red-500">
                 {errors.coverLetter.message}
               </p>
             )}
-            <p className="mt-1 text-sm text-[var(--foreground)]/60">
+            <p className="mt-1 text-sm text-gray-500">
               {watch("coverLetter")?.length || 0}/1000 characters
             </p>
           </div>
@@ -371,14 +371,14 @@ export default function ApplyPage() {
               min="5"
               max="10000"
               placeholder={`Budget: $${job.budget}`}
-              className="w-full px-3 py-2 border border-[var(--foreground)]/20 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
             />
             {errors.proposedRate && (
               <p className="mt-1 text-sm text-red-500">
                 {errors.proposedRate.message}
               </p>
             )}
-            <p className="mt-1 text-sm text-[var(--foreground)]/60">
+            <p className="mt-1 text-sm text-gray-500">
               The employer's budget for this job is ${job.budget}
             </p>
           </div>
@@ -389,13 +389,13 @@ export default function ApplyPage() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="flex-1 py-2 px-4 bg-[var(--foreground)] text-[var(--background)] rounded-md font-medium hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:ring-offset-2 focus:ring-offset-[var(--background)] disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+            className="flex-1 py-2 px-4 bg-primary text-white rounded-md font-medium hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {isSubmitting ? "Submitting Application..." : "Apply Now"}
           </button>
           <Link
             href="/jobs"
-            className="px-4 py-2 border border-[var(--foreground)]/20 text-[var(--foreground)] rounded-md font-medium hover:bg-[var(--foreground)]/5 transition-colors"
+            className="px-4 py-2 border border-gray-300 text-[var(--foreground)] rounded-md font-medium hover:bg-gray-50 transition-colors"
           >
             Cancel
           </Link>

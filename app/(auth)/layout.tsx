@@ -10,7 +10,7 @@ export default function AuthLayout({
           <h1 className="text-3xl font-bold text-[var(--foreground)] mb-2">
             Skill Orbit
           </h1>
-          <p className="text-sm text-[var(--foreground)]/60">
+          <p className="text-sm text-gray-500">
             Connect. Work. Grow.
           </p>
         </div>

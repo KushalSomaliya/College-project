@@ -88,7 +88,7 @@ export default function JobDetailsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <p className="text-[var(--foreground)]/60">Loading...</p>
+        <p className="text-gray-500">Loading...</p>
       </div>
     )
   }
@@ -96,7 +96,7 @@ export default function JobDetailsPage() {
   if (!job) {
     return (
       <div className="text-center py-12">
-        <p className="text-[var(--foreground)]/60 mb-4">Job not found</p>
+        <p className="text-gray-500 mb-4">Job not found</p>
         <Link href="/my-jobs" className="text-[var(--foreground)] hover:underline">
           Back to My Jobs
         </Link>
@@ -194,64 +194,64 @@ export default function JobDetailsPage() {
     <div className="space-y-6">
       {/* Success Message */}
       {successMessage && (
-        <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-md p-4">
-          <p className="text-green-800 dark:text-green-300">{successMessage}</p>
+        <div className="bg-green-50 border border-green-200 rounded-md p-4">
+          <p className="text-green-700">{successMessage}</p>
         </div>
       )}
 
       {/* Header */}
       <div className="flex justify-between items-start">
         <div>
-          <Link href="/my-jobs" className="text-sm text-[var(--foreground)]/60 hover:text-[var(--foreground)] mb-2 inline-block">
+          <Link href="/my-jobs" className="text-sm text-gray-500 hover:text-[var(--foreground)] mb-2 inline-block">
             ← Back to My Jobs
           </Link>
           <h1 className="text-2xl font-bold text-[var(--foreground)]">{job.title}</h1>
-          <p className="text-[var(--foreground)]/60 mt-1">Posted on {formatDate(job.postedDate)}</p>
+          <p className="text-gray-500 mt-1">Posted on {formatDate(job.postedDate)}</p>
         </div>
         {job.status === 'active' ? (
           <button
             onClick={() => setShowCloseConfirmation(true)}
             disabled={isClosing}
-            className="px-4 py-2 border border-red-500/50 text-red-600 dark:text-red-400 rounded-md text-sm font-medium hover:bg-red-500/10 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-4 py-2 border border-red-500/50 text-red-600 rounded-md text-sm font-medium hover:bg-red-500/10 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isClosing ? 'Closing...' : 'Close Job'}
           </button>
         ) : (
-          <span className="px-3 py-1 text-sm rounded-full bg-gray-100 dark:bg-gray-900/20 text-gray-800 dark:text-gray-300">
+          <span className="px-3 py-1 text-sm rounded-full bg-gray-100 text-gray-800">
             Closed
           </span>
         )}
       </div>
 
       {/* Job Details */}
-      <div className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg p-6">
+      <div className="bg-[var(--background)] border border-gray-200 rounded-lg p-6">
         <h2 className="text-lg font-semibold text-[var(--foreground)] mb-4">Job Details</h2>
         
         <div className="space-y-4">
           <div>
-            <h3 className="text-sm font-medium text-[var(--foreground)]/60 mb-1">Description</h3>
+            <h3 className="text-sm font-medium text-gray-500 mb-1">Description</h3>
             <p className="text-[var(--foreground)]">{job.description}</p>
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             <div>
-              <h3 className="text-sm font-medium text-[var(--foreground)]/60 mb-1">Category</h3>
+              <h3 className="text-sm font-medium text-gray-500 mb-1">Category</h3>
               <p className="text-[var(--foreground)]">{job.category}</p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-[var(--foreground)]/60 mb-1">Budget</h3>
+              <h3 className="text-sm font-medium text-gray-500 mb-1">Budget</h3>
               <p className="text-[var(--foreground)] font-semibold">${job.budget}</p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-[var(--foreground)]/60 mb-1">Duration</h3>
+              <h3 className="text-sm font-medium text-gray-500 mb-1">Duration</h3>
               <p className="text-[var(--foreground)]">{job.duration}</p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-[var(--foreground)]/60 mb-1">Experience Level</h3>
+              <h3 className="text-sm font-medium text-gray-500 mb-1">Experience Level</h3>
               <p className="text-[var(--foreground)] capitalize">{job.experienceLevel}</p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-[var(--foreground)]/60 mb-1">Applications</h3>
+              <h3 className="text-sm font-medium text-gray-500 mb-1">Applications</h3>
               <p className="text-[var(--foreground)]">{applicationsList.length} total</p>
             </div>
           </div>
@@ -265,15 +265,15 @@ export default function JobDetailsPage() {
         </h2>
 
         {job.status === 'closed' && (
-          <div className="mb-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-md">
-            <p className="text-sm text-yellow-800 dark:text-yellow-300">
+          <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+            <p className="text-sm text-yellow-700">
               This job is closed. You can no longer accept or reject applications.
             </p>
           </div>
         )}
 
         {/* Tabs */}
-        <div className="flex gap-4 mb-6 border-b border-[var(--foreground)]/10">
+        <div className="flex gap-4 mb-6 border-b border-gray-200">
           {tabs.map((tab) => (
             <button
               key={tab.value}
@@ -281,7 +281,7 @@ export default function JobDetailsPage() {
               className={`pb-2 px-1 transition-colors ${
                 activeTab === tab.value
                   ? 'border-b-2 border-[var(--foreground)] text-[var(--foreground)] font-medium'
-                  : 'text-[var(--foreground)]/60 hover:text-[var(--foreground)]'
+                  : 'text-gray-500 hover:text-[var(--foreground)]'
               }`}
             >
               {tab.label} ({tab.count})
@@ -292,8 +292,8 @@ export default function JobDetailsPage() {
         {/* Applications List */}
         <div className="space-y-4">
           {filteredApplications.length === 0 ? (
-            <div className="text-center py-8 bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg">
-              <p className="text-[var(--foreground)]/60">
+            <div className="text-center py-8 bg-[var(--background)] border border-gray-200 rounded-lg">
+              <p className="text-gray-500">
                 {activeTab === 'all' 
                   ? 'No applications yet' 
                   : `No ${activeTab} applications`}
@@ -301,16 +301,16 @@ export default function JobDetailsPage() {
             </div>
           ) : (
             filteredApplications.map((application) => (
-              <div key={application._id} className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg p-6">
+              <div key={application._id} className="bg-[var(--background)] border border-gray-200 rounded-lg p-6">
                 <div className="flex justify-between items-start mb-4">
                   <div>
                     <h3 className="text-lg font-semibold text-[var(--foreground)]">
                       {application.studentName}
                     </h3>
-                    <p className="text-sm text-[var(--foreground)]/60">
+                    <p className="text-sm text-gray-500">
                       {application.studentEmail} • {application.studentUniversity}
                     </p>
-                    <p className="text-sm text-[var(--foreground)]/60 mt-1">
+                    <p className="text-sm text-gray-500 mt-1">
                       Applied {formatDate(application.appliedDate)}
                     </p>
                   </div>
@@ -320,10 +320,10 @@ export default function JobDetailsPage() {
                     </p>
                     <span className={`inline-block mt-1 px-2 py-1 text-xs rounded-full ${
                       application.status === 'pending'
-                        ? 'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-300'
+                        ? 'bg-yellow-100 text-yellow-800'
                         : application.status === 'accepted'
-                        ? 'bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300'
-                        : 'bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-300'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
                     }`}>
                       {application.status.charAt(0).toUpperCase() + application.status.slice(1)}
                     </span>
@@ -333,19 +333,19 @@ export default function JobDetailsPage() {
                 <div className="space-y-3">
                   {application.experience && (
                     <div>
-                      <h4 className="text-sm font-medium text-[var(--foreground)]/60 mb-1">Experience</h4>
+                      <h4 className="text-sm font-medium text-gray-500 mb-1">Experience</h4>
                       <p className="text-sm text-[var(--foreground)]">{application.experience}</p>
                     </div>
                   )}
                   
                   <div>
-                    <h4 className="text-sm font-medium text-[var(--foreground)]/60 mb-1">Cover Letter</h4>
+                    <h4 className="text-sm font-medium text-gray-500 mb-1">Cover Letter</h4>
                     <p className="text-sm text-[var(--foreground)]">{application.coverLetter}</p>
                   </div>
                 </div>
 
                 {application.status === 'pending' && job.status === 'active' && (
-                  <div className="flex gap-2 mt-4 pt-4 border-t border-[var(--foreground)]/10">
+                  <div className="flex gap-2 mt-4 pt-4 border-t border-gray-200">
                     <button 
                       onClick={() => handleStatusUpdate(application._id, 'accepted')}
                       disabled={processingId === application._id}
@@ -371,17 +371,17 @@ export default function JobDetailsPage() {
       {/* Close Confirmation Dialog */}
       {showCloseConfirmation && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-[var(--background)] border border-[var(--foreground)]/20 rounded-lg p-6 max-w-md w-full">
+          <div className="bg-[var(--background)] border border-gray-300 rounded-lg p-6 max-w-md w-full">
             <h3 className="text-lg font-semibold text-[var(--foreground)] mb-3">
               Close Job
             </h3>
-            <p className="text-[var(--foreground)]/80 mb-6">
+            <p className="text-gray-600 mb-6">
               Are you sure you want to close this job? This action cannot be undone and the job will no longer accept applications.
             </p>
             <div className="flex gap-3 justify-end">
               <button
                 onClick={() => setShowCloseConfirmation(false)}
-                className="px-4 py-2 border border-[var(--foreground)]/20 text-[var(--foreground)] rounded-md font-medium hover:bg-[var(--foreground)]/5 transition-colors"
+                className="px-4 py-2 border border-gray-300 text-[var(--foreground)] rounded-md font-medium hover:bg-gray-50 transition-colors"
               >
                 Cancel
               </button>

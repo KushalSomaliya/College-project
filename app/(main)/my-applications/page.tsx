@@ -70,7 +70,7 @@ export default function MyApplicationsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <p className="text-[var(--foreground)]/60">Loading...</p>
+        <p className="text-gray-500">Loading...</p>
       </div>
     )
   }
@@ -101,33 +101,33 @@ export default function MyApplicationsPage() {
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-[var(--foreground)]">My Applications</h1>
-        <p className="text-[var(--foreground)]/60 mt-1">
+        <p className="text-gray-500 mt-1">
           Track the status of your job applications
         </p>
       </div>
 
       {/* Stats Overview */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg p-4">
-          <p className="text-sm text-[var(--foreground)]/60 mb-1">Total Applications</p>
+        <div className="bg-[var(--background)] border border-gray-200 rounded-lg p-4">
+          <p className="text-sm text-gray-500 mb-1">Total Applications</p>
           <p className="text-2xl font-bold text-[var(--foreground)]">{applications.length}</p>
         </div>
-        <div className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg p-4">
-          <p className="text-sm text-[var(--foreground)]/60 mb-1">Pending Review</p>
-          <p className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">{pendingCount}</p>
+        <div className="bg-[var(--background)] border border-gray-200 rounded-lg p-4">
+          <p className="text-sm text-gray-500 mb-1">Pending Review</p>
+          <p className="text-2xl font-bold text-yellow-600">{pendingCount}</p>
         </div>
-        <div className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg p-4">
-          <p className="text-sm text-[var(--foreground)]/60 mb-1">Accepted</p>
-          <p className="text-2xl font-bold text-green-600 dark:text-green-400">{acceptedCount}</p>
+        <div className="bg-[var(--background)] border border-gray-200 rounded-lg p-4">
+          <p className="text-sm text-gray-500 mb-1">Accepted</p>
+          <p className="text-2xl font-bold text-green-600">{acceptedCount}</p>
         </div>
-        <div className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg p-4">
-          <p className="text-sm text-[var(--foreground)]/60 mb-1">Rejected</p>
-          <p className="text-2xl font-bold text-red-600 dark:text-red-400">{rejectedCount}</p>
+        <div className="bg-[var(--background)] border border-gray-200 rounded-lg p-4">
+          <p className="text-sm text-gray-500 mb-1">Rejected</p>
+          <p className="text-2xl font-bold text-red-600">{rejectedCount}</p>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-4 border-b border-[var(--foreground)]/10">
+      <div className="flex gap-4 border-b border-gray-200">
         {tabs.map((tab) => (
           <button
             key={tab.value}
@@ -135,7 +135,7 @@ export default function MyApplicationsPage() {
             className={`pb-2 px-1 transition-colors ${
               activeTab === tab.value
                 ? 'border-b-2 border-[var(--foreground)] text-[var(--foreground)] font-medium'
-                : 'text-[var(--foreground)]/60 hover:text-[var(--foreground)]'
+                : 'text-gray-500 hover:text-[var(--foreground)]'
             }`}
           >
             {tab.label} ({tab.count})
@@ -146,8 +146,8 @@ export default function MyApplicationsPage() {
       {/* Applications List */}
       <div className="space-y-4">
         {sortedApplications.length === 0 ? (
-          <div className="text-center py-12 bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg">
-            <p className="text-[var(--foreground)]/60">
+          <div className="text-center py-12 bg-[var(--background)] border border-gray-200 rounded-lg">
+            <p className="text-gray-500">
               {activeTab === 'all' 
                 ? "You haven't applied to any jobs yet" 
                 : `No ${activeTab} applications`}
@@ -160,27 +160,27 @@ export default function MyApplicationsPage() {
             if (!job) return null
             
             return (
-              <div key={application._id} className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg p-6">
+              <div key={application._id} className="bg-[var(--background)] border border-gray-200 rounded-lg p-6">
                 {/* Application Header */}
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex-1">
                     <h3 className="text-lg font-semibold text-[var(--foreground)] mb-1">
                       {job.title}
                     </h3>
-                    <p className="text-sm text-[var(--foreground)]/60">
+                    <p className="text-sm text-gray-500">
                       {job.company} • {job.employerName}
                     </p>
-                    <p className="text-sm text-[var(--foreground)]/60 mt-1">
+                    <p className="text-sm text-gray-500 mt-1">
                       Applied {formatDate(application.appliedDate)}
                     </p>
                   </div>
                   <div className="text-right">
                     <span className={`inline-block px-3 py-1 text-sm rounded-full ${
                       application.status === 'pending'
-                        ? 'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-300'
+                        ? 'bg-yellow-100 text-yellow-800'
                         : application.status === 'accepted'
-                        ? 'bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300'
-                        : 'bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-300'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
                     }`}>
                       {application.status.charAt(0).toUpperCase() + application.status.slice(1)}
                     </span>
@@ -193,49 +193,49 @@ export default function MyApplicationsPage() {
                 {/* Job Details */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 text-sm">
                   <div>
-                    <p className="text-[var(--foreground)]/60">Category</p>
+                    <p className="text-gray-500">Category</p>
                     <p className="text-[var(--foreground)]">{job.category}</p>
                   </div>
                   <div>
-                    <p className="text-[var(--foreground)]/60">Budget</p>
+                    <p className="text-gray-500">Budget</p>
                     <p className="text-[var(--foreground)]">${job.budget}</p>
                   </div>
                   <div>
-                    <p className="text-[var(--foreground)]/60">Duration</p>
+                    <p className="text-gray-500">Duration</p>
                     <p className="text-[var(--foreground)]">{job.duration}</p>
                   </div>
                   <div>
-                    <p className="text-[var(--foreground)]/60">Experience</p>
+                    <p className="text-gray-500">Experience</p>
                     <p className="text-[var(--foreground)] capitalize">{job.experienceLevel}</p>
                   </div>
                 </div>
 
                 {/* Application Details */}
-                <div className="border-t border-[var(--foreground)]/10 pt-4 space-y-3">
+                <div className="border-t border-gray-200 pt-4 space-y-3">
                   {application.experience && (
                     <div>
-                      <h4 className="text-sm font-medium text-[var(--foreground)]/60 mb-1">Your Experience</h4>
+                      <h4 className="text-sm font-medium text-gray-500 mb-1">Your Experience</h4>
                       <p className="text-sm text-[var(--foreground)]">{application.experience}</p>
                     </div>
                   )}
                   
                   <div>
-                    <h4 className="text-sm font-medium text-[var(--foreground)]/60 mb-1">Your Cover Letter</h4>
+                    <h4 className="text-sm font-medium text-gray-500 mb-1">Your Cover Letter</h4>
                     <p className="text-sm text-[var(--foreground)]">{application.coverLetter}</p>
                   </div>
 
                   {/* Status-specific messages */}
                   {application.status === 'accepted' && (
-                    <div className="mt-4 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-md">
-                      <p className="text-sm text-green-800 dark:text-green-300">
+                    <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-md">
+                      <p className="text-sm text-green-700">
                         Congratulations! Your application has been accepted. The employer will contact you with next steps.
                       </p>
                     </div>
                   )}
                   
                   {application.status === 'rejected' && (
-                    <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md">
-                      <p className="text-sm text-red-800 dark:text-red-300">
+                    <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-md">
+                      <p className="text-sm text-red-700">
                         Unfortunately, your application was not selected for this job. Keep applying to other opportunities!
                       </p>
                     </div>

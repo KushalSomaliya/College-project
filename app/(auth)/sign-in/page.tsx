@@ -45,15 +45,15 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg shadow-lg p-8">
+    <div className="bg-[var(--background)] border border-gray-200 rounded-lg shadow-lg p-8">
       <h2 className="text-2xl font-semibold text-[var(--foreground)] mb-6 text-center">
         Welcome back
       </h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {loginError && (
-          <div className="p-3 rounded-md bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
-            <p className="text-sm text-red-600 dark:text-red-400">
+          <div className="p-3 rounded-md bg-red-50 border border-red-200">
+            <p className="text-sm text-red-600">
               {loginError}
             </p>
           </div>
@@ -73,7 +73,7 @@ export default function SignInPage() {
             // Mock for development
             // Remove mock value for production
             // defaultValue="test@example.com"
-            className="w-full px-3 py-2 border border-[var(--foreground)]/20 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
             placeholder="john@example.com"
           />
           {errors.email && (
@@ -95,7 +95,7 @@ export default function SignInPage() {
             // Mock for development
             // Remove mock value for production
             // defaultValue="password123"
-            className="w-full px-3 py-2 border border-[var(--foreground)]/20 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
             placeholder="••••••••"
           />
           {errors.password && (
@@ -110,18 +110,18 @@ export default function SignInPage() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full py-2 px-4 bg-[var(--foreground)] text-[var(--background)] rounded-md font-medium hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:ring-offset-2 focus:ring-offset-[var(--background)] disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+          className="w-full py-2 px-4 bg-primary text-white rounded-md font-medium hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           {isSubmitting ? "Signing in..." : "Sign in"}
         </button>
       </form>
 
       <div className="mt-6 text-center">
-        <p className="text-sm text-[var(--foreground)]/60">
+        <p className="text-sm text-gray-500">
           Don't have an account?{" "}
           <Link
             href="/sign-up"
-            className="text-[var(--foreground)] hover:underline font-medium"
+            className="text-primary hover:underline font-medium"
           >
             Sign up
           </Link>
@@ -129,10 +129,10 @@ export default function SignInPage() {
       </div>
 
       <div className="mt-4 text-center space-y-1">
-        <p className="text-xs text-[var(--foreground)]/40">
+        <p className="text-xs text-gray-400">
           Student demo: student@test.com / password123
         </p>
-        <p className="text-xs text-[var(--foreground)]/40">
+        <p className="text-xs text-gray-400">
           Employer demo: employer@test.com / password123
         </p>
       </div>

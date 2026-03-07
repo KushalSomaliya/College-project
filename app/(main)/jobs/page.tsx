@@ -88,14 +88,14 @@ export default function JobsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <p className="text-[var(--foreground)]/60">Loading...</p>
+        <p className="text-gray-500">Loading...</p>
       </div>
     );
   }
 
   // Get applied job IDs for checking (handle both string and populated object)
   const appliedJobIds = myApplications.map((app) => 
-    typeof app.jobId === 'string' ? app.jobId : app.jobId._id
+    typeof app.jobId === 'string' ? app.jobId : app.jobId?._id
   );
   console.log("appliedJobIds:", appliedJobIds);
 
@@ -129,13 +129,13 @@ export default function JobsPage() {
         <h1 className="text-2xl font-bold text-[var(--foreground)]">
           Browse Jobs
         </h1>
-        <p className="text-[var(--foreground)]/60 mt-1">
+        <p className="text-gray-500 mt-1">
           Find freelance opportunities that match your skills
         </p>
       </div>
 
       {/* Filters */}
-      <div className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg p-4">
+      <div className="bg-[var(--background)] border border-gray-200 rounded-lg p-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Search */}
           <div>
@@ -151,7 +151,7 @@ export default function JobsPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by title, description, or company..."
-              className="w-full px-3 py-2 border border-[var(--foreground)]/20 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
             />
           </div>
 
@@ -167,7 +167,7 @@ export default function JobsPage() {
               id="category"
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full px-3 py-2 border border-[var(--foreground)]/20 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
             >
               {availableCategories.map((category) => (
                 <option key={category} value={category}>
@@ -180,7 +180,7 @@ export default function JobsPage() {
       </div>
 
       {/* Results Summary */}
-      <div className="text-sm text-[var(--foreground)]/60">
+      <div className="text-sm text-gray-500">
         Showing {filteredJobs.length}{" "}
         {filteredJobs.length === 1 ? "job" : "jobs"}
         {selectedCategory !== "all" && ` in ${selectedCategory}`}
@@ -190,15 +190,15 @@ export default function JobsPage() {
       {/* Gigs Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredJobs.length === 0 ? (
-          <div className="col-span-full text-center py-12 bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg">
-            <p className="text-[var(--foreground)]/60">
+          <div className="col-span-full text-center py-12 bg-[var(--background)] border border-gray-200 rounded-lg">
+            <p className="text-gray-500">
               {searchQuery || selectedCategory !== "all"
                 ? "No jobs found matching your criteria. Try adjusting your filters."
                 : "No active jobs available at the moment."}
             </p>
             <Link
               href="/my-applications"
-              className="text-[var(--foreground)] hover:underline font-medium mt-4 inline-block"
+              className="text-primary hover:underline font-medium mt-4 inline-block"
             >
               View Your Applications
             </Link>
@@ -207,7 +207,7 @@ export default function JobsPage() {
           filteredJobs.map((job) => (
             <div
               key={job._id}
-              className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg p-6 hover:shadow-lg transition-shadow flex flex-col"
+              className="bg-[var(--background)] border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow flex flex-col"
             >
               {/* Job Header */}
               <div className="mb-4">
@@ -215,36 +215,36 @@ export default function JobsPage() {
                   <h3 className="text-lg font-semibold text-[var(--foreground)] line-clamp-2">
                     {job.title}
                   </h3>
-                  <span className="text-xs px-2 py-1 bg-[var(--foreground)]/10 text-[var(--foreground)] rounded-full whitespace-nowrap ml-2">
+                  <span className="text-xs px-2 py-1 bg-gray-100 text-[var(--foreground)] rounded-full whitespace-nowrap ml-2">
                     {job.category}
                   </span>
                 </div>
-                <p className="text-sm text-[var(--foreground)]/60">
+                <p className="text-sm text-gray-500">
                   {job.company} • {job.employerName}
                 </p>
               </div>
 
               {/* Description */}
-              <p className="text-sm text-[var(--foreground)]/80 mb-4 line-clamp-3 flex-grow">
+              <p className="text-sm text-gray-600 mb-4 line-clamp-3 flex-grow">
                 {job.description}
               </p>
 
               {/* Job Details */}
               <div className="space-y-2 mb-4">
                 <div className="flex justify-between text-sm">
-                  <span className="text-[var(--foreground)]/60">Budget</span>
+                  <span className="text-gray-500">Budget</span>
                   <span className="font-semibold text-[var(--foreground)]">
                     ${job.budget}
                   </span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-[var(--foreground)]/60">Duration</span>
+                  <span className="text-gray-500">Duration</span>
                   <span className="text-[var(--foreground)]">
                     {job.duration}
                   </span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-[var(--foreground)]/60">
+                  <span className="text-gray-500">
                     Experience
                   </span>
                   <span className="text-[var(--foreground)] capitalize">
@@ -254,25 +254,25 @@ export default function JobsPage() {
               </div>
 
               {/* Footer */}
-              <div className="border-t border-[var(--foreground)]/10 pt-4">
+              <div className="border-t border-gray-200 pt-4">
                 <div className="flex justify-between items-center mb-3">
-                  <span className="text-xs text-[var(--foreground)]/60">
+                  <span className="text-xs text-gray-500">
                     Posted {formatDate(job.postedDate)}
                   </span>
-                  <span className="text-xs text-[var(--foreground)]/60">
+                  <span className="text-xs text-gray-500">
                     {job.applicationsCount}{" "}
                     {job.applicationsCount === 1 ? "applicant" : "applicants"}
                   </span>
                 </div>
 
                 {appliedJobIds.includes(job._id) ? (
-                  <div className="w-full text-center py-2 px-4 bg-[var(--foreground)]/10 text-[var(--foreground)] rounded-md border border-[var(--foreground)]/20">
+                  <div className="w-full text-center py-2 px-4 bg-green-50 text-green-700 rounded-md border border-green-200">
                     Applied ✓
                   </div>
                 ) : (
                   <Link
                     href={`/jobs/${job._id}/apply`}
-                    className="w-full block text-center py-2 px-4 bg-[var(--foreground)] text-[var(--background)] rounded-md font-medium hover:opacity-90 transition-opacity"
+                    className="w-full block text-center py-2 px-4 bg-primary text-white rounded-md font-medium hover:bg-primary-hover transition-colors"
                   >
                     Apply Now
                   </Link>

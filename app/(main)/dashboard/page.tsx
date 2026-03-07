@@ -25,7 +25,7 @@ export default function DashboardPage() {
   if (!user) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <p className="text-[var(--foreground)]/60">Loading...</p>
+        <p className="text-gray-500">Loading...</p>
       </div>
     )
   }
@@ -33,8 +33,8 @@ export default function DashboardPage() {
   return (
     <>
       {showSuccessMessage && (
-        <div className="mb-6 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-md p-4">
-          <p className="text-green-800 dark:text-green-300">
+        <div className="mb-6 bg-green-50 border border-green-200 rounded-md p-4">
+          <p className="text-green-700">
             Application submitted successfully! The employer will review your application and get back to you.
           </p>
         </div>

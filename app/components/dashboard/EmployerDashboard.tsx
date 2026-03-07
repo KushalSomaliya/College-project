@@ -87,7 +87,7 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <p className="text-[var(--foreground)]/60">Loading...</p>
+        <p className="text-gray-500">Loading...</p>
       </div>
     )
   }
@@ -100,13 +100,13 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
           <h1 className="text-2xl font-bold text-[var(--foreground)]">
             Welcome back, {user.name}!
           </h1>
-          <p className="text-[var(--foreground)]/60 mt-1">
+          <p className="text-gray-500 mt-1">
             Manage your jobs and find talented students
           </p>
         </div>
         <Link
           href="/post-job"
-          className="px-4 py-2 bg-[var(--foreground)] text-[var(--background)] rounded-md font-medium hover:opacity-90 transition-opacity"
+          className="px-4 py-2 bg-primary text-white rounded-md font-medium hover:bg-primary-hover transition-colors"
         >
           Post New Job
         </Link>
@@ -161,35 +161,35 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
       </div>
 
       {/* Active Jobs */}
-      <div className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg p-6">
+      <div className="bg-[var(--background)] border border-gray-200 rounded-lg p-6">
         <h3 className="text-lg font-semibold text-[var(--foreground)] mb-4">Your Active Jobs</h3>
         <div className="space-y-4">
           {myJobs.filter(job => job.status === 'active').map((job) => (
-            <div key={job._id} className="border-b border-[var(--foreground)]/10 pb-4 last:border-0">
+            <div key={job._id} className="border-b border-gray-200 pb-4 last:border-0">
               <div className="flex justify-between items-start mb-2">
                 <h4 className="font-medium text-[var(--foreground)]">{job.title}</h4>
                 <span className="text-sm px-2 py-1 bg-green-100 text-green-800 rounded-full">
                   Active
                 </span>
               </div>
-              <p className="text-sm text-[var(--foreground)]/60 mb-3">{job.description}</p>
+              <p className="text-sm text-gray-500 mb-3">{job.description}</p>
               <div className="flex items-center justify-between text-sm">
                 <div className="flex gap-4">
-                  <span className="text-[var(--foreground)]/60">
+                  <span className="text-gray-500">
                     <strong className="text-[var(--foreground)]">{job.applicationsCount}</strong> applications
                   </span>
-                  <span className="text-[var(--foreground)]/60">
+                  <span className="text-gray-500">
                     Budget: <strong className="text-[var(--foreground)]">${job.budget}</strong>
                   </span>
                 </div>
-                <Link href={`/jobs/${job._id}`} className="text-[var(--foreground)] hover:underline">
+                <Link href={`/jobs/${job._id}`} className="text-primary hover:underline">
                   View Details →
                 </Link>
               </div>
             </div>
           ))}
           {myJobs.filter(job => job.status === 'active').length === 0 && (
-            <p className="text-[var(--foreground)]/60 text-sm">No active jobs. Post a new job to get started!</p>
+            <p className="text-gray-500 text-sm">No active jobs. Post a new job to get started!</p>
           )}
         </div>
       </div>
@@ -197,28 +197,28 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
       {/* Recent Applications */}
       <div>
         <h2 className="text-xl font-semibold text-[var(--foreground)] mb-4">Recent Applications to Review</h2>
-        <div className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg overflow-hidden">
+        <div className="bg-[var(--background)] border border-gray-200 rounded-lg overflow-hidden">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-[var(--foreground)]/10">
-                <th className="px-6 py-3 text-left text-xs font-medium text-[var(--foreground)]/60 uppercase tracking-wider">
+              <tr className="border-b border-gray-200">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Student
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-[var(--foreground)]/60 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Job
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-[var(--foreground)]/60 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Proposed Rate
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-[var(--foreground)]/60 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Applied
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-[var(--foreground)]/60 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Action
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[var(--foreground)]/10">
+            <tbody className="divide-y divide-gray-200">
               {recentApplications.map((app) => {
                 const jobId = typeof app.jobId === 'string' ? app.jobId : app.jobId?._id
                 const job = typeof app.jobId === 'object' ? app.jobId : myJobs.find(g => g._id === jobId)
@@ -228,20 +228,20 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
                       <div className="text-sm font-medium text-[var(--foreground)]">{app.studentName}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-[var(--foreground)]/80">{job?.title}</div>
+                      <div className="text-sm text-gray-600">{job?.title}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-[var(--foreground)]">${app.proposedRate}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-[var(--foreground)]/60">
+                      <div className="text-sm text-gray-500">
                         {formatDate(app.appliedDate)}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <Link 
                         href={`/jobs/${jobId}`} 
-                        className="text-sm text-[var(--foreground)] hover:underline"
+                        className="text-sm text-primary hover:underline"
                       >
                         Review →
                       </Link>
@@ -252,7 +252,7 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
             </tbody>
           </table>
           {recentApplications.length === 0 && (
-            <div className="px-6 py-8 text-center text-[var(--foreground)]/60">
+            <div className="px-6 py-8 text-center text-gray-500">
               No pending applications to review
             </div>
           )}

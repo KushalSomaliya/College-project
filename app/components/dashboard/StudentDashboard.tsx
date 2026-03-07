@@ -57,7 +57,7 @@ export function StudentDashboard({ user }: StudentDashboardProps) {
         
         // Filter out jobs the student has already applied to
         const appliedJobIds = fetchedApplications.map(app => 
-          typeof app.jobId === 'string' ? app.jobId : app.jobId._id
+          typeof app.jobId === 'string' ? app.jobId : app.jobId?._id
         )
         const availableJobs = allJobs.filter((job: Job) => 
           !appliedJobIds.includes(job._id)
@@ -86,7 +86,7 @@ export function StudentDashboard({ user }: StudentDashboardProps) {
         <h1 className="text-2xl font-bold text-[var(--foreground)]">
           Welcome back, {user.name}!
         </h1>
-        <p className="text-[var(--foreground)]/60 mt-1">
+        <p className="text-gray-500 mt-1">
           Here's what's happening with your freelance journey
         </p>
       </div>
@@ -145,16 +145,16 @@ export function StudentDashboard({ user }: StudentDashboardProps) {
         {recentJobs.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {recentJobs.map((job) => (
-              <div key={job._id} className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg p-4 hover:shadow-lg transition-shadow">
+              <div key={job._id} className="bg-[var(--background)] border border-gray-200 rounded-lg p-4 hover:shadow-lg transition-shadow">
                 <h3 className="font-medium text-[var(--foreground)] mb-2">{job.title}</h3>
-                <p className="text-sm text-[var(--foreground)]/60 mb-3 line-clamp-2">{job.description}</p>
+                <p className="text-sm text-gray-500 mb-3 line-clamp-2">{job.description}</p>
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-sm font-medium text-[var(--foreground)]">${job.budget}</span>
-                  <span className="text-sm text-[var(--foreground)]/60">{job.duration}</span>
+                  <span className="text-sm text-gray-500">{job.duration}</span>
                 </div>
                 <Link 
                   href={`/jobs/${job._id}/apply`}
-                  className="w-full block text-center py-2 px-4 bg-[var(--foreground)] text-[var(--background)] rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
+                  className="w-full block text-center py-2 px-4 bg-primary text-white rounded-md text-sm font-medium hover:bg-primary-hover transition-colors"
                 >
                   Quick Apply
                 </Link>
@@ -162,9 +162,9 @@ export function StudentDashboard({ user }: StudentDashboardProps) {
             ))}
           </div>
         ) : (
-          <div className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg p-8 text-center">
-            <p className="text-[var(--foreground)]/60 mb-4">No new opportunities at the moment</p>
-            <Link href="/jobs" className="text-[var(--foreground)] hover:underline font-medium">
+          <div className="bg-[var(--background)] border border-gray-200 rounded-lg p-8 text-center">
+            <p className="text-gray-500 mb-4">No new opportunities at the moment</p>
+            <Link href="/jobs" className="text-primary hover:underline font-medium">
               Browse All Jobs
             </Link>
           </div>
@@ -184,20 +184,20 @@ export function StudentDashboard({ user }: StudentDashboardProps) {
               if (!job) return null
               
               return (
-                <div key={application._id} className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg p-4">
+                <div key={application._id} className="bg-[var(--background)] border border-gray-200 rounded-lg p-4">
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
                       <h4 className="font-medium text-[var(--foreground)]">{job.title}</h4>
-                      <p className="text-sm text-[var(--foreground)]/60 mt-1">
+                      <p className="text-sm text-gray-500 mt-1">
                         {job.company} • Applied {new Date(application.appliedDate).toLocaleDateString('en-GB')}
                       </p>
                     </div>
                     <span className={`px-2 py-1 text-xs rounded-full ${
                       application.status === 'pending'
-                        ? 'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-300'
+                        ? 'bg-yellow-100 text-yellow-800'
                         : application.status === 'accepted'
-                        ? 'bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300'
-                        : 'bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-300'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
                     }`}>
                       {application.status.charAt(0).toUpperCase() + application.status.slice(1)}
                     </span>
@@ -208,8 +208,8 @@ export function StudentDashboard({ user }: StudentDashboardProps) {
             .filter(Boolean)
           }
           {applications.length === 0 && (
-            <div className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg p-8 text-center">
-              <p className="text-[var(--foreground)]/60">You haven't applied to any jobs yet</p>
+            <div className="bg-[var(--background)] border border-gray-200 rounded-lg p-8 text-center">
+              <p className="text-gray-500">You haven't applied to any jobs yet</p>
             </div>
           )}
         </div>

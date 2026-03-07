@@ -101,14 +101,14 @@ export default function PostJobPage() {
 
   return (
     <div className="max-w-3xl mx-auto">
-      <div className="bg-[var(--background)] border border-[var(--foreground)]/10 rounded-lg shadow-lg p-8">
+      <div className="bg-[var(--background)] border border-gray-200 rounded-lg shadow-lg p-8">
         <h1 className="text-2xl font-bold text-[var(--foreground)] mb-6">
           Post a New Job
         </h1>
 
         {submitSuccess && (
-          <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-md">
-            <p className="text-green-800 dark:text-green-300">
+          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-md">
+            <p className="text-green-700">
               Job posted successfully! Redirecting to your jobs...
             </p>
           </div>
@@ -127,7 +127,7 @@ export default function PostJobPage() {
               {...register("title")}
               type="text"
               id="title"
-              className="w-full px-3 py-2 border border-[var(--foreground)]/20 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
               placeholder="e.g., React Developer for E-commerce Website"
             />
             {errors.title && (
@@ -148,7 +148,7 @@ export default function PostJobPage() {
             <select
               {...register("category")}
               id="category"
-              className="w-full px-3 py-2 border border-[var(--foreground)]/20 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
             >
               <option value="">Select a category</option>
               {JOB_CATEGORIES.map((category) => (
@@ -176,7 +176,7 @@ export default function PostJobPage() {
               {...register("description")}
               id="description"
               rows={4}
-              className="w-full px-3 py-2 border border-[var(--foreground)]/20 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
               placeholder="Describe the work that needs to be done..."
             />
             {errors.description && (
@@ -199,7 +199,7 @@ export default function PostJobPage() {
                 {...register("budget", { valueAsNumber: true })}
                 type="number"
                 id="budget"
-                className="w-full px-3 py-2 border border-[var(--foreground)]/20 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
                 placeholder="Enter amount in $"
               />
               {errors.budget && (
@@ -221,7 +221,7 @@ export default function PostJobPage() {
                 {...register("duration")}
                 type="text"
                 id="duration"
-                className="w-full px-3 py-2 border border-[var(--foreground)]/20 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
                 placeholder="e.g., 2 weeks, 1 month"
               />
               {errors.duration && (
@@ -243,7 +243,7 @@ export default function PostJobPage() {
             <select
               {...register("experienceLevel")}
               id="experienceLevel"
-              className="w-full px-3 py-2 border border-[var(--foreground)]/20 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
             >
               {EXPERIENCE_LEVELS.map((level) => (
                 <option key={level.value} value={level.value}>
@@ -257,14 +257,14 @@ export default function PostJobPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex-1 py-2 px-4 bg-[var(--foreground)] text-[var(--background)] rounded-md font-medium hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:ring-offset-2 focus:ring-offset-[var(--background)] disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+              className="flex-1 py-2 px-4 bg-primary text-white rounded-md font-medium hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {isSubmitting ? "Posting..." : "Post Job"}
             </button>
             <button
               type="button"
               onClick={() => router.push("/dashboard")}
-              className="px-6 py-2 border border-[var(--foreground)]/20 text-[var(--foreground)] rounded-md font-medium hover:bg-[var(--foreground)]/5 focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/50 focus:ring-offset-2 focus:ring-offset-[var(--background)] transition-colors"
+              className="px-6 py-2 border border-gray-300 text-[var(--foreground)] rounded-md font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 transition-colors"
             >
               Cancel
             </button>
