@@ -34,8 +34,8 @@ const applySchema = z.object({
     .max(1000, "Cover letter cannot exceed 1000 characters"),
   proposedRate: z
     .number()
-    .min(5, "Proposed rate must be at least $5")
-    .max(10000, "Proposed rate cannot exceed $10,000"),
+    .min(5, "Proposed rate must be at least ₹5")
+    .max(1000000, "Proposed rate cannot exceed ₹10,00,000"),
 });
 
 type ApplyFormData = z.infer<typeof applySchema>;
@@ -80,8 +80,8 @@ export default function ApplyPage() {
         setJob(jobData.job);
       }
 
-      // Check if student has already applied
-      const appsResponse = await fetch(`/api/applications?studentId=${user?.id}&jobId=${jobId}`);
+      // Check if employee has already applied
+      const appsResponse = await fetch(`/api/applications?employeeId=${user?.id}&jobId=${jobId}`);
       if (appsResponse.ok) {
         const appsData = await appsResponse.json();
         setAlreadyApplied(appsData.applications.length > 0);
@@ -93,7 +93,7 @@ export default function ApplyPage() {
     }
   };
 
-  if (!user || user.userType !== "student") {
+  if (!user || user.userType !== "employee") {
     router.push("/dashboard");
     return null;
   }
@@ -175,7 +175,7 @@ export default function ApplyPage() {
         },
         body: JSON.stringify({
           jobId: jobId,
-          studentId: user.id,
+          employeeId: user.id,
           coverLetter: data.coverLetter,
           proposedRate: data.proposedRate,
           experience: experienceText,
@@ -232,7 +232,7 @@ export default function ApplyPage() {
           <div>
             <p className="text-gray-500">Budget</p>
             <p className="font-semibold text-[var(--foreground)]">
-              ${job.budget}
+              ₹{job.budget}
             </p>
           </div>
           <div>
@@ -362,7 +362,7 @@ export default function ApplyPage() {
               htmlFor="proposedRate"
               className="block text-sm font-medium text-[var(--foreground)] mb-1"
             >
-              Proposed Rate ($)
+              Proposed Rate (₹)
             </label>
             <input
               {...register("proposedRate", { valueAsNumber: true })}
@@ -370,7 +370,7 @@ export default function ApplyPage() {
               id="proposedRate"
               min="5"
               max="10000"
-              placeholder={`Budget: $${job.budget}`}
+              placeholder={`Budget: ₹${job.budget}`}
               className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
             />
             {errors.proposedRate && (
@@ -379,7 +379,7 @@ export default function ApplyPage() {
               </p>
             )}
             <p className="mt-1 text-sm text-gray-500">
-              The employer's budget for this job is ${job.budget}
+              The employer's budget for this job is ₹{job.budget}
             </p>
           </div>
         </div>

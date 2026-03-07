@@ -18,7 +18,7 @@ export interface IJob extends mongoose.Document {
   category: string
   experienceLevel: 'beginner' | 'intermediate' | 'advanced'
   locationType: 'remote' | 'on-site' | 'hybrid'
-  studentsNeeded: number
+  employeesNeeded: number
   createdAt: Date
   updatedAt: Date
 }
@@ -53,7 +53,7 @@ const JobSchema = new mongoose.Schema({
     type: Number,
     required: true,
     min: 5,
-    max: 10000,
+    max: 1000000,
   },
   budgetType: {
     type: String,
@@ -100,7 +100,7 @@ const JobSchema = new mongoose.Schema({
     enum: ['remote', 'on-site', 'hybrid'],
     default: 'remote',
   },
-  studentsNeeded: {
+  employeesNeeded: {
     type: Number,
     default: 1,
     min: 1,

@@ -2,10 +2,10 @@ import mongoose from 'mongoose'
 
 export interface IApplication extends mongoose.Document {
   jobId: mongoose.Types.ObjectId
-  studentId: mongoose.Types.ObjectId
-  studentName: string
-  studentEmail: string
-  studentUniversity?: string
+  employeeId: mongoose.Types.ObjectId
+  employeeName: string
+  employeeEmail: string
+  employeeUniversity?: string
   status: 'pending' | 'accepted' | 'rejected'
   appliedDate: Date
   coverLetter: string
@@ -21,20 +21,20 @@ const ApplicationSchema = new mongoose.Schema({
     ref: 'Job',
     required: true,
   },
-  studentId: {
+  employeeId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
   },
-  studentName: {
+  employeeName: {
     type: String,
     required: true,
   },
-  studentEmail: {
+  employeeEmail: {
     type: String,
     required: true,
   },
-  studentUniversity: {
+  employeeUniversity: {
     type: String,
   },
   status: {
@@ -54,7 +54,7 @@ const ApplicationSchema = new mongoose.Schema({
     type: Number,
     required: true,
     min: 5,
-    max: 10000,
+    max: 1000000,
   },
   experience: {
     type: String,
@@ -63,8 +63,8 @@ const ApplicationSchema = new mongoose.Schema({
   timestamps: true,
 })
 
-// Create compound index to ensure a student can only apply once per job
-ApplicationSchema.index({ jobId: 1, studentId: 1 }, { unique: true })
+// Create compound index to ensure an employee can only apply once per job
+ApplicationSchema.index({ jobId: 1, employeeId: 1 }, { unique: true })
 
 const Application = mongoose.models.Application || mongoose.model<IApplication>('Application', ApplicationSchema)
 

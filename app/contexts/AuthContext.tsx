@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 
-export type UserType = 'student' | 'employer'
+export type UserType = 'employee' | 'employer'
 
 export interface User {
   id: string
@@ -10,7 +10,7 @@ export interface User {
   email: string
   userType: UserType
   profilePicture?: string
-  // Student specific fields
+  // Employee specific fields
   university?: string
   skills?: string[]
   rating?: number

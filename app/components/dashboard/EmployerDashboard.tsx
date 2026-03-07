@@ -27,10 +27,10 @@ interface Job {
 interface Application {
   _id: string
   jobId: any
-  studentId: string
-  studentName: string
-  studentEmail: string
-  studentUniversity?: string
+  employeeId: string
+  employeeName: string
+  employeeEmail: string
+  employeeUniversity?: string
   status: 'pending' | 'accepted' | 'rejected'
   appliedDate: string
   proposedRate: number
@@ -101,7 +101,7 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
             Welcome back, {user.name}!
           </h1>
           <p className="text-gray-500 mt-1">
-            Manage your jobs and find talented students
+            Manage your jobs and find talented employees
           </p>
         </div>
         <Link
@@ -138,7 +138,7 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
         />
         
         <StatsCard
-          title="Students Hired"
+          title="Employees Hired"
           value={user.totalHired || 0}
           trend={{ value: 10, isPositive: true }}
           icon={
@@ -150,7 +150,7 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
         
         <StatsCard
           title="Total Spent"
-          value={`$${totalSpent.toLocaleString()}`}
+          value={`₹${totalSpent.toLocaleString()}`}
           description="On completed jobs"
           icon={
             <svg className="w-6 h-6 text-[var(--foreground)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -179,7 +179,7 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
                     <strong className="text-[var(--foreground)]">{job.applicationsCount}</strong> applications
                   </span>
                   <span className="text-gray-500">
-                    Budget: <strong className="text-[var(--foreground)]">${job.budget}</strong>
+                    Budget: <strong className="text-[var(--foreground)]">₹{job.budget}</strong>
                   </span>
                 </div>
                 <Link href={`/jobs/${job._id}`} className="text-primary hover:underline">
@@ -202,7 +202,7 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
             <thead>
               <tr className="border-b border-gray-200">
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Student
+                  Employee
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Job
@@ -225,13 +225,13 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
                 return (
                   <tr key={app._id}>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-[var(--foreground)]">{app.studentName}</div>
+                      <div className="text-sm font-medium text-[var(--foreground)]">{app.employeeName}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-600">{job?.title}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-[var(--foreground)]">${app.proposedRate}</div>
+                      <div className="text-sm text-[var(--foreground)]">₹{app.proposedRate}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-500">

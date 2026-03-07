@@ -8,10 +8,10 @@ import { useRouter } from 'next/navigation'
 interface Application {
   _id: string
   jobId: any // Can be string or populated object
-  studentId: string
-  studentName: string
-  studentEmail: string
-  studentUniversity?: string
+  employeeId: string
+  employeeName: string
+  employeeEmail: string
+  employeeUniversity?: string
   status: 'pending' | 'accepted' | 'rejected'
   appliedDate: string
   coverLetter: string
@@ -42,14 +42,14 @@ export default function MyApplicationsPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (user && user.userType === 'student') {
+    if (user && user.userType === 'employee') {
       fetchApplications()
     }
   }, [user])
 
   const fetchApplications = async () => {
     try {
-      const response = await fetch(`/api/applications?studentId=${user?.id}`)
+      const response = await fetch(`/api/applications?employeeId=${user?.id}`)
       if (response.ok) {
         const data = await response.json()
         setApplications(data.applications)
@@ -61,8 +61,8 @@ export default function MyApplicationsPage() {
     }
   }
 
-  // Only students can view their applications
-  if (!user || user.userType !== 'student') {
+  // Only employees can view their applications
+  if (!user || user.userType !== 'employee') {
     router.push('/dashboard')
     return null
   }
@@ -185,7 +185,7 @@ export default function MyApplicationsPage() {
                       {application.status.charAt(0).toUpperCase() + application.status.slice(1)}
                     </span>
                     <p className="text-lg font-semibold text-[var(--foreground)] mt-2">
-                      ${application.proposedRate}
+                      ₹{application.proposedRate}
                     </p>
                   </div>
                 </div>
@@ -198,7 +198,7 @@ export default function MyApplicationsPage() {
                   </div>
                   <div>
                     <p className="text-gray-500">Budget</p>
-                    <p className="text-[var(--foreground)]">${job.budget}</p>
+                    <p className="text-[var(--foreground)]">₹{job.budget}</p>
                   </div>
                   <div>
                     <p className="text-gray-500">Duration</p>

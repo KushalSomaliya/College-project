@@ -130,7 +130,7 @@ export default function SignInPage() {
 
       <div className="mt-4 text-center space-y-1">
         <p className="text-xs text-gray-400">
-          Student demo: student@test.com / password123
+          Employee demo: employee@test.com / password123
         </p>
         <p className="text-xs text-gray-400">
           Employer demo: employer@test.com / password123

@@ -10,7 +10,7 @@ import { z } from 'zod'
 const signUpSchema = z.object({
   name: z.string().min(1, 'Name is required').min(2, 'Name must be at least 2 characters'),
   email: z.string().min(1, 'Email is required').email('Invalid email address'),
-  userType: z.enum(['student', 'employer']),
+  userType: z.enum(['employee', 'employer']),
   university: z.string().optional(),
   company: z.string().optional(),
   password: z.string().min(1, 'Password is required').min(8, 'Password must be at least 8 characters'),
@@ -19,12 +19,12 @@ const signUpSchema = z.object({
   message: "Passwords don't match",
   path: ['confirmPassword']
 }).refine((data) => {
-  if (data.userType === 'student' && (!data.university || data.university.trim() === '')) {
+  if (data.userType === 'employee' && (!data.university || data.university.trim() === '')) {
     return false
   }
   return true
 }, {
-  message: 'University is required for students',
+  message: 'University is required for employees',
   path: ['university']
 }).refine((data) => {
   if (data.userType === 'employer' && (!data.company || data.company.trim() === '')) {
@@ -50,7 +50,7 @@ export default function SignUpPage() {
   } = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
-      userType: 'student'
+      userType: 'employee'
     }
   })
 
@@ -131,8 +131,8 @@ export default function SignUpPage() {
             id="userType"
             className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
           >
-            <option value="student">Student looking for work</option>
-            <option value="employer">Employer hiring students</option>
+            <option value="employee">Employee looking for work</option>
+            <option value="employer">Employer hiring employees</option>
           </select>
           {errors.userType && (
             <p className="mt-1 text-sm text-red-500">{errors.userType.message}</p>
@@ -140,7 +140,7 @@ export default function SignUpPage() {
         </div>
 
         {/* Dynamic field based on user type */}
-        {userType === 'student' ? (
+        {userType === 'employee' ? (
           <div>
             <label htmlFor="university" className="block text-sm font-medium text-[var(--foreground)] mb-1">
               University

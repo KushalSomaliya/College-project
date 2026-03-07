@@ -154,7 +154,7 @@ export default function MyJobsPage() {
                   <div>
                     <p className="text-gray-500">Budget</p>
                     <p className="font-medium text-[var(--foreground)]">
-                      ${job.budget}
+                      ₹{job.budget}
                     </p>
                   </div>
                   <div>
@@ -229,7 +229,7 @@ export default function MyJobsPage() {
                     <div>
                       <p className="text-gray-500">Budget</p>
                       <p className="font-medium text-[var(--foreground)]">
-                        ${job.budget}
+                        ₹{job.budget}
                       </p>
                     </div>
                     <div>

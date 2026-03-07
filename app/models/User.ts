@@ -4,8 +4,8 @@ export interface IUser extends mongoose.Document {
   name: string
   email: string
   password: string
-  userType: 'student' | 'employer'
-  // Student specific fields
+  userType: 'employee' | 'employer'
+  // Employee specific fields
   university?: string
   skills?: string[]
   rating?: number
@@ -35,13 +35,13 @@ const UserSchema = new mongoose.Schema({
   },
   userType: {
     type: String,
-    enum: ['student', 'employer'],
+    enum: ['employee', 'employer'],
     required: true,
   },
-  // Student specific fields
+  // Employee specific fields
   university: {
     type: String,
-    required: function(this: IUser) { return this.userType === 'student' }
+    required: function(this: IUser) { return this.userType === 'employee' }
   },
   skills: [{
     type: String,

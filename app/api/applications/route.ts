@@ -4,14 +4,14 @@ import Application from '@/app/models/Application'
 import Job from '@/app/models/Job'
 import User from '@/app/models/User'
 
-// GET applications (by job, by student, or all)
+// GET applications (by job, by employee, or all)
 export async function GET(request: NextRequest) {
   try {
     await connectDB()
 
     const { searchParams } = new URL(request.url)
     const jobId = searchParams.get('jobId')
-    const studentId = searchParams.get('studentId')
+    const employeeId = searchParams.get('employeeId')
 
     let query: any = {}
 
@@ -19,8 +19,8 @@ export async function GET(request: NextRequest) {
       query.jobId = jobId
     }
 
-    if (studentId) {
-      query.studentId = studentId
+    if (employeeId) {
+      query.employeeId = employeeId
     }
 
     const applications = await Application.find(query)
@@ -43,10 +43,10 @@ export async function POST(request: NextRequest) {
     await connectDB()
 
     const body = await request.json()
-    const { jobId, studentId, coverLetter, proposedRate, experience } = body
+    const { jobId, employeeId, coverLetter, proposedRate, experience } = body
 
-    // Check if student has already applied
-    const existingApplication = await Application.findOne({ jobId, studentId })
+    // Check if employee has already applied
+    const existingApplication = await Application.findOne({ jobId, employeeId })
     if (existingApplication) {
       return NextResponse.json(
         { error: 'You have already applied to this job' },
@@ -54,11 +54,11 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Get student details
-    const student = await User.findById(studentId)
-    if (!student || student.userType !== 'student') {
+    // Get employee details
+    const employee = await User.findById(employeeId)
+    if (!employee || employee.userType !== 'employee') {
       return NextResponse.json(
-        { error: 'Invalid student' },
+        { error: 'Invalid employee' },
         { status: 400 }
       )
     }
@@ -75,10 +75,10 @@ export async function POST(request: NextRequest) {
     // Create application
     const application = await Application.create({
       jobId,
-      studentId,
-      studentName: student.name,
-      studentEmail: student.email,
-      studentUniversity: student.university,
+      employeeId,
+      employeeName: employee.name,
+      employeeEmail: employee.email,
+      employeeUniversity: employee.university,
       coverLetter,
       proposedRate,
       experience,

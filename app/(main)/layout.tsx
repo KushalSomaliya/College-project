@@ -40,7 +40,7 @@ export default function DashboardLayout({
               </Link>
               
               <div className="hidden md:flex space-x-6">
-                {user.userType === 'student' ? (
+                {user.userType === 'employee' ? (
                   <>
                     <Link href="/jobs" className="text-gray-600 hover:text-foreground transition-colors">
                       Browse Jobs
@@ -65,7 +65,7 @@ export default function DashboardLayout({
             <div className="flex items-center space-x-4">
               <div className="text-right">
                 <p className="text-sm font-medium text-[var(--foreground)]">{user.name}</p>
-                <p className="text-xs text-gray-500">{user.userType === 'student' ? 'Student' : 'Employer'}</p>
+                <p className="text-xs text-gray-500">{user.userType === 'employee' ? 'Employee' : 'Employer'}</p>
               </div>
               
               <div className="w-10 h-10 rounded-full bg-primary-light flex items-center justify-center">

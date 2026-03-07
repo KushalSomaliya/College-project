@@ -25,10 +25,10 @@ interface Job {
 interface Application {
   _id: string
   jobId: string
-  studentId: string
-  studentName: string
-  studentEmail: string
-  studentUniversity?: string
+  employeeId: string
+  employeeName: string
+  employeeEmail: string
+  employeeUniversity?: string
   status: 'pending' | 'accepted' | 'rejected'
   appliedDate: string
   coverLetter: string
@@ -240,7 +240,7 @@ export default function JobDetailsPage() {
             </div>
             <div>
               <h3 className="text-sm font-medium text-gray-500 mb-1">Budget</h3>
-              <p className="text-[var(--foreground)] font-semibold">${job.budget}</p>
+              <p className="text-[var(--foreground)] font-semibold">₹{job.budget}</p>
             </div>
             <div>
               <h3 className="text-sm font-medium text-gray-500 mb-1">Duration</h3>
@@ -305,10 +305,10 @@ export default function JobDetailsPage() {
                 <div className="flex justify-between items-start mb-4">
                   <div>
                     <h3 className="text-lg font-semibold text-[var(--foreground)]">
-                      {application.studentName}
+                      {application.employeeName}
                     </h3>
                     <p className="text-sm text-gray-500">
-                      {application.studentEmail} • {application.studentUniversity}
+                      {application.employeeEmail} • {application.employeeUniversity}
                     </p>
                     <p className="text-sm text-gray-500 mt-1">
                       Applied {formatDate(application.appliedDate)}
@@ -316,7 +316,7 @@ export default function JobDetailsPage() {
                   </div>
                   <div className="text-right">
                     <p className="text-lg font-semibold text-[var(--foreground)]">
-                      ${application.proposedRate}
+                      ₹{application.proposedRate}
                     </p>
                     <span className={`inline-block mt-1 px-2 py-1 text-xs rounded-full ${
                       application.status === 'pending'

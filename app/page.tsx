@@ -8,7 +8,7 @@ export default function HomePage() {
           Skill Orbit
         </h1>
         <p className="text-lg text-[var(--foreground)]/80 mb-8 max-w-md mx-auto">
-          Connect students with freelance opportunities. Find jobs, build your portfolio, and earn while you learn.
+          Connect employees with freelance opportunities. Find jobs, build your portfolio, and earn while you learn.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -30,7 +30,7 @@ export default function HomePage() {
           <div className="p-6 border border-gray-200 rounded-lg bg-gray-50">
             <h3 className="font-semibold text-foreground mb-2">Find Jobs</h3>
             <p className="text-sm text-gray-500">
-              Browse freelance opportunities tailored for students
+              Browse freelance opportunities tailored for employees
             </p>
           </div>
           <div className="p-6 border border-gray-200 rounded-lg bg-gray-50">

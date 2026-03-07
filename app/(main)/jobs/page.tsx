@@ -24,7 +24,7 @@ interface Job {
 
 interface Application {
   jobId: any; // Can be string or populated object
-  studentId: string;
+  employeeId: string;
 }
 
 const JOB_CATEGORIES = [
@@ -50,7 +50,7 @@ export default function JobsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (user && user.userType === "student") {
+    if (user && user.userType === "employee") {
       fetchData();
     }
   }, [user]);
@@ -64,9 +64,9 @@ export default function JobsPage() {
         setJobs(jobsData.jobs);
       }
 
-      // Fetch student's applications
+      // Fetch employee's applications
       const appsResponse = await fetch(
-        `/api/applications?studentId=${user?.id}`
+        `/api/applications?employeeId=${user?.id}`
       );
       if (appsResponse.ok) {
         const appsData = await appsResponse.json();
@@ -79,8 +79,8 @@ export default function JobsPage() {
     }
   };
 
-  // Only students can browse jobs
-  if (!user || user.userType !== "student") {
+  // Only employees can browse jobs
+  if (!user || user.userType !== "employee") {
     router.push("/dashboard");
     return null;
   }
@@ -234,7 +234,7 @@ export default function JobsPage() {
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">Budget</span>
                   <span className="font-semibold text-[var(--foreground)]">
-                    ${job.budget}
+                    ₹{job.budget}
                   </span>
                 </div>
                 <div className="flex justify-between text-sm">

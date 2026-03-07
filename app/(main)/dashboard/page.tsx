@@ -1,7 +1,7 @@
 'use client'
 
 import { useAuth } from '@/app/contexts/AuthContext'
-import { StudentDashboard } from '@/app/components/dashboard/StudentDashboard'
+import { EmployeeDashboard } from '@/app/components/dashboard/EmployeeDashboard'
 import { EmployerDashboard } from '@/app/components/dashboard/EmployerDashboard'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -40,8 +40,8 @@ export default function DashboardPage() {
         </div>
       )}
       
-      {user.userType === 'student' ? (
-        <StudentDashboard user={user} />
+      {user.userType === 'employee' ? (
+        <EmployeeDashboard user={user} />
       ) : (
         <EmployerDashboard user={user} />
       )}

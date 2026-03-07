@@ -35,8 +35,8 @@ const postJobSchema = z.object({
   category: z.string().min(1, "Category is required"),
   budget: z
     .number()
-    .min(5, "Budget must be at least $5")
-    .max(10000, "Budget cannot exceed $10,000"),
+    .min(5, "Budget must be at least ₹5")
+    .max(1000000, "Budget cannot exceed ₹10,00,000"),
   duration: z.string().min(1, "Duration is required"),
   experienceLevel: z.enum(["beginner", "intermediate", "advanced"]),
 });
@@ -200,7 +200,7 @@ export default function PostJobPage() {
                 type="number"
                 id="budget"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
-                placeholder="Enter amount in $"
+                placeholder="Enter amount in ₹"
               />
               {errors.budget && (
                 <p className="mt-1 text-sm text-red-500">

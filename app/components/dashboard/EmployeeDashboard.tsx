@@ -3,7 +3,7 @@ import { User } from '@/app/contexts/AuthContext'
 import { StatsCard } from './StatsCard'
 import Link from 'next/link'
 
-interface StudentDashboardProps {
+interface EmployeeDashboardProps {
   user: User
 }
 
@@ -20,15 +20,15 @@ interface Job {
 interface Application {
   _id: string
   jobId: any
-  studentId: string
-  studentName: string
-  studentEmail: string
+  employeeId: string
+  employeeName: string
+  employeeEmail: string
   status: 'pending' | 'accepted' | 'rejected'
   appliedDate: string
   proposedRate: number
 }
 
-export function StudentDashboard({ user }: StudentDashboardProps) {
+export function EmployeeDashboard({ user }: EmployeeDashboardProps) {
   const [applications, setApplications] = useState<Application[]>([])
   const [recentJobs, setRecentGigs] = useState<Job[]>([])
   const [loading, setLoading] = useState(true)
@@ -39,8 +39,8 @@ export function StudentDashboard({ user }: StudentDashboardProps) {
 
   const fetchData = async () => {
     try {
-      // Fetch student's applications first
-      const appsResponse = await fetch(`/api/applications?studentId=${user.id}`)
+      // Fetch employee's applications first
+      const appsResponse = await fetch(`/api/applications?employeeId=${user.id}`)
       let fetchedApplications: Application[] = []
       
       if (appsResponse.ok) {
@@ -55,7 +55,7 @@ export function StudentDashboard({ user }: StudentDashboardProps) {
         const jobsData = await jobsResponse.json()
         const allJobs = jobsData.jobs
         
-        // Filter out jobs the student has already applied to
+        // Filter out jobs the employee has already applied to
         const appliedJobIds = fetchedApplications.map(app => 
           typeof app.jobId === 'string' ? app.jobId : app.jobId?._id
         )
@@ -117,7 +117,7 @@ export function StudentDashboard({ user }: StudentDashboardProps) {
         
         <StatsCard
           title="Total Earnings"
-          value={`$${totalEarnings.toLocaleString()}`}
+          value={`₹${totalEarnings.toLocaleString()}`}
           trend={{ value: 8, isPositive: true }}
           icon={
             <svg className="w-6 h-6 text-[var(--foreground)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -149,7 +149,7 @@ export function StudentDashboard({ user }: StudentDashboardProps) {
                 <h3 className="font-medium text-[var(--foreground)] mb-2">{job.title}</h3>
                 <p className="text-sm text-gray-500 mb-3 line-clamp-2">{job.description}</p>
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-sm font-medium text-[var(--foreground)]">${job.budget}</span>
+                  <span className="text-sm font-medium text-[var(--foreground)]">₹{job.budget}</span>
                   <span className="text-sm text-gray-500">{job.duration}</span>
                 </div>
                 <Link 

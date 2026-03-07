@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
       userType,
     }
 
-    if (userType === 'student') {
+    if (userType === 'employee') {
       userData.university = university
     } else {
       userData.company = company
