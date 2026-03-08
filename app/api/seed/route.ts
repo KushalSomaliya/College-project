@@ -24,6 +24,18 @@ export async function GET() {
 
     // --- USERS ---
 
+    // Admin account
+    await User.create({
+      name: 'Admin',
+      email: 'admin@skillorbit.com',
+      password: 'admin@123',
+      userType: 'employer',
+      role: 'admin',
+      company: 'Skill Orbit',
+      verified: true,
+      totalHired: 0,
+    })
+
     // Demo employee account
     const demoEmployee = await User.create({
       name: 'Arjun Mehta',
@@ -375,13 +387,14 @@ export async function GET() {
     return NextResponse.json({
       message: 'Database wiped and seeded successfully!',
       data: {
-        users: 7,
+        users: 8,
         jobs: 9,
         applications: 7,
       },
       demoAccounts: [
         { role: 'Employee', email: 'employee@test.com', password: 'password123' },
         { role: 'Employer', email: 'employer@test.com', password: 'password123' },
+        { role: 'Admin', email: 'admin@skillorbit.com', password: 'admin@123' },
       ],
     })
   } catch (error) {

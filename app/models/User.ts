@@ -5,6 +5,7 @@ export interface IUser extends mongoose.Document {
   email: string
   password: string
   userType: 'employee' | 'employer'
+  role: 'user' | 'admin'
   // Employee specific fields
   university?: string
   skills?: string[]
@@ -37,6 +38,11 @@ const UserSchema = new mongoose.Schema({
     type: String,
     enum: ['employee', 'employer'],
     required: true,
+  },
+  role: {
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user',
   },
   // Employee specific fields
   university: {
@@ -71,6 +77,11 @@ const UserSchema = new mongoose.Schema({
 }, {
   timestamps: true,
 })
+
+// In development, delete the cached model so schema changes are picked up
+if (process.env.NODE_ENV !== 'production' && mongoose.models.User) {
+  delete mongoose.models.User
+}
 
 const User = mongoose.models.User || mongoose.model<IUser>('User', UserSchema)
 

@@ -63,17 +63,19 @@ export default function DashboardLayout({
             </div>
 
             <div className="flex items-center space-x-4">
-              <div className="text-right">
-                <p className="text-sm font-medium text-[var(--foreground)]">{user.name}</p>
-                <p className="text-xs text-gray-500">{user.userType === 'employee' ? 'Employee' : 'Employer'}</p>
-              </div>
-              
-              <div className="w-10 h-10 rounded-full bg-primary-light flex items-center justify-center">
-                <span className="text-primary font-medium">
-                  {user.name.charAt(0).toUpperCase()}
-                </span>
-              </div>
-              
+              <Link href="/profile" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+                <div className="text-right">
+                  <p className="text-sm font-medium text-[var(--foreground)]">{user.name}</p>
+                  <p className="text-xs text-gray-500">{user.userType === 'employee' ? 'Employee' : 'Employer'}</p>
+                </div>
+
+                <div className="w-10 h-10 rounded-full bg-primary-light flex items-center justify-center">
+                  <span className="text-primary font-medium">
+                    {user.name.charAt(0).toUpperCase()}
+                  </span>
+                </div>
+              </Link>
+
               <button
                 onClick={handleLogout}
                 className="text-sm text-gray-600 hover:text-foreground transition-colors"

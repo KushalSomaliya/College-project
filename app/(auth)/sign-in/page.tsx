@@ -35,10 +35,10 @@ export default function SignInPage() {
   const onSubmit = async (data: SignInFormData) => {
     setLoginError("");
 
-    const success = await login(data.email, data.password);
+    const loggedInUser = await login(data.email, data.password);
 
-    if (success) {
-      router.push("/dashboard");
+    if (loggedInUser) {
+      router.push(loggedInUser.role === "admin" ? "/admin" : "/dashboard");
     } else {
       setLoginError("Invalid email or password");
     }
@@ -134,6 +134,9 @@ export default function SignInPage() {
         </p>
         <p className="text-xs text-gray-400">
           Employer demo: employer@test.com / password123
+        </p>
+        <p className="text-xs text-gray-400">
+          Admin: admin@skillorbit.com / admin@123
         </p>
       </div>
     </div>

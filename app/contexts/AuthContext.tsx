@@ -9,6 +9,7 @@ export interface User {
   name: string
   email: string
   userType: UserType
+  role: 'user' | 'admin'
   profilePicture?: string
   // Employee specific fields
   university?: string
@@ -23,8 +24,9 @@ export interface User {
 
 interface AuthContextType {
   user: User | null
-  login: (email: string, password: string) => Promise<boolean>
+  login: (email: string, password: string) => Promise<User | null>
   logout: () => void
+  updateUser: (updates: Partial<User>) => void
   isLoading: boolean
 }
 
@@ -52,7 +54,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoading(false)
   }, [])
 
-  const login = async (email: string, password: string): Promise<boolean> => {
+  const login = async (email: string, password: string): Promise<User | null> => {
     setIsLoading(true)
 
     try {
@@ -69,15 +71,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(data.user)
         localStorage.setItem('skill-orbit-user', JSON.stringify(data.user))
         setIsLoading(false)
-        return true
+        return data.user
       }
 
       setIsLoading(false)
-      return false
+      return null
     } catch (error) {
       console.error('Login error:', error)
       setIsLoading(false)
-      return false
+      return null
+    }
+  }
+
+  const updateUser = (updates: Partial<User>) => {
+    if (user) {
+      const updatedUser = { ...user, ...updates }
+      setUser(updatedUser)
+      localStorage.setItem('skill-orbit-user', JSON.stringify(updatedUser))
     }
   }
 
@@ -87,7 +97,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, isLoading }}>
+    <AuthContext.Provider value={{ user, login, logout, updateUser, isLoading }}>
       {children}
     </AuthContext.Provider>
   )
