@@ -91,101 +91,177 @@ export default function ProfilePage() {
     <div className="max-w-3xl mx-auto space-y-6">
       {/* Success Message */}
       {successMessage && (
-        <div className="bg-green-50 border border-green-200 rounded-md p-4">
-          <p className="text-green-700">{successMessage}</p>
+        <div className="flex items-center gap-3 bg-[#f0fdf4] border border-[#bbf7d0] rounded-xl px-5 py-4">
+          <svg className="w-5 h-5 text-[#16a34a] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <p className="text-sm text-[#166534] m-0" style={{ fontFamily: "'DM Sans', sans-serif" }}>{successMessage}</p>
         </div>
       )}
 
-      {/* Profile Header */}
-      <div className="bg-[var(--background)] border border-gray-200 rounded-lg p-8">
-        <div className="flex items-start justify-between mb-6">
+      {/* Profile Header Card */}
+      <div className="bg-white border border-[#ede9e3] rounded-2xl p-8">
+        <div className="mb-8">
+          {/* Top row: Avatar + Info + Action button */}
           <div className="flex items-center gap-5">
-            <div className="w-20 h-20 rounded-full bg-primary-light flex items-center justify-center">
-              <span className="text-primary text-3xl font-bold">
+            {/* Avatar circle */}
+            <div className="w-[72px] h-[72px] rounded-full bg-[#e85d2f] flex items-center justify-center shadow-[0_4px_16px_rgba(232,93,47,0.2)] flex-shrink-0">
+              <span
+                style={{ fontFamily: "'Syne', sans-serif" }}
+                className="text-white text-[1.75rem] font-extrabold leading-none"
+              >
                 {user.name.charAt(0).toUpperCase()}
               </span>
             </div>
-            <div>
-              {isEditing ? (
+            <div className="flex-1 min-w-0">
+              <h1
+                style={{ fontFamily: "'Syne', sans-serif" }}
+                className="text-[1.5rem] font-extrabold text-[#111] m-0 leading-tight truncate"
+              >
+                {user.name}
+              </h1>
+              <p className="text-[#aaa] mt-1 text-sm m-0" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                {user.email}
+              </p>
+              <span
+                className={`inline-block mt-2 px-3.5 py-1 text-xs font-semibold rounded-full tracking-wide ${
+                  user.userType === 'employee'
+                    ? 'bg-[#fff7f4] text-[#e85d2f] border border-[#fdd5c7]'
+                    : 'bg-[#f5f3ff] text-[#7c3aed] border border-[#ddd6fe]'
+                }`}
+                style={{ fontFamily: "'DM Sans', sans-serif" }}
+              >
+                {user.userType === 'employee' ? 'Employee' : 'Employer'}
+              </span>
+            </div>
+            {!isEditing && (
+              <button
+                onClick={handleEdit}
+                className="px-5 py-2.5 bg-[#111] text-white rounded-full text-sm font-semibold hover:bg-[#333] transition-colors cursor-pointer flex-shrink-0"
+                style={{ fontFamily: "'Syne', sans-serif" }}
+              >
+                Edit Profile
+              </button>
+            )}
+          </div>
+
+          {/* Edit form fields (shown below the header when editing) */}
+          {isEditing && (
+            <div className="mt-6 bg-[#f7f5f0] rounded-xl p-5 space-y-4">
+              <div>
+                <label className="text-[0.82rem] font-medium text-[#444] mb-1.5 block" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                  Full Name
+                </label>
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="text-2xl font-bold text-[var(--foreground)] border border-gray-300 rounded-md px-3 py-1 bg-[var(--background)] focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  className="w-full px-3.5 py-2.5 border-[1.5px] border-[#e5e2db] rounded-xl bg-white text-[#111] text-sm focus:outline-none focus:border-[#e85d2f] focus:shadow-[0_0_0_3px_rgba(232,93,47,0.1)] transition-all"
+                  style={{ fontFamily: "'DM Sans', sans-serif" }}
                 />
-              ) : (
-                <h1 className="text-2xl font-bold text-[var(--foreground)]">{user.name}</h1>
-              )}
-              <p className="text-gray-500 mt-1">{user.email}</p>
-              <span className={`inline-block mt-2 px-3 py-1 text-xs font-medium rounded-full ${
-                user.userType === 'employee'
-                  ? 'bg-blue-100 text-blue-800'
-                  : 'bg-purple-100 text-purple-800'
-              }`}>
-                {user.userType === 'employee' ? 'Employee' : 'Employer'}
-              </span>
-            </div>
-          </div>
+              </div>
 
-          {!isEditing ? (
-            <button
-              onClick={handleEdit}
-              className="px-4 py-2 border border-gray-300 text-[var(--foreground)] rounded-md text-sm font-medium hover:bg-gray-50 transition-colors"
-            >
-              Edit Profile
-            </button>
-          ) : (
-            <div className="flex gap-2">
-              <button
-                onClick={handleSave}
-                disabled={isSaving}
-                className="px-4 py-2 bg-primary text-white rounded-md text-sm font-medium hover:bg-primary-hover transition-colors disabled:opacity-50"
-              >
-                {isSaving ? 'Saving...' : 'Save'}
-              </button>
-              <button
-                onClick={handleCancel}
-                className="px-4 py-2 border border-gray-300 text-[var(--foreground)] rounded-md text-sm font-medium hover:bg-gray-50 transition-colors"
-              >
-                Cancel
-              </button>
-            </div>
-          )}
-        </div>
-
-        <div className="border-t border-gray-200 pt-6">
-          <h2 className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-4">
-            {user.userType === 'employee' ? 'Employee Details' : 'Employer Details'}
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {user.userType === 'employee' ? (
-              <>
-                {/* University */}
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500 mb-1">University</h3>
-                  {isEditing ? (
+              {user.userType === 'employee' ? (
+                <>
+                  <div>
+                    <label className="text-[0.82rem] font-medium text-[#444] mb-1.5 block" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                      University
+                    </label>
                     <input
                       type="text"
                       value={university}
                       onChange={(e) => setUniversity(e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50"
+                      className="w-full px-3.5 py-2.5 border-[1.5px] border-[#e5e2db] rounded-xl bg-white text-[#111] text-sm focus:outline-none focus:border-[#e85d2f] focus:shadow-[0_0_0_3px_rgba(232,93,47,0.1)] transition-all"
+                      style={{ fontFamily: "'DM Sans', sans-serif" }}
                     />
-                  ) : (
-                    <p className="text-[var(--foreground)]">{user.university || 'Not specified'}</p>
-                  )}
+                  </div>
+                  <div>
+                    <label className="text-[0.82rem] font-medium text-[#444] mb-1.5 block" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                      Skills
+                    </label>
+                    <input
+                      type="text"
+                      value={skillsInput}
+                      onChange={(e) => setSkillsInput(e.target.value)}
+                      placeholder="e.g., React, Node.js, TypeScript"
+                      className="w-full px-3.5 py-2.5 border-[1.5px] border-[#e5e2db] rounded-xl bg-white text-[#111] text-sm focus:outline-none focus:border-[#e85d2f] focus:shadow-[0_0_0_3px_rgba(232,93,47,0.1)] transition-all placeholder:text-[#ccc]"
+                      style={{ fontFamily: "'DM Sans', sans-serif" }}
+                    />
+                    <p className="mt-1.5 text-[0.78rem] text-[#aaa] m-0" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                      Separate skills with commas
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <div>
+                  <label className="text-[0.82rem] font-medium text-[#444] mb-1.5 block" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                    Company
+                  </label>
+                  <input
+                    type="text"
+                    value={company}
+                    onChange={(e) => setCompany(e.target.value)}
+                    className="w-full px-3.5 py-2.5 border-[1.5px] border-[#e5e2db] rounded-xl bg-white text-[#111] text-sm focus:outline-none focus:border-[#e85d2f] focus:shadow-[0_0_0_3px_rgba(232,93,47,0.1)] transition-all"
+                    style={{ fontFamily: "'DM Sans', sans-serif" }}
+                  />
+                </div>
+              )}
+
+              <div className="flex gap-2.5 pt-2">
+                <button
+                  onClick={handleSave}
+                  disabled={isSaving}
+                  className="px-6 py-2.5 bg-[#e85d2f] text-white rounded-full text-sm font-semibold hover:bg-[#d14e23] transition-colors disabled:opacity-50 cursor-pointer"
+                  style={{ fontFamily: "'Syne', sans-serif", boxShadow: '0 4px 16px rgba(232,93,47,0.3)' }}
+                >
+                  {isSaving ? 'Saving...' : 'Save Changes'}
+                </button>
+                <button
+                  onClick={handleCancel}
+                  className="px-5 py-2.5 border-[1.5px] border-[#e5e2db] text-[#111] rounded-full text-sm font-semibold bg-white hover:bg-[#f7f5f0] transition-colors cursor-pointer"
+                  style={{ fontFamily: "'Syne', sans-serif" }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Details section */}
+        <div className="border-t border-[#ede9e3] pt-7">
+          <h2
+            className="text-[0.75rem] font-semibold text-[#aaa] uppercase tracking-wider mb-5 m-0"
+            style={{ fontFamily: "'DM Sans', sans-serif" }}
+          >
+            {user.userType === 'employee' ? 'Employee Details' : 'Employer Details'}
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+            {user.userType === 'employee' ? (
+              <>
+                {/* University */}
+                <div>
+                  <label className="text-[0.82rem] font-medium text-[#444] mb-1.5 block" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                    University
+                  </label>
+                  <p className="text-[#111] text-sm m-0" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                    {user.university || 'Not specified'}
+                  </p>
                 </div>
 
                 {/* Rating */}
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500 mb-1">Rating</h3>
-                  <div className="flex items-center gap-2">
-                    <div className="flex">
+                  <label className="text-[0.82rem] font-medium text-[#444] mb-1.5 block" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                    Rating
+                  </label>
+                  <div className="flex items-center gap-2.5">
+                    <div className="flex gap-0.5">
                       {[1, 2, 3, 4, 5].map((star) => (
                         <svg
                           key={star}
                           className={`w-5 h-5 ${
-                            star <= Math.round(user.rating || 0) ? 'text-yellow-400' : 'text-gray-300'
+                            star <= Math.round(user.rating || 0) ? 'text-amber-400' : 'text-[#ede9e3]'
                           }`}
                           fill="currentColor"
                           viewBox="0 0 20 20"
@@ -194,48 +270,52 @@ export default function ProfilePage() {
                         </svg>
                       ))}
                     </div>
-                    <span className="text-[var(--foreground)] font-medium">
+                    <span className="text-[#111] text-sm font-semibold" style={{ fontFamily: "'Syne', sans-serif" }}>
                       {user.rating ? user.rating.toFixed(1) : 'N/A'}
                     </span>
                   </div>
                 </div>
 
-                {/* Completed Jobs */}
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500 mb-1">Completed Jobs</h3>
-                  <p className="text-[var(--foreground)] text-lg font-semibold">{user.completedJobs || 0}</p>
+                {/* Stats: Completed Jobs & Member Since */}
+                <div className="bg-[#f7f5f0] rounded-xl px-5 py-4">
+                  <h3 className="text-[0.75rem] font-semibold text-[#aaa] uppercase tracking-wider mb-1 m-0" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                    Completed Jobs
+                  </h3>
+                  <p style={{ fontFamily: "'Syne', sans-serif" }} className="text-[1.75rem] font-extrabold text-[#111] m-0 leading-tight">
+                    {user.completedJobs || 0}
+                  </p>
                 </div>
 
-                {/* Member Since */}
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500 mb-1">Member Since</h3>
-                  <p className="text-[var(--foreground)]">{memberSince}</p>
+                <div className="bg-[#f7f5f0] rounded-xl px-5 py-4">
+                  <h3 className="text-[0.75rem] font-semibold text-[#aaa] uppercase tracking-wider mb-1 m-0" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                    Member Since
+                  </h3>
+                  <p style={{ fontFamily: "'Syne', sans-serif" }} className="text-[1.75rem] font-extrabold text-[#111] m-0 leading-tight">
+                    {memberSince}
+                  </p>
                 </div>
               </>
             ) : (
               <>
                 {/* Company */}
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500 mb-1">Company</h3>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      value={company}
-                      onChange={(e) => setCompany(e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50"
-                    />
-                  ) : (
-                    <p className="text-[var(--foreground)]">{user.company || 'Not specified'}</p>
-                  )}
+                  <label className="text-[0.82rem] font-medium text-[#444] mb-1.5 block" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                    Company
+                  </label>
+                  <p className="text-[#111] text-sm m-0" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                    {user.company || 'Not specified'}
+                  </p>
                 </div>
 
                 {/* Verified */}
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500 mb-1">Verification Status</h3>
-                  <span className={`inline-flex items-center gap-1 px-2 py-1 text-sm rounded-full ${
+                  <label className="text-[0.82rem] font-medium text-[#444] mb-1.5 block" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                    Verification Status
+                  </label>
+                  <span className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-full ${
                     user.verified
-                      ? 'bg-green-100 text-green-800'
-                      : 'bg-yellow-100 text-yellow-800'
+                      ? 'bg-[#f0fdf4] text-[#166534] border border-[#bbf7d0]'
+                      : 'bg-[#fffbeb] text-[#92400e] border border-[#fde68a]'
                   }`}>
                     {user.verified ? (
                       <>
@@ -248,16 +328,23 @@ export default function ProfilePage() {
                   </span>
                 </div>
 
-                {/* Total Hired */}
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500 mb-1">Total Hired</h3>
-                  <p className="text-[var(--foreground)] text-lg font-semibold">{user.totalHired || 0}</p>
+                {/* Stats: Total Hired & Member Since */}
+                <div className="bg-[#f7f5f0] rounded-xl px-5 py-4">
+                  <h3 className="text-[0.75rem] font-semibold text-[#aaa] uppercase tracking-wider mb-1 m-0" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                    Total Hired
+                  </h3>
+                  <p style={{ fontFamily: "'Syne', sans-serif" }} className="text-[1.75rem] font-extrabold text-[#111] m-0 leading-tight">
+                    {user.totalHired || 0}
+                  </p>
                 </div>
 
-                {/* Member Since */}
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500 mb-1">Member Since</h3>
-                  <p className="text-[var(--foreground)]">{memberSince}</p>
+                <div className="bg-[#f7f5f0] rounded-xl px-5 py-4">
+                  <h3 className="text-[0.75rem] font-semibold text-[#aaa] uppercase tracking-wider mb-1 m-0" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                    Member Since
+                  </h3>
+                  <p style={{ fontFamily: "'Syne', sans-serif" }} className="text-[1.75rem] font-extrabold text-[#111] m-0 leading-tight">
+                    {memberSince}
+                  </p>
                 </div>
               </>
             )}
@@ -267,51 +354,65 @@ export default function ProfilePage() {
 
       {/* Skills Section (Employee only) */}
       {user.userType === 'employee' && (
-        <div className="bg-[var(--background)] border border-gray-200 rounded-lg p-6">
-          <h2 className="text-lg font-semibold text-[var(--foreground)] mb-4">Skills</h2>
-          {isEditing ? (
-            <div>
-              <input
-                type="text"
-                value={skillsInput}
-                onChange={(e) => setSkillsInput(e.target.value)}
-                placeholder="e.g., React, Node.js, TypeScript"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50"
-              />
-              <p className="mt-1 text-sm text-gray-500">Separate skills with commas</p>
-            </div>
-          ) : user.skills && user.skills.length > 0 ? (
+        <div className="bg-white border border-[#ede9e3] rounded-2xl p-6">
+          <h2
+            style={{ fontFamily: "'Syne', sans-serif" }}
+            className="text-[1.1rem] font-extrabold text-[#111] mb-4 m-0"
+          >
+            Skills
+          </h2>
+          {user.skills && user.skills.length > 0 ? (
             <div className="flex flex-wrap gap-2">
               {user.skills.map((skill, index) => (
                 <span
                   key={index}
-                  className="px-3 py-1 bg-primary-light text-primary text-sm font-medium rounded-full"
+                  className="px-3.5 py-1.5 bg-[#fff7f4] text-[#e85d2f] text-sm font-medium rounded-full border border-[#fdd5c7]"
+                  style={{ fontFamily: "'DM Sans', sans-serif" }}
                 >
                   {skill}
                 </span>
               ))}
             </div>
           ) : (
-            <p className="text-gray-500">No skills added yet</p>
+            <p className="text-[#bbb] text-sm font-light m-0" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+              No skills added yet
+            </p>
           )}
         </div>
       )}
 
-      {/* Account Info */}
-      <div className="bg-[var(--background)] border border-gray-200 rounded-lg p-6">
-        <h2 className="text-lg font-semibold text-[var(--foreground)] mb-4">Account Information</h2>
-        <div className="space-y-3">
-          <div className="flex justify-between items-center py-2 border-b border-gray-100">
-            <span className="text-sm text-gray-500">Email</span>
-            <span className="text-sm text-[var(--foreground)]">{user.email}</span>
+      {/* Account Info Card */}
+      <div className="bg-white border border-[#ede9e3] rounded-2xl p-6">
+        <h2
+          style={{ fontFamily: "'Syne', sans-serif" }}
+          className="text-[1.1rem] font-extrabold text-[#111] mb-5 m-0"
+        >
+          Account Information
+        </h2>
+        <div className="space-y-0">
+          <div className="flex justify-between items-center py-3.5 border-b border-[#ede9e3]">
+            <span className="text-[0.82rem] font-medium text-[#444]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+              Email
+            </span>
+            <span className="text-sm text-[#111]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+              {user.email}
+            </span>
           </div>
-          <div className="flex justify-between items-center py-2 border-b border-gray-100">
-            <span className="text-sm text-gray-500">Account Type</span>
-            <span className="text-sm text-[var(--foreground)] capitalize">{user.userType}</span>
+          <div className="flex justify-between items-center py-3.5 border-b border-[#ede9e3]">
+            <span className="text-[0.82rem] font-medium text-[#444]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+              Account Type
+            </span>
+            <span className="text-sm text-[#111] capitalize" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+              {user.userType}
+            </span>
           </div>
-          <div className="flex justify-between items-center py-2">
-            <span className="text-sm text-gray-500">Member Since</span>
-            <span className="text-sm text-[var(--foreground)]">{memberSince}</span>
+          <div className="flex justify-between items-center py-3.5">
+            <span className="text-[0.82rem] font-medium text-[#444]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+              Member Since
+            </span>
+            <span className="text-sm text-[#111]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+              {memberSince}
+            </span>
           </div>
         </div>
       </div>

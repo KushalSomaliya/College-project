@@ -41,11 +41,12 @@ type SignUpFormData = z.infer<typeof signUpSchema>
 export default function SignUpPage() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
-  
+
   const {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors }
   } = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema),
@@ -58,18 +59,13 @@ export default function SignUpPage() {
 
   const onSubmit = async (data: SignUpFormData) => {
     setIsLoading(true)
-    
     try {
       const response = await fetch('/api/auth/signup', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       })
-      
       if (response.ok) {
-        // Redirect to sign-in on successful signup
         router.push('/sign-in?registered=true')
       } else {
         const error = await response.json()
@@ -84,147 +80,157 @@ export default function SignUpPage() {
   }
 
   return (
-    <div className="bg-[var(--background)] border border-gray-200 rounded-lg shadow-lg p-8">
-      <h2 className="text-2xl font-semibold text-[var(--foreground)] mb-6 text-center">
-        Create your account
-      </h2>
-      
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <div>
-          <label htmlFor="name" className="block text-sm font-medium text-[var(--foreground)] mb-1">
-            Full Name
-          </label>
+    <div
+      className="border border-[#ede9e3] rounded-3xl p-10"
+      style={{
+        background: 'rgba(255,255,255,0.85)',
+        backdropFilter: 'blur(10px)',
+        boxShadow: '0 8px 40px rgba(0,0,0,0.06)',
+        animation: 'fadeUp 0.5s ease both',
+        maxWidth: 460,
+      }}
+    >
+      {/* Header */}
+      <div className="text-center mb-8">
+        <div className="inline-block bg-[#fff7f4] border border-[#fdd5c7] text-[#e85d2f] text-xs font-semibold px-3 py-1 rounded-full mb-4 uppercase tracking-wider">
+          Join Skill Orbit
+        </div>
+        <h2 className="text-[1.75rem] font-extrabold text-[#111] tracking-tight" style={{ fontFamily: "'Syne', sans-serif", letterSpacing: '-0.03em' }}>
+          Create your account
+        </h2>
+      </div>
+
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {/* User Type Toggle */}
+        <div className="grid grid-cols-2 gap-2.5 mb-4">
+          <div
+            className={`py-2.5 border-[1.5px] rounded-xl text-center cursor-pointer transition-all text-[0.82rem] font-bold ${
+              userType === 'employee'
+                ? 'border-[#e85d2f] bg-[#fff7f4] text-[#e85d2f]'
+                : 'border-[#e5e2db] bg-white text-[#888]'
+            }`}
+            style={{ fontFamily: "'Syne', sans-serif" }}
+            onClick={() => setValue('userType', 'employee')}
+          >
+            &#127891; Employee
+          </div>
+          <div
+            className={`py-2.5 border-[1.5px] rounded-xl text-center cursor-pointer transition-all text-[0.82rem] font-bold ${
+              userType === 'employer'
+                ? 'border-[#e85d2f] bg-[#fff7f4] text-[#e85d2f]'
+                : 'border-[#e5e2db] bg-white text-[#888]'
+            }`}
+            style={{ fontFamily: "'Syne', sans-serif" }}
+            onClick={() => setValue('userType', 'employer')}
+          >
+            &#127970; Employer
+          </div>
+          <input type="hidden" {...register('userType')} />
+        </div>
+
+        {/* Name */}
+        <div className="mb-4">
+          <label htmlFor="name" className="block text-[0.82rem] font-medium text-[#444] mb-1.5">Full Name</label>
           <input
             {...register('name')}
             type="text"
             id="name"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
-            placeholder="John Doe"
+            className="w-full px-3.5 py-2.5 border-[1.5px] border-[#e5e2db] rounded-xl bg-white text-[#111] text-sm outline-none transition-all focus:border-[#e85d2f] focus:shadow-[0_0_0_3px_rgba(232,93,47,0.1)]"
+            style={{ fontFamily: "'DM Sans', sans-serif" }}
+            placeholder="Name Surname"
           />
-          {errors.name && (
-            <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>
-          )}
+          {errors.name && <p className="text-xs text-[#e85d2f] mt-1">{errors.name.message}</p>}
         </div>
 
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium text-[var(--foreground)] mb-1">
-            Email Address
-          </label>
+        {/* Email */}
+        <div className="mb-4">
+          <label htmlFor="email" className="block text-[0.82rem] font-medium text-[#444] mb-1.5">Email Address</label>
           <input
             {...register('email')}
             type="email"
             id="email"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
-            placeholder="john@example.com"
+            className="w-full px-3.5 py-2.5 border-[1.5px] border-[#e5e2db] rounded-xl bg-white text-[#111] text-sm outline-none transition-all focus:border-[#e85d2f] focus:shadow-[0_0_0_3px_rgba(232,93,47,0.1)]"
+            style={{ fontFamily: "'DM Sans', sans-serif" }}
+            placeholder="SkillOrbit@example.com"
           />
-          {errors.email && (
-            <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>
-          )}
+          {errors.email && <p className="text-xs text-[#e85d2f] mt-1">{errors.email.message}</p>}
         </div>
 
-        <div>
-          <label htmlFor="userType" className="block text-sm font-medium text-[var(--foreground)] mb-1">
-            I am a
-          </label>
-          <select
-            {...register('userType')}
-            id="userType"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
-          >
-            <option value="employee">Employee looking for work</option>
-            <option value="employer">Employer hiring employees</option>
-          </select>
-          {errors.userType && (
-            <p className="mt-1 text-sm text-red-500">{errors.userType.message}</p>
-          )}
-        </div>
-
-        {/* Dynamic field based on user type */}
+        {/* University / Company */}
         {userType === 'employee' ? (
-          <div>
-            <label htmlFor="university" className="block text-sm font-medium text-[var(--foreground)] mb-1">
-              University
-            </label>
+          <div className="mb-4">
+            <label htmlFor="university" className="block text-[0.82rem] font-medium text-[#444] mb-1.5">University</label>
             <input
               {...register('university')}
               type="text"
               id="university"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
-              placeholder="University of Technology"
+              className="w-full px-3.5 py-2.5 border-[1.5px] border-[#e5e2db] rounded-xl bg-white text-[#111] text-sm outline-none transition-all focus:border-[#e85d2f] focus:shadow-[0_0_0_3px_rgba(232,93,47,0.1)]"
+              style={{ fontFamily: "'DM Sans', sans-serif" }}
+              placeholder="e.g. SVIT, GTU..."
             />
-            {errors.university && (
-              <p className="mt-1 text-sm text-red-500">{errors.university.message}</p>
-            )}
+            {errors.university && <p className="text-xs text-[#e85d2f] mt-1">{errors.university.message}</p>}
           </div>
         ) : (
-          <div>
-            <label htmlFor="company" className="block text-sm font-medium text-[var(--foreground)] mb-1">
-              Company Name
-            </label>
+          <div className="mb-4">
+            <label htmlFor="company" className="block text-[0.82rem] font-medium text-[#444] mb-1.5">Company Name</label>
             <input
               {...register('company')}
               type="text"
               id="company"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
-              placeholder="Tech Startup Inc."
+              className="w-full px-3.5 py-2.5 border-[1.5px] border-[#e5e2db] rounded-xl bg-white text-[#111] text-sm outline-none transition-all focus:border-[#e85d2f] focus:shadow-[0_0_0_3px_rgba(232,93,47,0.1)]"
+              style={{ fontFamily: "'DM Sans', sans-serif" }}
+              placeholder="e.g. Tech Startup Inc."
             />
-            {errors.company && (
-              <p className="mt-1 text-sm text-red-500">{errors.company.message}</p>
-            )}
+            {errors.company && <p className="text-xs text-[#e85d2f] mt-1">{errors.company.message}</p>}
           </div>
         )}
 
-        <div>
-          <label htmlFor="password" className="block text-sm font-medium text-[var(--foreground)] mb-1">
-            Password
-          </label>
+        {/* Password */}
+        <div className="mb-4">
+          <label htmlFor="password" className="block text-[0.82rem] font-medium text-[#444] mb-1.5">Password</label>
           <input
             {...register('password')}
             type="password"
             id="password"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
-            placeholder="••••••••"
+            className="w-full px-3.5 py-2.5 border-[1.5px] border-[#e5e2db] rounded-xl bg-white text-[#111] text-sm outline-none transition-all focus:border-[#e85d2f] focus:shadow-[0_0_0_3px_rgba(232,93,47,0.1)]"
+            style={{ fontFamily: "'DM Sans', sans-serif" }}
+            placeholder="Min. 8 characters"
           />
-          {errors.password && (
-            <p className="mt-1 text-sm text-red-500">{errors.password.message}</p>
-          )}
+          {errors.password && <p className="text-xs text-[#e85d2f] mt-1">{errors.password.message}</p>}
         </div>
 
-        <div>
-          <label htmlFor="confirmPassword" className="block text-sm font-medium text-[var(--foreground)] mb-1">
-            Confirm Password
-          </label>
+        {/* Confirm Password */}
+        <div className="mb-4">
+          <label htmlFor="confirmPassword" className="block text-[0.82rem] font-medium text-[#444] mb-1.5">Confirm Password</label>
           <input
             {...register('confirmPassword')}
             type="password"
             id="confirmPassword"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
+            className="w-full px-3.5 py-2.5 border-[1.5px] border-[#e5e2db] rounded-xl bg-white text-[#111] text-sm outline-none transition-all focus:border-[#e85d2f] focus:shadow-[0_0_0_3px_rgba(232,93,47,0.1)]"
+            style={{ fontFamily: "'DM Sans', sans-serif" }}
             placeholder="••••••••"
           />
-          {errors.confirmPassword && (
-            <p className="mt-1 text-sm text-red-500">{errors.confirmPassword.message}</p>
-          )}
+          {errors.confirmPassword && <p className="text-xs text-[#e85d2f] mt-1">{errors.confirmPassword.message}</p>}
         </div>
 
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full py-2 px-4 bg-primary text-white rounded-md font-medium hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="w-full py-3.5 bg-[#e85d2f] text-white border-none rounded-full text-[0.95rem] font-bold cursor-pointer mt-2 transition-all hover:-translate-y-0.5 disabled:opacity-55 disabled:cursor-not-allowed"
+          style={{
+            fontFamily: "'Syne', sans-serif",
+            boxShadow: '0 4px 16px rgba(232,93,47,0.3)',
+          }}
         >
-          {isLoading ? 'Creating account...' : 'Sign up'}
+          {isLoading ? 'Creating account...' : 'Create Account \u2192'}
         </button>
       </form>
 
-      <div className="mt-6 text-center">
-        <p className="text-sm text-gray-500">
-          Already have an account?{' '}
-          <Link 
-            href="/sign-in" 
-            className="text-primary hover:underline font-medium"
-          >
-            Sign in
-          </Link>
-        </p>
+      <div className="text-center mt-6 text-sm text-[#999] font-light">
+        Already have an account?{' '}
+        <Link href="/sign-in" className="text-[#e85d2f] font-medium no-underline hover:underline">
+          Sign in
+        </Link>
       </div>
     </div>
   )

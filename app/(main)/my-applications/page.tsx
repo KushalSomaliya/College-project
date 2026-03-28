@@ -70,14 +70,14 @@ export default function MyApplicationsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <p className="text-gray-500">Loading...</p>
+        <p className="text-[#bbb] font-light" style={{ fontFamily: "'DM Sans', sans-serif" }}>Loading...</p>
       </div>
     )
   }
 
   // Filter applications based on active tab
-  const filteredApplications = activeTab === 'all' 
-    ? applications 
+  const filteredApplications = activeTab === 'all'
+    ? applications
     : applications.filter(app => app.status === activeTab)
 
   const pendingCount = applications.filter(app => app.status === 'pending').length
@@ -92,50 +92,75 @@ export default function MyApplicationsPage() {
   ]
 
   // Sort applications by date (newest first)
-  const sortedApplications = filteredApplications.sort((a, b) => 
+  const sortedApplications = filteredApplications.sort((a, b) =>
     new Date(b.appliedDate).getTime() - new Date(a.appliedDate).getTime()
   )
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" style={{ fontFamily: "'DM Sans', sans-serif" }}>
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-[var(--foreground)]">My Applications</h1>
-        <p className="text-gray-500 mt-1">
+        <h1
+          className="text-[1.75rem] font-extrabold text-[#111]"
+          style={{ fontFamily: "'Syne', sans-serif" }}
+        >
+          My Applications
+        </h1>
+        <p className="text-[#aaa] font-light mt-1">
           Track the status of your job applications
         </p>
       </div>
 
       {/* Stats Overview */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-[var(--background)] border border-gray-200 rounded-lg p-4">
-          <p className="text-sm text-gray-500 mb-1">Total Applications</p>
-          <p className="text-2xl font-bold text-[var(--foreground)]">{applications.length}</p>
+        <div className="bg-white border border-[#ede9e3] rounded-2xl p-4">
+          <p className="text-[0.75rem] text-[#aaa] uppercase tracking-wide mb-1">Total Applications</p>
+          <p
+            className="text-[1.75rem] font-extrabold text-[#111]"
+            style={{ fontFamily: "'Syne', sans-serif" }}
+          >
+            {applications.length}
+          </p>
         </div>
-        <div className="bg-[var(--background)] border border-gray-200 rounded-lg p-4">
-          <p className="text-sm text-gray-500 mb-1">Pending Review</p>
-          <p className="text-2xl font-bold text-yellow-600">{pendingCount}</p>
+        <div className="bg-white border border-[#ede9e3] rounded-2xl p-4">
+          <p className="text-[0.75rem] text-[#aaa] uppercase tracking-wide mb-1">Pending Review</p>
+          <p
+            className="text-[1.75rem] font-extrabold text-[#854d0e]"
+            style={{ fontFamily: "'Syne', sans-serif" }}
+          >
+            {pendingCount}
+          </p>
         </div>
-        <div className="bg-[var(--background)] border border-gray-200 rounded-lg p-4">
-          <p className="text-sm text-gray-500 mb-1">Accepted</p>
-          <p className="text-2xl font-bold text-green-600">{acceptedCount}</p>
+        <div className="bg-white border border-[#ede9e3] rounded-2xl p-4">
+          <p className="text-[0.75rem] text-[#aaa] uppercase tracking-wide mb-1">Accepted</p>
+          <p
+            className="text-[1.75rem] font-extrabold text-[#166534]"
+            style={{ fontFamily: "'Syne', sans-serif" }}
+          >
+            {acceptedCount}
+          </p>
         </div>
-        <div className="bg-[var(--background)] border border-gray-200 rounded-lg p-4">
-          <p className="text-sm text-gray-500 mb-1">Rejected</p>
-          <p className="text-2xl font-bold text-red-600">{rejectedCount}</p>
+        <div className="bg-white border border-[#ede9e3] rounded-2xl p-4">
+          <p className="text-[0.75rem] text-[#aaa] uppercase tracking-wide mb-1">Rejected</p>
+          <p
+            className="text-[1.75rem] font-extrabold text-[#991b1b]"
+            style={{ fontFamily: "'Syne', sans-serif" }}
+          >
+            {rejectedCount}
+          </p>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-4 border-b border-gray-200">
+      <div className="flex gap-4 border-b border-[#ede9e3]">
         {tabs.map((tab) => (
           <button
             key={tab.value}
             onClick={() => setActiveTab(tab.value)}
             className={`pb-2 px-1 transition-colors ${
               activeTab === tab.value
-                ? 'border-b-2 border-[var(--foreground)] text-[var(--foreground)] font-medium'
-                : 'text-gray-500 hover:text-[var(--foreground)]'
+                ? 'border-b-2 border-[#e85d2f] text-[#e85d2f] font-medium'
+                : 'text-[#aaa] hover:text-[#111]'
             }`}
           >
             {tab.label} ({tab.count})
@@ -146,10 +171,10 @@ export default function MyApplicationsPage() {
       {/* Applications List */}
       <div className="space-y-4">
         {sortedApplications.length === 0 ? (
-          <div className="text-center py-12 bg-[var(--background)] border border-gray-200 rounded-lg">
-            <p className="text-gray-500">
-              {activeTab === 'all' 
-                ? "You haven't applied to any jobs yet" 
+          <div className="text-center py-12 bg-white border border-[#ede9e3] rounded-2xl">
+            <p className="text-[#bbb] font-light">
+              {activeTab === 'all'
+                ? "You haven't applied to any jobs yet"
                 : `No ${activeTab} applications`}
             </p>
           </div>
@@ -158,34 +183,40 @@ export default function MyApplicationsPage() {
             // Handle populated jobId
             const job = typeof application.jobId === 'object' ? application.jobId : null
             if (!job) return null
-            
+
             return (
-              <div key={application._id} className="bg-[var(--background)] border border-gray-200 rounded-lg p-6">
+              <div key={application._id} className="bg-white border border-[#ede9e3] rounded-2xl p-6">
                 {/* Application Header */}
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-[var(--foreground)] mb-1">
+                    <h3
+                      className="text-lg font-semibold text-[#111] mb-1"
+                      style={{ fontFamily: "'Syne', sans-serif" }}
+                    >
                       {job.title}
                     </h3>
-                    <p className="text-sm text-gray-500">
-                      {job.company} • {job.employerName}
+                    <p className="text-sm text-[#bbb] font-light">
+                      {job.company} &bull; {job.employerName}
                     </p>
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="text-sm text-[#bbb] font-light mt-1">
                       Applied {formatDate(application.appliedDate)}
                     </p>
                   </div>
                   <div className="text-right">
-                    <span className={`inline-block px-3 py-1 text-sm rounded-full ${
+                    <span className={`inline-block px-3 py-1 text-sm rounded-full font-medium ${
                       application.status === 'pending'
-                        ? 'bg-yellow-100 text-yellow-800'
+                        ? 'bg-[#fef9c3] text-[#854d0e]'
                         : application.status === 'accepted'
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-red-100 text-red-800'
+                        ? 'bg-[#dcfce7] text-[#166534]'
+                        : 'bg-[#fee2e2] text-[#991b1b]'
                     }`}>
                       {application.status.charAt(0).toUpperCase() + application.status.slice(1)}
                     </span>
-                    <p className="text-lg font-semibold text-[var(--foreground)] mt-2">
-                      ₹{application.proposedRate}
+                    <p
+                      className="text-lg font-bold text-[#111] mt-2"
+                      style={{ fontFamily: "'Syne', sans-serif" }}
+                    >
+                      &#8377;{application.proposedRate}
                     </p>
                   </div>
                 </div>
@@ -193,49 +224,49 @@ export default function MyApplicationsPage() {
                 {/* Job Details */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 text-sm">
                   <div>
-                    <p className="text-gray-500">Category</p>
-                    <p className="text-[var(--foreground)]">{job.category}</p>
+                    <p className="text-[0.75rem] text-[#bbb] uppercase tracking-wide">Category</p>
+                    <p className="text-[#111]">{job.category}</p>
                   </div>
                   <div>
-                    <p className="text-gray-500">Budget</p>
-                    <p className="text-[var(--foreground)]">₹{job.budget}</p>
+                    <p className="text-[0.75rem] text-[#bbb] uppercase tracking-wide">Budget</p>
+                    <p className="text-[#111]">&#8377;{job.budget}</p>
                   </div>
                   <div>
-                    <p className="text-gray-500">Duration</p>
-                    <p className="text-[var(--foreground)]">{job.duration}</p>
+                    <p className="text-[0.75rem] text-[#bbb] uppercase tracking-wide">Duration</p>
+                    <p className="text-[#111]">{job.duration}</p>
                   </div>
                   <div>
-                    <p className="text-gray-500">Experience</p>
-                    <p className="text-[var(--foreground)] capitalize">{job.experienceLevel}</p>
+                    <p className="text-[0.75rem] text-[#bbb] uppercase tracking-wide">Experience</p>
+                    <p className="text-[#111] capitalize">{job.experienceLevel}</p>
                   </div>
                 </div>
 
                 {/* Application Details */}
-                <div className="border-t border-gray-200 pt-4 space-y-3">
+                <div className="border-t border-[#f3f1ed] pt-4 space-y-3">
                   {application.experience && (
                     <div>
-                      <h4 className="text-sm font-medium text-gray-500 mb-1">Your Experience</h4>
-                      <p className="text-sm text-[var(--foreground)]">{application.experience}</p>
+                      <h4 className="text-sm font-medium text-[#aaa] mb-1">Your Experience</h4>
+                      <p className="text-sm text-[#111]">{application.experience}</p>
                     </div>
                   )}
-                  
+
                   <div>
-                    <h4 className="text-sm font-medium text-gray-500 mb-1">Your Cover Letter</h4>
-                    <p className="text-sm text-[var(--foreground)]">{application.coverLetter}</p>
+                    <h4 className="text-sm font-medium text-[#aaa] mb-1">Your Cover Letter</h4>
+                    <p className="text-sm text-[#111]">{application.coverLetter}</p>
                   </div>
 
                   {/* Status-specific messages */}
                   {application.status === 'accepted' && (
-                    <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-md">
-                      <p className="text-sm text-green-700">
+                    <div className="mt-4 p-3 bg-[#f0fdf4] border border-[#bbf7d0] rounded-xl">
+                      <p className="text-sm text-[#166534]">
                         Congratulations! Your application has been accepted. The employer will contact you with next steps.
                       </p>
                     </div>
                   )}
-                  
+
                   {application.status === 'rejected' && (
-                    <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-md">
-                      <p className="text-sm text-red-700">
+                    <div className="mt-4 p-3 bg-[#fff5f5] border border-[#fecaca] rounded-xl">
+                      <p className="text-sm text-[#991b1b]">
                         Unfortunately, your application was not selected for this job. Keep applying to other opportunities!
                       </p>
                     </div>

@@ -88,13 +88,13 @@ export default function JobsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <p className="text-gray-500">Loading...</p>
+        <p className="text-[#bbb] text-sm font-light">Loading...</p>
       </div>
     );
   }
 
   // Get applied job IDs for checking (handle both string and populated object)
-  const appliedJobIds = myApplications.map((app) => 
+  const appliedJobIds = myApplications.map((app) =>
     typeof app.jobId === 'string' ? app.jobId : app.jobId?._id
   );
   console.log("appliedJobIds:", appliedJobIds);
@@ -123,25 +123,28 @@ export default function JobsPage() {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" style={{ fontFamily: "'DM Sans', sans-serif" }}>
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-[var(--foreground)]">
+        <h1
+          className="text-[1.75rem] font-extrabold text-[#111]"
+          style={{ fontFamily: "'Syne', sans-serif" }}
+        >
           Browse Jobs
         </h1>
-        <p className="text-gray-500 mt-1">
+        <p className="text-[#aaa] font-light mt-1">
           Find freelance opportunities that match your skills
         </p>
       </div>
 
       {/* Filters */}
-      <div className="bg-[var(--background)] border border-gray-200 rounded-lg p-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="bg-white border border-[#ede9e3] rounded-2xl p-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* Search */}
           <div>
             <label
               htmlFor="search"
-              className="block text-sm font-medium text-[var(--foreground)] mb-1"
+              className="block text-[0.75rem] font-semibold text-[#bbb] uppercase tracking-wider mb-2"
             >
               Search jobs
             </label>
@@ -151,7 +154,7 @@ export default function JobsPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by title, description, or company..."
-              className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
+              className="w-full px-3.5 py-2.5 border-[1.5px] border-[#e5e2db] rounded-xl bg-white text-[#111] placeholder:text-[#ccc] focus:outline-none focus:border-[#e85d2f] focus:shadow-[0_0_0_3px_rgba(232,93,47,0.1)] transition-all"
             />
           </div>
 
@@ -159,7 +162,7 @@ export default function JobsPage() {
           <div>
             <label
               htmlFor="category"
-              className="block text-sm font-medium text-[var(--foreground)] mb-1"
+              className="block text-[0.75rem] font-semibold text-[#bbb] uppercase tracking-wider mb-2"
             >
               Category
             </label>
@@ -167,7 +170,7 @@ export default function JobsPage() {
               id="category"
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
+              className="w-full px-3.5 py-2.5 border-[1.5px] border-[#e5e2db] rounded-xl bg-white text-[#111] focus:outline-none focus:border-[#e85d2f] focus:shadow-[0_0_0_3px_rgba(232,93,47,0.1)] transition-all"
             >
               {availableCategories.map((category) => (
                 <option key={category} value={category}>
@@ -180,25 +183,32 @@ export default function JobsPage() {
       </div>
 
       {/* Results Summary */}
-      <div className="text-sm text-gray-500">
-        Showing {filteredJobs.length}{" "}
+      <div className="text-[0.82rem] text-[#bbb] font-light">
+        Showing <span className="font-bold text-[#111]">{filteredJobs.length}</span>{" "}
         {filteredJobs.length === 1 ? "job" : "jobs"}
-        {selectedCategory !== "all" && ` in ${selectedCategory}`}
-        {searchQuery && ` matching "${searchQuery}"`}
+        {selectedCategory !== "all" && (
+          <> in <span className="font-bold text-[#111]">{selectedCategory}</span></>
+        )}
+        {searchQuery && (
+          <> matching <span className="font-bold text-[#111]">&ldquo;{searchQuery}&rdquo;</span></>
+        )}
       </div>
 
-      {/* Gigs Grid */}
+      {/* Jobs Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredJobs.length === 0 ? (
-          <div className="col-span-full text-center py-12 bg-[var(--background)] border border-gray-200 rounded-lg">
-            <p className="text-gray-500">
+          <div className="col-span-full bg-white border border-[#ede9e3] rounded-2xl py-16 px-6 text-center">
+            <div className="text-4xl mb-4">
+              {searchQuery || selectedCategory !== "all" ? "🔍" : "📭"}
+            </div>
+            <p className="text-[#bbb] font-light">
               {searchQuery || selectedCategory !== "all"
                 ? "No jobs found matching your criteria. Try adjusting your filters."
                 : "No active jobs available at the moment."}
             </p>
             <Link
               href="/my-applications"
-              className="text-primary hover:underline font-medium mt-4 inline-block"
+              className="inline-block mt-5 px-5 py-2 bg-[#e85d2f] text-white text-sm font-medium rounded-full hover:opacity-90 transition-opacity"
             >
               View Your Applications
             </Link>
@@ -207,72 +217,78 @@ export default function JobsPage() {
           filteredJobs.map((job) => (
             <div
               key={job._id}
-              className="bg-[var(--background)] border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow flex flex-col"
+              className="bg-white border border-[#ede9e3] rounded-2xl p-5 hover:-translate-y-0.5 hover:shadow-lg transition-all flex flex-col"
             >
               {/* Job Header */}
-              <div className="mb-4">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-lg font-semibold text-[var(--foreground)] line-clamp-2">
+              <div className="mb-3">
+                <div className="flex justify-between items-start gap-2 mb-1.5">
+                  <h3
+                    className="text-[1.05rem] font-bold text-[#111] line-clamp-2 leading-snug"
+                    style={{ fontFamily: "'Syne', sans-serif" }}
+                  >
                     {job.title}
                   </h3>
-                  <span className="text-xs px-2 py-1 bg-gray-100 text-[var(--foreground)] rounded-full whitespace-nowrap ml-2">
+                  <span className="text-[0.68rem] px-2.5 py-1 bg-[#f3f1ed] text-[#888] rounded-full whitespace-nowrap uppercase font-medium tracking-wide">
                     {job.category}
                   </span>
                 </div>
-                <p className="text-sm text-gray-500">
-                  {job.company} • {job.employerName}
+                <p className="text-[0.82rem] text-[#bbb] font-light">
+                  {job.company} &middot; {job.employerName}
                 </p>
               </div>
 
               {/* Description */}
-              <p className="text-sm text-gray-600 mb-4 line-clamp-3 flex-grow">
+              <p className="text-[0.85rem] text-[#888] mb-4 line-clamp-3 flex-grow font-light leading-relaxed">
                 {job.description}
               </p>
 
               {/* Job Details */}
               <div className="space-y-2 mb-4">
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Budget</span>
-                  <span className="font-semibold text-[var(--foreground)]">
+                <div className="flex justify-between text-[0.85rem]">
+                  <span className="text-[#bbb] font-light">Budget</span>
+                  <span
+                    className="font-bold text-[#111]"
+                    style={{ fontFamily: "'Syne', sans-serif" }}
+                  >
                     ₹{job.budget}
                   </span>
                 </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Duration</span>
-                  <span className="text-[var(--foreground)]">
+                <div className="flex justify-between text-[0.85rem]">
+                  <span className="text-[#bbb] font-light">Duration</span>
+                  <span className="text-[#111]">
                     {job.duration}
                   </span>
                 </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">
+                <div className="flex justify-between text-[0.85rem]">
+                  <span className="text-[#bbb] font-light">
                     Experience
                   </span>
-                  <span className="text-[var(--foreground)] capitalize">
+                  <span className="text-[#111] capitalize">
                     {job.experienceLevel}
                   </span>
                 </div>
               </div>
 
               {/* Footer */}
-              <div className="border-t border-gray-200 pt-4">
+              <div className="border-t border-[#f3f1ed] pt-4">
                 <div className="flex justify-between items-center mb-3">
-                  <span className="text-xs text-gray-500">
+                  <span className="text-[0.75rem] text-[#bbb]">
                     Posted {formatDate(job.postedDate)}
                   </span>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-[0.75rem] text-[#bbb]">
                     {job.applicationsCount}{" "}
                     {job.applicationsCount === 1 ? "applicant" : "applicants"}
                   </span>
                 </div>
 
                 {appliedJobIds.includes(job._id) ? (
-                  <div className="w-full text-center py-2 px-4 bg-green-50 text-green-700 rounded-md border border-green-200">
+                  <div className="w-full text-center py-2 px-4 bg-[#f0fdf4] text-[#166534] rounded-full border border-[#bbf7d0] text-sm font-medium">
                     Applied ✓
                   </div>
                 ) : (
                   <Link
                     href={`/jobs/${job._id}/apply`}
-                    className="w-full block text-center py-2 px-4 bg-primary text-white rounded-md font-medium hover:bg-primary-hover transition-colors"
+                    className="w-full block text-center py-2 px-4 bg-[#111] text-white rounded-full font-medium hover:bg-[#333] transition-colors text-sm"
                   >
                     Apply Now
                   </Link>

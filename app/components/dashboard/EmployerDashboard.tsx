@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { User } from '@/app/contexts/AuthContext'
-import { StatsCard } from './StatsCard'
 import { formatDate } from '@/app/lib/utils'
 import Link from 'next/link'
 
@@ -47,14 +46,11 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
 
   const fetchData = async () => {
     try {
-      // Fetch employer's jobs
       const jobsResponse = await fetch(`/api/jobs?employerId=${user.id}`)
       if (jobsResponse.ok) {
         const jobsData = await jobsResponse.json()
         setMyJobs(jobsData.jobs)
       }
-
-      // Fetch all applications
       const appsResponse = await fetch('/api/applications')
       if (appsResponse.ok) {
         const appsData = await appsResponse.json()
@@ -67,15 +63,12 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
     }
   }
 
-  // Calculate employer stats
-  const activeJobs = myJobs.filter(job => job.status === 'active').length
+  const activeJobsList = myJobs.filter(job => job.status === 'active')
+  const activeJobsCount = activeJobsList.length
   const totalApplications = myJobs.reduce((sum, job) => sum + job.applicationsCount, 0)
   const totalSpent = myJobs.filter(job => job.status === 'completed').reduce((sum, job) => sum + job.budget, 0)
 
-  // Get recent applications for review (only for this employer's active jobs)
-  const myActiveJobIds = myJobs
-    .filter(job => job.status === 'active')
-    .map(job => job._id)
+  const myActiveJobIds = activeJobsList.map(job => job._id)
   const recentApplications = applications
     .filter(app => {
       const jobId = typeof app.jobId === 'string' ? app.jobId : app.jobId?._id
@@ -86,177 +79,123 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <p className="text-gray-500">Loading...</p>
+      <div className="flex items-center justify-center min-h-[60vh] text-[#bbb] text-sm font-light">
+        Loading your dashboard...
       </div>
     )
   }
 
   return (
-    <div className="space-y-6">
-      {/* Welcome Section */}
-      <div className="flex justify-between items-start">
+    <div>
+      {/* Welcome */}
+      <div className="flex justify-between items-start mb-8 gap-4 flex-wrap">
         <div>
-          <h1 className="text-2xl font-bold text-[var(--foreground)]">
-            Welcome back, {user.name}!
+          <h1 className="text-[1.75rem] font-extrabold text-[#111] mb-1" style={{ fontFamily: "'Syne', sans-serif", letterSpacing: '-0.03em' }}>
+            Hey, <span className="text-[#e85d2f]">{user.name}</span> &#128075;
           </h1>
-          <p className="text-gray-500 mt-1">
-            Manage your jobs and find talented employees
-          </p>
+          <p className="text-sm text-[#999] font-light">Manage your jobs and find talented students</p>
         </div>
         <Link
           href="/post-job"
-          className="px-4 py-2 bg-primary text-white rounded-md font-medium hover:bg-primary-hover transition-colors"
+          className="bg-[#e85d2f] text-white px-6 py-3 rounded-full font-bold text-sm no-underline whitespace-nowrap hover:-translate-y-0.5 transition-transform"
+          style={{ fontFamily: "'Syne', sans-serif", boxShadow: '0 4px 16px rgba(232,93,47,0.3)' }}
         >
-          Post New Job
+          + Post New Job
         </Link>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <StatsCard
-          title="Active Jobs"
-          value={activeJobs}
-          description="Currently hiring"
-          icon={
-            <svg className="w-6 h-6 text-[var(--foreground)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
-          }
-        />
-        
-        <StatsCard
-          title="Total Applications"
-          value={totalApplications}
-          description="Across all jobs"
-          trend={{ value: 25, isPositive: true }}
-          icon={
-            <svg className="w-6 h-6 text-[var(--foreground)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-            </svg>
-          }
-        />
-        
-        <StatsCard
-          title="Employees Hired"
-          value={user.totalHired || 0}
-          trend={{ value: 10, isPositive: true }}
-          icon={
-            <svg className="w-6 h-6 text-[var(--foreground)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-            </svg>
-          }
-        />
-        
-        <StatsCard
-          title="Total Spent"
-          value={`₹${totalSpent.toLocaleString()}`}
-          description="On completed jobs"
-          icon={
-            <svg className="w-6 h-6 text-[var(--foreground)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-            </svg>
-          }
-        />
-      </div>
-
-      {/* Active Jobs */}
-      <div className="bg-[var(--background)] border border-gray-200 rounded-lg p-6">
-        <h3 className="text-lg font-semibold text-[var(--foreground)] mb-4">Your Active Jobs</h3>
-        <div className="space-y-4">
-          {myJobs.filter(job => job.status === 'active').map((job) => (
-            <div key={job._id} className="border-b border-gray-200 pb-4 last:border-0">
-              <div className="flex justify-between items-start mb-2">
-                <h4 className="font-medium text-[var(--foreground)]">{job.title}</h4>
-                <span className="text-sm px-2 py-1 bg-green-100 text-green-800 rounded-full">
-                  Active
-                </span>
-              </div>
-              <p className="text-sm text-gray-500 mb-3">{job.description}</p>
-              <div className="flex items-center justify-between text-sm">
-                <div className="flex gap-4">
-                  <span className="text-gray-500">
-                    <strong className="text-[var(--foreground)]">{job.applicationsCount}</strong> applications
-                  </span>
-                  <span className="text-gray-500">
-                    Budget: <strong className="text-[var(--foreground)]">₹{job.budget}</strong>
-                  </span>
-                </div>
-                <Link href={`/jobs/${job._id}`} className="text-primary hover:underline">
-                  View Details →
-                </Link>
-              </div>
-            </div>
-          ))}
-          {myJobs.filter(job => job.status === 'active').length === 0 && (
-            <p className="text-gray-500 text-sm">No active jobs. Post a new job to get started!</p>
-          )}
+      {/* Stats */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div className="bg-white border border-[#ede9e3] rounded-2xl p-5 hover:-translate-y-0.5 hover:shadow-lg transition-all">
+          <div className="text-[0.75rem] font-semibold text-[#aaa] uppercase tracking-wider mb-2">Active Jobs</div>
+          <div className="text-[1.75rem] font-extrabold text-[#e85d2f] leading-none" style={{ fontFamily: "'Syne', sans-serif", letterSpacing: '-0.03em' }}>{activeJobsCount}</div>
+          <div className="text-xs text-[#bbb] font-light mt-1">Currently hiring</div>
+        </div>
+        <div className="bg-white border border-[#ede9e3] rounded-2xl p-5 hover:-translate-y-0.5 hover:shadow-lg transition-all">
+          <div className="text-[0.75rem] font-semibold text-[#aaa] uppercase tracking-wider mb-2">Total Applications</div>
+          <div className="text-[1.75rem] font-extrabold text-[#111] leading-none" style={{ fontFamily: "'Syne', sans-serif", letterSpacing: '-0.03em' }}>{totalApplications}</div>
+          <div className="text-xs text-[#bbb] font-light mt-1">Across all jobs</div>
+        </div>
+        <div className="bg-white border border-[#ede9e3] rounded-2xl p-5 hover:-translate-y-0.5 hover:shadow-lg transition-all">
+          <div className="text-[0.75rem] font-semibold text-[#aaa] uppercase tracking-wider mb-2">Students Hired</div>
+          <div className="text-[1.75rem] font-extrabold text-[#111] leading-none" style={{ fontFamily: "'Syne', sans-serif", letterSpacing: '-0.03em' }}>{user.totalHired || 0}</div>
+          <div className="text-xs text-[#bbb] font-light mt-1">All time</div>
+        </div>
+        <div className="bg-white border border-[#ede9e3] rounded-2xl p-5 hover:-translate-y-0.5 hover:shadow-lg transition-all">
+          <div className="text-[0.75rem] font-semibold text-[#aaa] uppercase tracking-wider mb-2">Total Spent</div>
+          <div className="text-[1.75rem] font-extrabold text-[#111] leading-none" style={{ fontFamily: "'Syne', sans-serif", letterSpacing: '-0.03em' }}>&#8377;{totalSpent.toLocaleString()}</div>
+          <div className="text-xs text-[#bbb] font-light mt-1">Completed jobs</div>
         </div>
       </div>
 
-      {/* Recent Applications */}
-      <div>
-        <h2 className="text-xl font-semibold text-[var(--foreground)] mb-4">Recent Applications to Review</h2>
-        <div className="bg-[var(--background)] border border-gray-200 rounded-lg overflow-hidden">
-          <table className="w-full">
+      {/* Active Jobs */}
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-[1.1rem] font-extrabold text-[#111]" style={{ fontFamily: "'Syne', sans-serif", letterSpacing: '-0.02em' }}>Your Active Jobs</h2>
+      </div>
+
+      {activeJobsList.length > 0 ? (
+        <div className="bg-white border border-[#ede9e3] rounded-2xl overflow-hidden mb-8">
+          {activeJobsList.map((job, i) => (
+            <div key={job._id} className={`px-6 py-5 ${i < activeJobsList.length - 1 ? 'border-b border-[#f3f1ed]' : ''}`}>
+              <div className="flex justify-between items-start gap-4 mb-1.5">
+                <div className="text-[0.95rem] font-bold text-[#111]" style={{ fontFamily: "'Syne', sans-serif" }}>{job.title}</div>
+                <span className="text-[0.72rem] font-semibold bg-[#dcfce7] text-[#166534] px-2.5 py-0.5 rounded-full whitespace-nowrap">Active</span>
+              </div>
+              <p className="text-[0.82rem] text-[#aaa] font-light leading-relaxed mb-3">{job.description}</p>
+              <div className="flex justify-between items-center">
+                <div className="flex gap-6">
+                  <span className="text-[0.82rem] text-[#bbb] font-light"><b className="text-[#111] font-semibold">{job.applicationsCount}</b> applications</span>
+                  <span className="text-[0.82rem] text-[#bbb] font-light">Budget: <b className="text-[#111] font-semibold">&#8377;{job.budget}</b></span>
+                </div>
+                <Link href={`/jobs/${job._id}`} className="text-[0.82rem] text-[#e85d2f] no-underline font-medium hover:underline">View Details &rarr;</Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="bg-white border border-[#ede9e3] rounded-2xl p-12 text-center text-[#bbb] text-sm font-light mb-8">
+          No active jobs yet. Post one to get started!
+        </div>
+      )}
+
+      {/* Applications to Review */}
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-[1.1rem] font-extrabold text-[#111]" style={{ fontFamily: "'Syne', sans-serif", letterSpacing: '-0.02em' }}>Applications to Review</h2>
+      </div>
+
+      <div className="bg-white border border-[#ede9e3] rounded-2xl overflow-hidden mb-8">
+        {recentApplications.length > 0 ? (
+          <table className="w-full border-collapse">
             <thead>
-              <tr className="border-b border-gray-200">
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Employee
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Job
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Proposed Rate
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Applied
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Action
-                </th>
+              <tr className="border-b border-[#f3f1ed]">
+                <th className="px-5 py-3.5 text-left text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">Student</th>
+                <th className="px-5 py-3.5 text-left text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">Job</th>
+                <th className="px-5 py-3.5 text-left text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">Proposed Rate</th>
+                <th className="px-5 py-3.5 text-left text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">Applied</th>
+                <th className="px-5 py-3.5 text-left text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200">
+            <tbody>
               {recentApplications.map((app) => {
                 const jobId = typeof app.jobId === 'string' ? app.jobId : app.jobId?._id
                 const job = typeof app.jobId === 'object' ? app.jobId : myJobs.find(g => g._id === jobId)
                 return (
-                  <tr key={app._id}>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-[var(--foreground)]">{app.employeeName}</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-600">{job?.title}</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-[var(--foreground)]">₹{app.proposedRate}</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-500">
-                        {formatDate(app.appliedDate)}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <Link 
-                        href={`/jobs/${jobId}`} 
-                        className="text-sm text-primary hover:underline"
-                      >
-                        Review →
-                      </Link>
-                    </td>
+                  <tr key={app._id} className="border-b border-[#f3f1ed] last:border-b-0 hover:bg-[#fafaf9] transition-colors">
+                    <td className="px-5 py-4"><div className="text-sm font-bold text-[#111]" style={{ fontFamily: "'Syne', sans-serif" }}>{app.employeeName}</div></td>
+                    <td className="px-5 py-4"><div className="text-sm text-[#666] font-light">{job?.title}</div></td>
+                    <td className="px-5 py-4"><div className="text-sm font-bold text-[#111]" style={{ fontFamily: "'Syne', sans-serif" }}>&#8377;{app.proposedRate}</div></td>
+                    <td className="px-5 py-4"><div className="text-[0.82rem] text-[#bbb] font-light">{formatDate(app.appliedDate)}</div></td>
+                    <td className="px-5 py-4"><Link href={`/jobs/${jobId}`} className="text-[0.82rem] text-[#e85d2f] no-underline font-medium hover:underline">Review &rarr;</Link></td>
                   </tr>
                 )
               })}
             </tbody>
           </table>
-          {recentApplications.length === 0 && (
-            <div className="px-6 py-8 text-center text-gray-500">
-              No pending applications to review
-            </div>
-          )}
-        </div>
+        ) : (
+          <div className="p-12 text-center text-[#bbb] text-sm font-light">
+            No pending applications to review.
+          </div>
+        )}
       </div>
     </div>
   )

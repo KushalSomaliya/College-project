@@ -29,93 +29,85 @@ export default function AdminLayout({
     router.push('/')
   }
 
+  const getPageTitle = () => {
+    if (pathname === '/admin' || pathname === '/admin/') return 'Dashboard'
+    if (pathname.includes('/admin/users')) return 'User Management'
+    if (pathname.includes('/admin/jobs')) return 'Job Management'
+    return 'Admin'
+  }
+
   const navItems = [
-    {
-      label: 'Dashboard',
-      href: '/admin',
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-        </svg>
-      ),
-    },
-    {
-      label: 'Users',
-      href: '/admin/users',
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-        </svg>
-      ),
-    },
-    {
-      label: 'Jobs',
-      href: '/admin/jobs',
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-        </svg>
-      ),
-    },
+    { label: 'Dashboard', href: '/admin', icon: '\u229E' },
+    { label: 'Users', href: '/admin/users', icon: '\uD83D\uDC65' },
+    { label: 'Jobs', href: '/admin/jobs', icon: '\uD83D\uDCBC' },
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
-      {/* Sidebar */}
-      <aside className="w-64 bg-[#1e293b] text-white flex flex-col fixed h-full">
-        <div className="p-6 border-b border-white/10">
-          <h1 className="text-lg font-bold">Skill Orbit</h1>
-          <p className="text-sm text-gray-400 mt-1">Admin Panel</p>
+    <div className="min-h-screen flex" style={{ background: '#f7f5f0' }}>
+      {/* SIDEBAR */}
+      <aside className="fixed inset-y-0 left-0 w-60 bg-[#111] flex flex-col z-50">
+        <div className="px-6 pt-6 pb-5 border-b border-white/[0.07]">
+          <div className="font-extrabold text-[1.15rem] text-white" style={{ fontFamily: "'Syne', sans-serif", letterSpacing: '-0.03em' }}>
+            Skill<span className="text-[#e85d2f]">Orbit</span>
+          </div>
+          <div className="text-[0.72rem] text-white/30 font-normal mt-0.5 uppercase tracking-widest">Admin Panel</div>
         </div>
 
-        <nav className="flex-1 p-4 space-y-1">
+        <nav className="flex-1 p-3 flex flex-col gap-1">
           {navItems.map((item) => {
-            const isActive = pathname === item.href
+            const isActive = pathname === item.href || (item.href !== '/admin' && pathname.startsWith(item.href))
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                className={`flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm no-underline transition-all ${
                   isActive
-                    ? 'bg-primary text-white'
-                    : 'text-gray-300 hover:bg-white/10 hover:text-white'
+                    ? 'bg-[#e85d2f] text-white font-semibold'
+                    : 'text-white/45 hover:bg-white/[0.07] hover:text-white/80'
                 }`}
               >
-                {item.icon}
+                <span className={`text-base ${isActive ? 'opacity-100' : 'opacity-50'}`}>{item.icon}</span>
                 {item.label}
               </Link>
             )
           })}
         </nav>
 
-        <div className="p-4 border-t border-white/10">
+        <div className="p-3 border-t border-white/[0.07]">
+          <div className="flex items-center gap-2.5 px-3.5 py-2.5 mb-1.5">
+            <div className="w-[30px] h-[30px] rounded-full bg-[#e85d2f] flex items-center justify-center text-white text-xs font-extrabold flex-shrink-0" style={{ fontFamily: "'Syne', sans-serif" }}>
+              {user.name.charAt(0).toUpperCase()}
+            </div>
+            <div>
+              <div className="text-[0.82rem] font-medium text-white/80">{user.name}</div>
+              <div className="text-[0.68rem] text-white/30 font-light">Administrator</div>
+            </div>
+          </div>
           <button
             onClick={handleLogout}
-            className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors w-full"
+            className="flex items-center gap-3 w-full px-3.5 py-2.5 rounded-xl bg-transparent border-none cursor-pointer text-sm text-white/35 hover:bg-white/[0.06] hover:text-white/70 transition-all text-left"
+            style={{ fontFamily: "'DM Sans', sans-serif" }}
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-            </svg>
-            Logout
+            <span>&#8617;</span> Logout
           </button>
         </div>
       </aside>
 
-      {/* Main Content */}
-      <div className="flex-1 ml-64">
-        <header className="bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center sticky top-0 z-10">
-          <h2 className="text-lg font-semibold text-gray-800">
-            {navItems.find((item) => item.href === pathname)?.label || 'Admin'}
-          </h2>
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-primary-light flex items-center justify-center">
-              <span className="text-primary text-sm font-medium">A</span>
+      {/* MAIN */}
+      <div className="ml-60 flex-1 flex flex-col">
+        <header className="sticky top-0 z-40 border-b border-black/[0.07] px-8 py-4 flex justify-between items-center" style={{ background: 'rgba(247,245,240,0.9)', backdropFilter: 'blur(12px)' }}>
+          <div className="font-extrabold text-[1.05rem] text-[#111]" style={{ fontFamily: "'Syne', sans-serif", letterSpacing: '-0.02em' }}>
+            {getPageTitle()}
+          </div>
+          <div className="flex items-center gap-2.5">
+            <span className="text-[0.82rem] text-[#888] font-light">{user.name}</span>
+            <div className="w-[30px] h-[30px] rounded-full bg-[#e85d2f] flex items-center justify-center text-white text-xs font-extrabold" style={{ fontFamily: "'Syne', sans-serif" }}>
+              {user.name.charAt(0).toUpperCase()}
             </div>
-            <span className="text-sm text-gray-600">Admin</span>
           </div>
         </header>
 
-        <main className="p-8">
+        <main className="p-8 flex-1">
           {children}
         </main>
       </div>

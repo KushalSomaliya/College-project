@@ -110,16 +110,35 @@ export default function AdminJobsPage() {
   }
 
   const statusColors: Record<string, string> = {
-    active: 'bg-green-100 text-green-700',
-    closed: 'bg-red-100 text-red-700',
-    completed: 'bg-blue-100 text-blue-700',
-    draft: 'bg-gray-100 text-gray-600',
+    active: 'bg-[#dcfce7] text-[#166534]',
+    closed: 'bg-[#f3f1ed] text-[#888]',
+    completed: 'bg-[#dbeafe] text-[#1e40af]',
+    draft: 'bg-[#f3f1ed] text-[#888]',
   }
 
+  const inputClass =
+    'w-full px-3 py-2.5 border-[1.5px] border-[#e5e2db] rounded-xl text-sm text-[#111] bg-white focus:outline-none focus:border-[#e85d2f] focus:shadow-[0_0_0_3px_rgba(232,93,47,0.1)] transition-all'
+  const selectClass =
+    'w-full px-3 py-2.5 border-[1.5px] border-[#e5e2db] rounded-xl text-sm text-[#111] bg-white focus:outline-none focus:border-[#e85d2f] focus:shadow-[0_0_0_3px_rgba(232,93,47,0.1)] transition-all'
+  const labelClass = "block text-sm font-medium text-[#111] mb-1.5"
+
   return (
-    <div className="space-y-6">
-      {/* Filters */}
-      <div className="bg-white rounded-xl border border-gray-200 p-4">
+    <div className="space-y-6" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+      {/* Page Header */}
+      <div>
+        <h1
+          className="text-[1.75rem] font-extrabold text-[#111]"
+          style={{ fontFamily: "'Syne', sans-serif" }}
+        >
+          Jobs
+        </h1>
+        <p className="text-sm text-[#aaa] mt-1 font-light">
+          Manage all job listings across the platform
+        </p>
+      </div>
+
+      {/* Search / Filter Bar */}
+      <div className="bg-white rounded-2xl border border-[#ede9e3] p-4">
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="flex-1">
             <input
@@ -127,13 +146,13 @@ export default function AdminJobsPage() {
               placeholder="Search by title, company, or employer..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className={inputClass}
             />
           </div>
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white"
+            className={`${selectClass} sm:w-44`}
           >
             <option value="all">All Statuses</option>
             <option value="active">Active</option>
@@ -145,84 +164,100 @@ export default function AdminJobsPage() {
       </div>
 
       {/* Jobs Table */}
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+      <div className="bg-white rounded-2xl border border-[#ede9e3] overflow-hidden">
         {loading ? (
-          <div className="p-8 text-center text-gray-500">Loading jobs...</div>
+          <div className="p-12 text-center text-[#bbb] font-light text-sm">
+            Loading jobs...
+          </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="bg-gray-50 border-b border-gray-200">
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                <tr className="border-b border-[#f3f1ed]">
+                  <th className="px-6 py-3.5 text-left text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">
                     Job
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3.5 text-left text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">
                     Employer
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3.5 text-left text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">
                     Budget
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3.5 text-left text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">
                     Apps
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3.5 text-left text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3.5 text-left text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">
                     Posted
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3.5 text-right text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-[#f3f1ed]">
                 {jobs.map((job) => (
-                  <tr key={job._id} className="hover:bg-gray-50 transition-colors">
+                  <tr
+                    key={job._id}
+                    className="hover:bg-[#fafaf9] transition-colors"
+                  >
                     <td className="px-6 py-4">
-                      <p className="text-sm font-medium text-gray-900">{job.title}</p>
-                      <p className="text-xs text-gray-400 mt-0.5">{job.category} &middot; {job.experienceLevel}</p>
+                      <p className="text-sm font-medium text-[#111]">
+                        {job.title}
+                      </p>
+                      <p className="text-xs text-[#aaa] mt-0.5">
+                        {job.category} &middot; {job.experienceLevel}
+                      </p>
                     </td>
                     <td className="px-6 py-4">
-                      <p className="text-sm text-gray-700">{job.employerName}</p>
-                      <p className="text-xs text-gray-400">{job.company}</p>
+                      <p className="text-sm text-[#111]">{job.employerName}</p>
+                      <p className="text-xs text-[#aaa]">{job.company}</p>
                     </td>
-                    <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                      ₹{job.budget.toLocaleString('en-IN')}
+                    <td className="px-6 py-4">
+                      <span
+                        className="text-sm font-bold text-[#111]"
+                        style={{ fontFamily: "'Syne', sans-serif" }}
+                      >
+                        {'\u20B9'}{job.budget.toLocaleString('en-IN')}
+                      </span>
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-600">
+                    <td className="px-6 py-4 text-sm text-[#111]">
                       {job.applicationsCount}
                     </td>
                     <td className="px-6 py-4">
-                      <span className={`px-2.5 py-1 text-xs font-medium rounded-full ${statusColors[job.status] || 'bg-gray-100 text-gray-600'}`}>
+                      <span
+                        className={`inline-block px-2.5 py-1 text-xs font-medium rounded-full ${statusColors[job.status] || 'bg-[#f3f1ed] text-[#888]'}`}
+                      >
                         {job.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-500">
+                    <td className="px-6 py-4 text-sm text-[#aaa]">
                       {new Date(job.createdAt).toLocaleDateString('en-IN', {
                         day: 'numeric',
                         month: 'short',
                       })}
                     </td>
                     <td className="px-6 py-4">
-                      <div className="flex items-center justify-end gap-2">
+                      <div className="flex items-center justify-end gap-4">
                         <button
                           onClick={() => setEditingJob({ ...job })}
-                          className="px-3 py-1.5 text-xs font-medium rounded-md bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 transition-colors"
+                          className="text-sm text-[#e85d2f] font-medium hover:underline transition-colors"
                         >
                           Edit
                         </button>
                         {deleteConfirm === job._id ? (
-                          <div className="flex items-center gap-1">
+                          <div className="flex items-center gap-3">
                             <button
                               onClick={() => handleDelete(job._id)}
-                              className="px-3 py-1.5 text-xs font-medium rounded-md bg-red-600 text-white hover:bg-red-700 transition-colors"
+                              className="text-sm text-[#991b1b] font-medium hover:underline transition-colors"
                             >
                               Confirm
                             </button>
                             <button
                               onClick={() => setDeleteConfirm(null)}
-                              className="px-3 py-1.5 text-xs font-medium rounded-md bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
+                              className="text-sm text-[#aaa] font-medium hover:underline transition-colors"
                             >
                               Cancel
                             </button>
@@ -230,7 +265,7 @@ export default function AdminJobsPage() {
                         ) : (
                           <button
                             onClick={() => setDeleteConfirm(job._id)}
-                            className="px-3 py-1.5 text-xs font-medium rounded-md bg-red-50 text-red-600 hover:bg-red-100 border border-red-200 transition-colors"
+                            className="text-sm text-[#991b1b] font-medium hover:underline transition-colors"
                           >
                             Delete
                           </button>
@@ -242,81 +277,119 @@ export default function AdminJobsPage() {
               </tbody>
             </table>
             {jobs.length === 0 && (
-              <div className="p-8 text-center text-gray-500">No jobs found</div>
+              <div className="p-12 text-center text-[#bbb] font-light text-sm">
+                No jobs found
+              </div>
             )}
           </div>
         )}
       </div>
 
-      <div className="text-sm text-gray-400">
+      <div className="text-sm text-[#aaa] font-light">
         Showing {jobs.length} job{jobs.length !== 1 ? 's' : ''}
       </div>
 
       {/* Edit Modal */}
       {editingJob && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center sticky top-0 bg-white rounded-t-xl">
-              <h3 className="text-lg font-semibold text-gray-900">Edit Job</h3>
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-3xl border border-[#ede9e3] w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-xl">
+            <div className="px-6 py-5 border-b border-[#ede9e3] flex justify-between items-center sticky top-0 bg-white rounded-t-3xl">
+              <h3
+                className="text-lg font-bold text-[#111]"
+                style={{ fontFamily: "'Syne', sans-serif" }}
+              >
+                Edit Job
+              </h3>
               <button
                 onClick={() => setEditingJob(null)}
-                className="text-gray-400 hover:text-gray-600"
+                className="text-[#bbb] hover:text-[#111] transition-colors"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
             </div>
 
-            <div className="p-6 space-y-4">
+            <div className="p-6 space-y-5">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                <label className={labelClass}>Title</label>
                 <input
                   type="text"
                   value={editingJob.title}
-                  onChange={(e) => setEditingJob({ ...editingJob, title: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  onChange={(e) =>
+                    setEditingJob({ ...editingJob, title: e.target.value })
+                  }
+                  className={inputClass}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <label className={labelClass}>Description</label>
                 <textarea
                   value={editingJob.description}
-                  onChange={(e) => setEditingJob({ ...editingJob, description: e.target.value })}
+                  onChange={(e) =>
+                    setEditingJob({
+                      ...editingJob,
+                      description: e.target.value,
+                    })
+                  }
                   rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none"
+                  className={`${inputClass} resize-none`}
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Budget (₹)</label>
+                  <label className={labelClass}>
+                    Budget ({'\u20B9'})
+                  </label>
                   <input
                     type="number"
                     value={editingJob.budget}
-                    onChange={(e) => setEditingJob({ ...editingJob, budget: Number(e.target.value) })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                    onChange={(e) =>
+                      setEditingJob({
+                        ...editingJob,
+                        budget: Number(e.target.value),
+                      })
+                    }
+                    className={inputClass}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Duration</label>
+                  <label className={labelClass}>Duration</label>
                   <input
                     type="text"
                     value={editingJob.duration}
-                    onChange={(e) => setEditingJob({ ...editingJob, duration: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                    onChange={(e) =>
+                      setEditingJob({ ...editingJob, duration: e.target.value })
+                    }
+                    className={inputClass}
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                  <label className={labelClass}>Status</label>
                   <select
                     value={editingJob.status}
-                    onChange={(e) => setEditingJob({ ...editingJob, status: e.target.value as JobItem['status'] })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white"
+                    onChange={(e) =>
+                      setEditingJob({
+                        ...editingJob,
+                        status: e.target.value as JobItem['status'],
+                      })
+                    }
+                    className={selectClass}
                   >
                     <option value="active">Active</option>
                     <option value="closed">Closed</option>
@@ -325,11 +398,16 @@ export default function AdminJobsPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Experience</label>
+                  <label className={labelClass}>Experience</label>
                   <select
                     value={editingJob.experienceLevel}
-                    onChange={(e) => setEditingJob({ ...editingJob, experienceLevel: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white"
+                    onChange={(e) =>
+                      setEditingJob({
+                        ...editingJob,
+                        experienceLevel: e.target.value,
+                      })
+                    }
+                    className={selectClass}
                   >
                     <option value="beginner">Beginner</option>
                     <option value="intermediate">Intermediate</option>
@@ -337,11 +415,16 @@ export default function AdminJobsPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
+                  <label className={labelClass}>Location</label>
                   <select
                     value={editingJob.locationType}
-                    onChange={(e) => setEditingJob({ ...editingJob, locationType: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white"
+                    onChange={(e) =>
+                      setEditingJob({
+                        ...editingJob,
+                        locationType: e.target.value,
+                      })
+                    }
+                    className={selectClass}
                   >
                     <option value="remote">Remote</option>
                     <option value="on-site">On-site</option>
@@ -351,29 +434,63 @@ export default function AdminJobsPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                <label className={labelClass}>Category</label>
                 <input
                   type="text"
                   value={editingJob.category}
-                  onChange={(e) => setEditingJob({ ...editingJob, category: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  onChange={(e) =>
+                    setEditingJob({ ...editingJob, category: e.target.value })
+                  }
+                  className={inputClass}
                 />
               </div>
             </div>
 
-            <div className="px-6 py-4 border-t border-gray-200 flex justify-end gap-3 sticky bottom-0 bg-white rounded-b-xl">
+            <div className="px-6 py-5 border-t border-[#ede9e3] flex justify-end gap-3 sticky bottom-0 bg-white rounded-b-3xl">
               <button
                 onClick={() => setEditingJob(null)}
-                className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                className="px-5 py-2.5 text-sm font-medium text-[#111] bg-white border border-[#ede9e3] rounded-full hover:bg-[#fafaf9] transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSaveJob}
                 disabled={saving}
-                className="px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary-hover transition-colors disabled:opacity-50"
+                className="px-5 py-2.5 text-sm font-medium text-white bg-[#e85d2f] rounded-full hover:bg-[#d4522a] transition-colors disabled:opacity-50"
               >
                 {saving ? 'Saving...' : 'Save Changes'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {deleteConfirm && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-3xl border border-[#ede9e3] w-full max-w-sm shadow-xl p-6 text-center">
+            <h3
+              className="text-lg font-bold text-[#111] mb-2"
+              style={{ fontFamily: "'Syne', sans-serif" }}
+            >
+              Delete Job
+            </h3>
+            <p className="text-sm text-[#aaa] mb-6 font-light">
+              Are you sure you want to delete this job? This action cannot be
+              undone.
+            </p>
+            <div className="flex justify-center gap-3">
+              <button
+                onClick={() => setDeleteConfirm(null)}
+                className="px-5 py-2.5 text-sm font-medium text-[#111] bg-white border border-[#ede9e3] rounded-full hover:bg-[#fafaf9] transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => handleDelete(deleteConfirm)}
+                className="px-5 py-2.5 text-sm font-medium text-white bg-[#991b1b] rounded-full hover:bg-[#7f1d1d] transition-colors"
+              >
+                Delete
               </button>
             </div>
           </div>

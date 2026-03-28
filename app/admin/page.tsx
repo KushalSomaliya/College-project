@@ -66,8 +66,8 @@ export default function AdminDashboard() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <p className="text-gray-500">Loading dashboard...</p>
+      <div className="flex items-center justify-center min-h-[60vh]" style={{ backgroundColor: '#f7f5f0' }}>
+        <p className="text-[#bbb] text-sm font-light">Loading dashboard...</p>
       </div>
     )
   }
@@ -122,19 +122,31 @@ export default function AdminDashboard() {
     : []
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8" style={{ backgroundColor: '#f7f5f0', minHeight: '100vh', padding: '2rem' }}>
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {statCards.map((card) => (
-          <div key={card.label} className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-md transition-shadow">
-            <div className="flex items-center justify-between mb-4">
-              <div className={`w-12 h-12 ${card.color} rounded-lg flex items-center justify-center`}>
-                {card.icon}
-              </div>
-              <span className="text-3xl font-bold text-gray-900">{card.value}</span>
+        {statCards.map((card, index) => (
+          <div
+            key={card.label}
+            className="bg-white rounded-2xl border border-[#ede9e3] p-6 hover:shadow-md transition-shadow"
+          >
+            <div className="mb-1">
+              <span className="text-[0.75rem] font-semibold text-[#aaa] uppercase tracking-wider">
+                {card.label}
+              </span>
             </div>
-            <h3 className="text-sm font-medium text-gray-500">{card.label}</h3>
-            <p className="text-xs text-gray-400 mt-1">{card.sub}</p>
+            <div className="mb-1">
+              <span
+                className="text-[1.75rem] font-extrabold"
+                style={{
+                  fontFamily: "'Syne', sans-serif",
+                  color: index === 0 ? '#e85d2f' : '#111',
+                }}
+              >
+                {card.value}
+              </span>
+            </div>
+            <p className="text-xs text-[#bbb] font-light">{card.sub}</p>
           </div>
         ))}
       </div>
@@ -142,40 +154,53 @@ export default function AdminDashboard() {
       {/* Recent Activity Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Users */}
-        <div className="bg-white rounded-xl border border-gray-200">
-          <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-            <h3 className="font-semibold text-gray-800">Recent Users</h3>
-            <Link href="/admin/users" className="text-sm text-primary hover:underline">
+        <div className="bg-white rounded-2xl border border-[#ede9e3]">
+          <div className="px-6 py-4 border-b border-[#ede9e3] flex justify-between items-center">
+            <h3
+              className="text-[1.1rem] font-extrabold text-[#111]"
+              style={{ fontFamily: "'Syne', sans-serif" }}
+            >
+              Recent Users
+            </h3>
+            <Link href="/admin/users" className="text-[0.82rem] text-[#e85d2f] font-medium hover:underline">
               View all
             </Link>
           </div>
-          <div className="divide-y divide-gray-100">
+          <div className="divide-y divide-[#ede9e3]">
             {recentUsers.map((u) => (
               <div key={u._id} className="px-6 py-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-primary-light flex items-center justify-center">
-                    <span className="text-primary text-sm font-medium">
+                  <div className="w-9 h-9 rounded-full bg-[#f7f5f0] border border-[#ede9e3] flex items-center justify-center">
+                    <span
+                      className="text-[#e85d2f] text-sm font-bold"
+                      style={{ fontFamily: "'Syne', sans-serif" }}
+                    >
                       {u.name.charAt(0).toUpperCase()}
                     </span>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-800">{u.name}</p>
-                    <p className="text-xs text-gray-400">{u.email}</p>
+                    <p
+                      className="text-sm font-bold text-[#111]"
+                      style={{ fontFamily: "'Syne', sans-serif" }}
+                    >
+                      {u.name}
+                    </p>
+                    <p className="text-xs text-[#bbb] font-light">{u.email}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className={`px-2 py-0.5 text-xs rounded-full ${
+                  <span className={`px-3 py-0.5 text-xs rounded-full font-medium ${
                     u.userType === 'employee'
-                      ? 'bg-blue-100 text-blue-700'
-                      : 'bg-purple-100 text-purple-700'
+                      ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                      : 'bg-purple-50 text-purple-700 border border-purple-200'
                   }`}>
                     {u.userType}
                   </span>
                   {u.userType === 'employer' && (
-                    <span className={`px-2 py-0.5 text-xs rounded-full ${
+                    <span className={`px-3 py-0.5 text-xs rounded-full font-medium ${
                       u.verified
-                        ? 'bg-green-100 text-green-700'
-                        : 'bg-yellow-100 text-yellow-700'
+                        ? 'bg-green-50 text-green-700 border border-green-200'
+                        : 'bg-yellow-50 text-yellow-700 border border-yellow-200'
                     }`}>
                       {u.verified ? 'Verified' : 'Unverified'}
                     </span>
@@ -187,32 +212,45 @@ export default function AdminDashboard() {
         </div>
 
         {/* Recent Jobs */}
-        <div className="bg-white rounded-xl border border-gray-200">
-          <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-            <h3 className="font-semibold text-gray-800">Recent Jobs</h3>
-            <Link href="/admin/jobs" className="text-sm text-primary hover:underline">
+        <div className="bg-white rounded-2xl border border-[#ede9e3]">
+          <div className="px-6 py-4 border-b border-[#ede9e3] flex justify-between items-center">
+            <h3
+              className="text-[1.1rem] font-extrabold text-[#111]"
+              style={{ fontFamily: "'Syne', sans-serif" }}
+            >
+              Recent Jobs
+            </h3>
+            <Link href="/admin/jobs" className="text-[0.82rem] text-[#e85d2f] font-medium hover:underline">
               View all
             </Link>
           </div>
-          <div className="divide-y divide-gray-100">
+          <div className="divide-y divide-[#ede9e3]">
             {recentJobs.map((job) => (
               <div key={job._id} className="px-6 py-4 flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-800">{job.title}</p>
-                  <p className="text-xs text-gray-400">
+                  <p
+                    className="text-sm font-bold text-[#111]"
+                    style={{ fontFamily: "'Syne', sans-serif" }}
+                  >
+                    {job.title}
+                  </p>
+                  <p className="text-xs text-[#bbb] font-light">
                     {job.company} &middot; {job.employerName}
                   </p>
                 </div>
-                <div className="text-right">
-                  <p className="text-sm font-medium text-gray-800">
+                <div className="text-right flex flex-col items-end gap-1">
+                  <p
+                    className="text-sm font-bold text-[#111]"
+                    style={{ fontFamily: "'Syne', sans-serif" }}
+                  >
                     ₹{job.budget.toLocaleString('en-IN')}
                   </p>
-                  <span className={`text-xs px-2 py-0.5 rounded-full ${
+                  <span className={`text-xs px-3 py-0.5 rounded-full font-medium ${
                     job.status === 'active'
-                      ? 'bg-green-100 text-green-700'
+                      ? 'bg-green-50 text-green-700 border border-green-200'
                       : job.status === 'completed'
-                      ? 'bg-blue-100 text-blue-700'
-                      : 'bg-gray-100 text-gray-600'
+                      ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                      : 'bg-[#f7f5f0] text-[#aaa] border border-[#ede9e3]'
                   }`}>
                     {job.status}
                   </span>

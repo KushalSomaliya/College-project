@@ -99,16 +99,25 @@ export default function PostJobPage() {
     return null;
   }
 
+  const inputClasses =
+    "w-full px-3.5 py-2.5 border-[1.5px] border-[#e5e2db] rounded-xl bg-white text-[#111] focus:outline-none focus:border-[#e85d2f] focus:shadow-[0_0_0_3px_rgba(232,93,47,0.1)] transition-all";
+
   return (
     <div className="max-w-3xl mx-auto">
-      <div className="bg-[var(--background)] border border-gray-200 rounded-lg shadow-lg p-8">
-        <h1 className="text-2xl font-bold text-[var(--foreground)] mb-6">
+      <div
+        className="bg-white border border-[#ede9e3] rounded-3xl p-8"
+        style={{ boxShadow: "0 8px 40px rgba(0,0,0,0.06)" }}
+      >
+        <h1
+          className="text-[1.75rem] font-extrabold text-[#111] mb-6"
+          style={{ fontFamily: "'Syne', sans-serif" }}
+        >
           Post a New Job
         </h1>
 
         {submitSuccess && (
-          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-md">
-            <p className="text-green-700">
+          <div className="mb-6 p-4 bg-[#f0fdf4] border border-[#bbf7d0] rounded-xl">
+            <p className="text-[#166534] text-sm font-medium">
               Job posted successfully! Redirecting to your jobs...
             </p>
           </div>
@@ -119,7 +128,7 @@ export default function PostJobPage() {
           <div>
             <label
               htmlFor="title"
-              className="block text-sm font-medium text-[var(--foreground)] mb-1"
+              className="block text-[0.82rem] font-medium text-[#444] mb-1.5"
             >
               Job Title *
             </label>
@@ -127,11 +136,11 @@ export default function PostJobPage() {
               {...register("title")}
               type="text"
               id="title"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
+              className={inputClasses}
               placeholder="e.g., React Developer for E-commerce Website"
             />
             {errors.title && (
-              <p className="mt-1 text-sm text-red-500">
+              <p className="mt-1 text-xs text-[#e85d2f]">
                 {errors.title.message}
               </p>
             )}
@@ -141,14 +150,14 @@ export default function PostJobPage() {
           <div>
             <label
               htmlFor="category"
-              className="block text-sm font-medium text-[var(--foreground)] mb-1"
+              className="block text-[0.82rem] font-medium text-[#444] mb-1.5"
             >
               Category *
             </label>
             <select
               {...register("category")}
               id="category"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
+              className={inputClasses}
             >
               <option value="">Select a category</option>
               {JOB_CATEGORIES.map((category) => (
@@ -158,7 +167,7 @@ export default function PostJobPage() {
               ))}
             </select>
             {errors.category && (
-              <p className="mt-1 text-sm text-red-500">
+              <p className="mt-1 text-xs text-[#e85d2f]">
                 {errors.category.message}
               </p>
             )}
@@ -168,7 +177,7 @@ export default function PostJobPage() {
           <div>
             <label
               htmlFor="description"
-              className="block text-sm font-medium text-[var(--foreground)] mb-1"
+              className="block text-[0.82rem] font-medium text-[#444] mb-1.5"
             >
               Description *
             </label>
@@ -176,11 +185,11 @@ export default function PostJobPage() {
               {...register("description")}
               id="description"
               rows={4}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
+              className={inputClasses}
               placeholder="Describe the work that needs to be done..."
             />
             {errors.description && (
-              <p className="mt-1 text-sm text-red-500">
+              <p className="mt-1 text-xs text-[#e85d2f]">
                 {errors.description.message}
               </p>
             )}
@@ -191,7 +200,7 @@ export default function PostJobPage() {
             <div>
               <label
                 htmlFor="budget"
-                className="block text-sm font-medium text-[var(--foreground)] mb-1"
+                className="block text-[0.82rem] font-medium text-[#444] mb-1.5"
               >
                 Budget (Fixed Price) *
               </label>
@@ -199,11 +208,11 @@ export default function PostJobPage() {
                 {...register("budget", { valueAsNumber: true })}
                 type="number"
                 id="budget"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
+                className={inputClasses}
                 placeholder="Enter amount in ₹"
               />
               {errors.budget && (
-                <p className="mt-1 text-sm text-red-500">
+                <p className="mt-1 text-xs text-[#e85d2f]">
                   {errors.budget.message}
                 </p>
               )}
@@ -213,7 +222,7 @@ export default function PostJobPage() {
             <div>
               <label
                 htmlFor="duration"
-                className="block text-sm font-medium text-[var(--foreground)] mb-1"
+                className="block text-[0.82rem] font-medium text-[#444] mb-1.5"
               >
                 Duration *
               </label>
@@ -221,11 +230,11 @@ export default function PostJobPage() {
                 {...register("duration")}
                 type="text"
                 id="duration"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
+                className={inputClasses}
                 placeholder="e.g., 2 weeks, 1 month"
               />
               {errors.duration && (
-                <p className="mt-1 text-sm text-red-500">
+                <p className="mt-1 text-xs text-[#e85d2f]">
                   {errors.duration.message}
                 </p>
               )}
@@ -236,14 +245,14 @@ export default function PostJobPage() {
           <div>
             <label
               htmlFor="experienceLevel"
-              className="block text-sm font-medium text-[var(--foreground)] mb-1"
+              className="block text-[0.82rem] font-medium text-[#444] mb-1.5"
             >
               Experience Level *
             </label>
             <select
               {...register("experienceLevel")}
               id="experienceLevel"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
+              className={inputClasses}
             >
               {EXPERIENCE_LEVELS.map((level) => (
                 <option key={level.value} value={level.value}>
@@ -257,14 +266,18 @@ export default function PostJobPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex-1 py-2 px-4 bg-primary text-white rounded-md font-medium hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="flex-1 py-2.5 px-4 bg-[#e85d2f] text-white rounded-full font-semibold hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-[#e85d2f]/30 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              style={{
+                fontFamily: "'Syne', sans-serif",
+                boxShadow: "0 4px 16px rgba(232,93,47,0.18)",
+              }}
             >
               {isSubmitting ? "Posting..." : "Post Job"}
             </button>
             <button
               type="button"
               onClick={() => router.push("/dashboard")}
-              className="px-6 py-2 border border-gray-300 text-[var(--foreground)] rounded-md font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 transition-colors"
+              className="px-6 py-2.5 border-[1.5px] border-[#e5e2db] text-[#111] rounded-full font-medium hover:bg-[#f7f5f0] focus:outline-none focus:ring-2 focus:ring-[#e85d2f]/20 focus:ring-offset-2 transition-colors"
             >
               Cancel
             </button>

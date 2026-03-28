@@ -99,21 +99,29 @@ export default function MyJobsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <p className="text-gray-500">Loading...</p>
+        <p className="text-[#bbb] font-light text-base">Loading...</p>
       </div>
     );
   }
 
   return (
     <>
-      <div className="space-y-6">
+      <div className="space-y-8">
+        {/* Page Header */}
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-[var(--foreground)]">
+          <h1
+            className="text-[1.75rem] font-extrabold text-[#111]"
+            style={{ fontFamily: "'Syne', sans-serif" }}
+          >
             My Jobs
           </h1>
           <Link
             href="/post-job"
-            className="px-4 py-2 bg-primary text-white rounded-md font-medium hover:bg-primary-hover transition-colors"
+            className="px-5 py-2.5 bg-[#e85d2f] text-white rounded-full font-semibold text-sm hover:brightness-110 transition-all"
+            style={{
+              fontFamily: "'Syne', sans-serif",
+              boxShadow: "0 4px 16px rgba(232,93,47,0.18)",
+            }}
           >
             Post New Job
           </Link>
@@ -121,45 +129,66 @@ export default function MyJobsPage() {
 
         {/* Active Jobs */}
         <div>
-          <h2 className="text-xl font-semibold text-[var(--foreground)] mb-4">
+          <h2
+            className="text-[1.1rem] font-extrabold text-[#111] mb-4"
+            style={{ fontFamily: "'Syne', sans-serif" }}
+          >
             Active Jobs ({activeJobs.length})
           </h2>
           <div className="grid gap-4">
             {activeJobs.map((job) => (
               <div
                 key={job._id}
-                className="bg-[var(--background)] border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow"
+                className="bg-white border border-[#ede9e3] rounded-2xl p-6 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200"
               >
                 <div className="flex justify-between items-start mb-3">
                   <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-[var(--foreground)] mb-2">
+                    <h3
+                      className="text-lg font-bold text-[#111] mb-2"
+                      style={{ fontFamily: "'Syne', sans-serif" }}
+                    >
                       {job.title}
                     </h3>
-                    <p className="text-gray-500 text-sm mb-3 line-clamp-2">
+                    <p className="text-[#888] text-sm mb-3 line-clamp-2">
                       {job.description}
                     </p>
                   </div>
-                  <span className="px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full">
+                  <span className="px-3 py-1 bg-[#dcfce7] text-[#166534] text-xs font-medium rounded-full">
                     Active
                   </span>
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4 text-sm">
                   <div>
-                    <p className="text-gray-500">Applications</p>
-                    <p className="font-medium text-[var(--foreground)]">
+                    <p className="text-[0.75rem] text-[#bbb] uppercase tracking-wide mb-0.5">
+                      Applications
+                    </p>
+                    <p
+                      className="font-bold text-[#111]"
+                      style={{ fontFamily: "'Syne', sans-serif" }}
+                    >
                       {job.applicationsCount}
                     </p>
                   </div>
                   <div>
-                    <p className="text-gray-500">Budget</p>
-                    <p className="font-medium text-[var(--foreground)]">
+                    <p className="text-[0.75rem] text-[#bbb] uppercase tracking-wide mb-0.5">
+                      Budget
+                    </p>
+                    <p
+                      className="font-bold text-[#111]"
+                      style={{ fontFamily: "'Syne', sans-serif" }}
+                    >
                       ₹{job.budget}
                     </p>
                   </div>
                   <div>
-                    <p className="text-gray-500">Posted</p>
-                    <p className="font-medium text-[var(--foreground)]">
+                    <p className="text-[0.75rem] text-[#bbb] uppercase tracking-wide mb-0.5">
+                      Posted
+                    </p>
+                    <p
+                      className="font-bold text-[#111]"
+                      style={{ fontFamily: "'Syne', sans-serif" }}
+                    >
                       {formatDate(job.postedDate)}
                     </p>
                   </div>
@@ -168,13 +197,13 @@ export default function MyJobsPage() {
                 <div className="flex gap-2">
                   <Link
                     href={`/jobs/${job._id}`}
-                    className="px-4 py-2 bg-primary text-white rounded-md text-sm font-medium hover:bg-primary-hover transition-colors"
+                    className="px-4 py-2 bg-[#111] text-white rounded-full text-sm font-medium hover:bg-[#222] transition-colors"
                   >
                     View Applications
                   </Link>
                   <button
                     onClick={() => handleCloseJob(job._id)}
-                    className="px-4 py-2 border border-red-500/50 text-red-600 rounded-md text-sm font-medium hover:bg-red-500/10 transition-colors"
+                    className="px-4 py-2 border border-[#fecaca] text-[#991b1b] rounded-full text-sm font-medium hover:bg-[#fef2f2] transition-colors"
                   >
                     Close Job
                   </button>
@@ -182,8 +211,8 @@ export default function MyJobsPage() {
               </div>
             ))}
             {activeJobs.length === 0 && (
-              <div className="text-center py-8 bg-[var(--background)] border border-gray-200 rounded-lg">
-                <p className="text-gray-500">
+              <div className="text-center py-8 bg-white border border-[#ede9e3] rounded-2xl">
+                <p className="text-[#bbb] font-light">
                   No active jobs. Post your first job to get started!
                 </p>
               </div>
@@ -194,55 +223,76 @@ export default function MyJobsPage() {
         {/* Closed Jobs */}
         {closedJobs.length > 0 && (
           <div>
-            <h2 className="text-xl font-semibold text-[var(--foreground)] mb-4">
+            <h2
+              className="text-[1.1rem] font-extrabold text-[#111] mb-4"
+              style={{ fontFamily: "'Syne', sans-serif" }}
+            >
               Closed Jobs ({closedJobs.length})
             </h2>
             <div className="grid gap-4">
               {closedJobs.map((job) => (
                 <div
                   key={job._id}
-                  className="bg-[var(--background)] border border-gray-200 rounded-lg p-6 opacity-75"
+                  className="bg-white border border-[#ede9e3] rounded-2xl p-6 opacity-75"
                 >
                   <div className="flex justify-between items-start mb-3">
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-[var(--foreground)] mb-2">
+                      <h3
+                        className="text-lg font-bold text-[#111] mb-2"
+                        style={{ fontFamily: "'Syne', sans-serif" }}
+                      >
                         {job.title}
                       </h3>
-                      <p className="text-gray-500 text-sm mb-3 line-clamp-2">
+                      <p className="text-[#888] text-sm mb-3 line-clamp-2">
                         {job.description}
                       </p>
                     </div>
-                    <span className="px-3 py-1 bg-gray-100 text-gray-800 text-sm rounded-full">
+                    <span className="px-3 py-1 bg-[#f3f1ed] text-[#888] text-xs font-medium rounded-full">
                       {job.status === "completed" ? "Completed" : "Closed"}
                     </span>
                   </div>
 
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                     <div>
-                      <p className="text-gray-500">
+                      <p className="text-[0.75rem] text-[#bbb] uppercase tracking-wide mb-0.5">
                         Applications
                       </p>
-                      <p className="font-medium text-[var(--foreground)]">
+                      <p
+                        className="font-bold text-[#111]"
+                        style={{ fontFamily: "'Syne', sans-serif" }}
+                      >
                         {job.applicationsCount}
                       </p>
                     </div>
                     <div>
-                      <p className="text-gray-500">Budget</p>
-                      <p className="font-medium text-[var(--foreground)]">
+                      <p className="text-[0.75rem] text-[#bbb] uppercase tracking-wide mb-0.5">
+                        Budget
+                      </p>
+                      <p
+                        className="font-bold text-[#111]"
+                        style={{ fontFamily: "'Syne', sans-serif" }}
+                      >
                         ₹{job.budget}
                       </p>
                     </div>
                     <div>
-                      <p className="text-gray-500">Posted</p>
-                      <p className="font-medium text-[var(--foreground)]">
+                      <p className="text-[0.75rem] text-[#bbb] uppercase tracking-wide mb-0.5">
+                        Posted
+                      </p>
+                      <p
+                        className="font-bold text-[#111]"
+                        style={{ fontFamily: "'Syne', sans-serif" }}
+                      >
                         {formatDate(job.postedDate)}
                       </p>
                     </div>
                     <div className="md:text-right">
-                      <p className="text-gray-500">&nbsp;</p>
+                      <p className="text-[0.75rem] text-[#bbb] uppercase tracking-wide mb-0.5">
+                        &nbsp;
+                      </p>
                       <Link
                         href={`/jobs/${job._id}`}
-                        className="text-sm text-[var(--foreground)] hover:underline inline-block font-medium"
+                        className="text-sm text-[#111] hover:underline inline-block font-medium"
                       >
                         View Details →
                       </Link>
@@ -258,24 +308,31 @@ export default function MyJobsPage() {
       {/* Confirmation Dialog */}
       {confirmDialog.isOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-[var(--background)] border border-gray-300 rounded-lg p-6 max-w-md w-full">
-            <h3 className="text-lg font-semibold text-[var(--foreground)] mb-3">
+          <div className="bg-white border border-[#ede9e3] rounded-3xl p-6 max-w-md w-full">
+            <h3
+              className="text-lg font-extrabold text-[#111] mb-3"
+              style={{ fontFamily: "'Syne', sans-serif" }}
+            >
               Close Job
             </h3>
-            <p className="text-gray-600 mb-6">
+            <p className="text-[#888] mb-6 text-sm leading-relaxed">
               Are you sure you want to close this job? This action cannot be
               undone and the job will no longer accept applications.
             </p>
             <div className="flex gap-3 justify-end">
               <button
                 onClick={cancelCloseJob}
-                className="px-4 py-2 border border-gray-300 text-[var(--foreground)] rounded-md font-medium hover:bg-gray-50 transition-colors"
+                className="px-4 py-2 border border-[#ede9e3] text-[#111] rounded-full font-medium hover:bg-[#f7f5f0] transition-colors text-sm"
               >
                 Cancel
               </button>
               <button
                 onClick={confirmCloseJob}
-                className="px-4 py-2 bg-red-600 text-white rounded-md font-medium hover:bg-red-700 transition-colors"
+                className="px-4 py-2 bg-[#e85d2f] text-white rounded-full font-medium hover:brightness-110 transition-all text-sm"
+                style={{
+                  fontFamily: "'Syne', sans-serif",
+                  boxShadow: "0 4px 16px rgba(232,93,47,0.18)",
+                }}
               >
                 Yes, Close Job
               </button>

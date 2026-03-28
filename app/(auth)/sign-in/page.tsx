@@ -11,7 +11,6 @@ import { useAuth } from "@/app/contexts/AuthContext";
 const signInSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email address"),
   password: z.string().min(1, "Password is required"),
-  rememberMe: z.boolean().optional(),
 });
 
 type SignInFormData = z.infer<typeof signInSchema>;
@@ -24,19 +23,20 @@ export default function SignInPage() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<SignInFormData>({
     resolver: zodResolver(signInSchema),
-    defaultValues: {
-      rememberMe: false,
-    },
   });
+
+  const fillDemo = (email: string, password = "password123") => {
+    setValue("email", email);
+    setValue("password", password);
+  };
 
   const onSubmit = async (data: SignInFormData) => {
     setLoginError("");
-
     const loggedInUser = await login(data.email, data.password);
-
     if (loggedInUser) {
       router.push(loggedInUser.role === "admin" ? "/admin" : "/dashboard");
     } else {
@@ -45,99 +45,113 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="bg-[var(--background)] border border-gray-200 rounded-lg shadow-lg p-8">
-      <h2 className="text-2xl font-semibold text-[var(--foreground)] mb-6 text-center">
-        Welcome back
-      </h2>
+    <div
+      className="border border-[#ede9e3] rounded-3xl p-10 sm:p-10"
+      style={{
+        background: 'rgba(255,255,255,0.85)',
+        backdropFilter: 'blur(10px)',
+        boxShadow: '0 8px 40px rgba(0,0,0,0.06)',
+        animation: 'fadeUp 0.5s ease both',
+      }}
+    >
+      {/* Header */}
+      <div className="text-center mb-8">
+        <div className="inline-block bg-[#fff7f4] border border-[#fdd5c7] text-[#e85d2f] text-xs font-semibold px-3 py-1 rounded-full mb-4 uppercase tracking-wider">
+          Welcome Back
+        </div>
+        <h2 className="text-[1.75rem] font-extrabold text-[#111] tracking-tight" style={{ fontFamily: "'Syne', sans-serif", letterSpacing: '-0.03em' }}>
+          Sign in
+        </h2>
+        <p className="text-sm text-[#999] font-light mt-2">Good to see you again</p>
+      </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        {loginError && (
-          <div className="p-3 rounded-md bg-red-50 border border-red-200">
-            <p className="text-sm text-red-600">
-              {loginError}
-            </p>
-          </div>
-        )}
+      {loginError && (
+        <div className="bg-[#fff5f5] border border-[#fecaca] rounded-xl px-4 py-3 text-sm text-[#dc2626] mb-5">
+          {loginError}
+        </div>
+      )}
 
-        <div>
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-[var(--foreground)] mb-1"
-          >
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="mb-4">
+          <label htmlFor="email" className="block text-[0.82rem] font-medium text-[#444] mb-1.5">
             Email Address
           </label>
           <input
             {...register("email")}
             type="email"
             id="email"
-            // Mock for development
-            // Remove mock value for production
-            // defaultValue="test@example.com"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
-            placeholder="john@example.com"
+            className="w-full px-3.5 py-2.5 border-[1.5px] border-[#e5e2db] rounded-xl bg-white text-[#111] text-sm outline-none transition-all focus:border-[#e85d2f] focus:shadow-[0_0_0_3px_rgba(232,93,47,0.1)]"
+            style={{ fontFamily: "'DM Sans', sans-serif" }}
+            placeholder="SkillOrbit@example.com"
           />
           {errors.email && (
-            <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>
+            <p className="text-xs text-[#e85d2f] mt-1">{errors.email.message}</p>
           )}
         </div>
 
-        <div>
-          <label
-            htmlFor="password"
-            className="block text-sm font-medium text-[var(--foreground)] mb-1"
-          >
+        <div className="mb-4">
+          <label htmlFor="password" className="block text-[0.82rem] font-medium text-[#444] mb-1.5">
             Password
           </label>
           <input
             {...register("password")}
             type="password"
             id="password"
-            // Mock for development
-            // Remove mock value for production
-            // defaultValue="password123"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
+            className="w-full px-3.5 py-2.5 border-[1.5px] border-[#e5e2db] rounded-xl bg-white text-[#111] text-sm outline-none transition-all focus:border-[#e85d2f] focus:shadow-[0_0_0_3px_rgba(232,93,47,0.1)]"
+            style={{ fontFamily: "'DM Sans', sans-serif" }}
             placeholder="••••••••"
           />
           {errors.password && (
-            <p className="mt-1 text-sm text-red-500">
-              {errors.password.message}
-            </p>
+            <p className="text-xs text-[#e85d2f] mt-1">{errors.password.message}</p>
           )}
         </div>
-
-        
 
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full py-2 px-4 bg-primary text-white rounded-md font-medium hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="w-full py-3.5 bg-[#e85d2f] text-white border-none rounded-full text-[0.95rem] font-bold cursor-pointer mt-2 transition-all hover:-translate-y-0.5 disabled:opacity-55 disabled:cursor-not-allowed"
+          style={{
+            fontFamily: "'Syne', sans-serif",
+            boxShadow: '0 4px 16px rgba(232,93,47,0.3)',
+          }}
         >
-          {isSubmitting ? "Signing in..." : "Sign in"}
+          {isSubmitting ? "Signing in..." : "Sign In \u2192"}
         </button>
       </form>
 
-      <div className="mt-6 text-center">
-        <p className="text-sm text-gray-500">
-          Don't have an account?{" "}
-          <Link
-            href="/sign-up"
-            className="text-primary hover:underline font-medium"
-          >
-            Sign up
-          </Link>
-        </p>
+      <div className="text-center mt-6 text-sm text-[#999] font-light">
+        Don&apos;t have an account?{" "}
+        <Link href="/sign-up" className="text-[#e85d2f] font-medium no-underline hover:underline">
+          Sign up free
+        </Link>
       </div>
 
-      <div className="mt-4 text-center space-y-1">
-        <p className="text-xs text-gray-400">
-          Employee demo: employee@test.com / password123
-        </p>
-        <p className="text-xs text-gray-400">
-          Employer demo: employer@test.com / password123
-        </p>
-        <p className="text-xs text-gray-400">
-          Admin: admin@skillorbit.com / admin@123
-        </p>
+      {/* Demo Credentials */}
+      <div className="mt-6 bg-[#f7f5f0] border border-[#ede9e3] rounded-xl p-4">
+        <div className="text-[0.72rem] font-semibold text-[#aaa] uppercase tracking-widest mb-2.5">
+          Demo Accounts — click to fill
+        </div>
+        <div
+          className="flex justify-between items-center py-1.5 border-b border-[#ede9e3] cursor-pointer group"
+          onClick={() => fillDemo("employee@test.com")}
+        >
+          <span className="text-xs font-semibold text-[#888]" style={{ fontFamily: "'Syne', sans-serif" }}>Employee</span>
+          <span className="text-xs text-[#bbb] font-light group-hover:text-[#e85d2f] transition-colors">employee@test.com / password123</span>
+        </div>
+        <div
+          className="flex justify-between items-center py-1.5 border-b border-[#ede9e3] cursor-pointer group"
+          onClick={() => fillDemo("employer@test.com")}
+        >
+          <span className="text-xs font-semibold text-[#888]" style={{ fontFamily: "'Syne', sans-serif" }}>Employer</span>
+          <span className="text-xs text-[#bbb] font-light group-hover:text-[#e85d2f] transition-colors">employer@test.com / password123</span>
+        </div>
+        <div
+          className="flex justify-between items-center py-1.5 cursor-pointer group"
+          onClick={() => fillDemo("admin@skillorbit.com", "admin@123")}
+        >
+          <span className="text-xs font-semibold text-[#888]" style={{ fontFamily: "'Syne', sans-serif" }}>Admin</span>
+          <span className="text-xs text-[#bbb] font-light group-hover:text-[#e85d2f] transition-colors">admin@skillorbit.com / admin@123</span>
+        </div>
       </div>
     </div>
   );

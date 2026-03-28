@@ -43,7 +43,7 @@ export default function JobDetailsPage() {
   const router = useRouter()
   const { user } = useAuth()
   const jobId = params.id as string
-  
+
   const [activeTab, setActiveTab] = useState<TabType>('all')
   const [job, setJob] = useState<Job | null>(null)
   const [applicationsList, setApplicationsList] = useState<Application[]>([])
@@ -52,7 +52,7 @@ export default function JobDetailsPage() {
   const [showCloseConfirmation, setShowCloseConfirmation] = useState(false)
   const [isClosing, setIsClosing] = useState(false)
   const [loading, setLoading] = useState(true)
-  
+
   useEffect(() => {
     if (user && jobId) {
       fetchData()
@@ -88,22 +88,22 @@ export default function JobDetailsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <p className="text-gray-500">Loading...</p>
+        <p className="text-[#bbb] font-light text-[0.95rem]">Loading...</p>
       </div>
     )
   }
-  
+
   if (!job) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-500 mb-4">Job not found</p>
-        <Link href="/my-jobs" className="text-[var(--foreground)] hover:underline">
+        <p className="text-[#bbb] font-light mb-4">Job not found</p>
+        <Link href="/my-jobs" className="text-[0.82rem] text-[#e85d2f] font-medium hover:underline">
           Back to My Jobs
         </Link>
       </div>
     )
   }
-  
+
   // Only employers who own the job can view details
   if (user.userType !== 'employer' || job.employerId !== user.id) {
     router.push('/dashboard')
@@ -111,8 +111,8 @@ export default function JobDetailsPage() {
   }
 
   // Filter applications based on active tab
-  const filteredApplications = activeTab === 'all' 
-    ? applicationsList 
+  const filteredApplications = activeTab === 'all'
+    ? applicationsList
     : applicationsList.filter(app => app.status === activeTab)
 
   const pendingCount = applicationsList.filter(app => app.status === 'pending').length
@@ -121,7 +121,7 @@ export default function JobDetailsPage() {
 
   const handleStatusUpdate = async (applicationId: string, newStatus: 'accepted' | 'rejected') => {
     setProcessingId(applicationId)
-    
+
     try {
       const response = await fetch(`/api/applications/${applicationId}`, {
         method: 'PATCH',
@@ -130,15 +130,15 @@ export default function JobDetailsPage() {
         },
         body: JSON.stringify({ status: newStatus }),
       })
-      
+
       if (response.ok) {
         // Refresh applications
         await fetchData()
-        
+
         // Show success message
         const actionText = newStatus === 'accepted' ? 'accepted' : 'rejected'
         setSuccessMessage(`Application ${actionText} successfully`)
-        
+
         // Clear success message after 3 seconds
         setTimeout(() => {
           setSuccessMessage(null)
@@ -147,13 +147,13 @@ export default function JobDetailsPage() {
     } catch (error) {
       console.error('Error updating application:', error)
     }
-    
+
     setProcessingId(null)
   }
 
   const handleCloseJob = async () => {
     setIsClosing(true)
-    
+
     try {
       const response = await fetch(`/api/jobs/${jobId}`, {
         method: 'PATCH',
@@ -162,14 +162,14 @@ export default function JobDetailsPage() {
         },
         body: JSON.stringify({ status: 'closed' }),
       })
-      
+
       if (response.ok) {
         // Update local job state
         if (job) {
           setJob({ ...job, status: 'closed' })
         }
         setSuccessMessage('Job closed successfully')
-        
+
         // Clear success message after 3 seconds
         setTimeout(() => {
           setSuccessMessage(null)
@@ -178,7 +178,7 @@ export default function JobDetailsPage() {
     } catch (error) {
       console.error('Error closing job:', error)
     }
-    
+
     setIsClosing(false)
     setShowCloseConfirmation(false)
   }
@@ -190,98 +190,113 @@ export default function JobDetailsPage() {
     { value: 'rejected', label: 'Rejected', count: rejectedCount },
   ]
 
+  const syne: React.CSSProperties = { fontFamily: "'Syne', sans-serif" }
+
   return (
     <div className="space-y-6">
       {/* Success Message */}
       {successMessage && (
-        <div className="bg-green-50 border border-green-200 rounded-md p-4">
-          <p className="text-green-700">{successMessage}</p>
+        <div className="bg-[#f0fdf4] border border-[#bbf7d0] rounded-xl px-5 py-4">
+          <p className="text-[#166534] text-[0.9rem] font-medium">{successMessage}</p>
         </div>
       )}
 
       {/* Header */}
       <div className="flex justify-between items-start">
         <div>
-          <Link href="/my-jobs" className="text-sm text-gray-500 hover:text-[var(--foreground)] mb-2 inline-block">
-            ← Back to My Jobs
+          <Link href="/my-jobs" className="text-[0.82rem] text-[#e85d2f] font-medium hover:underline mb-2 inline-block">
+            &larr; Back to My Jobs
           </Link>
-          <h1 className="text-2xl font-bold text-[var(--foreground)]">{job.title}</h1>
-          <p className="text-gray-500 mt-1">Posted on {formatDate(job.postedDate)}</p>
+          <h1
+            className="text-[1.65rem] font-extrabold text-[#111] tracking-tight"
+            style={{ ...syne, letterSpacing: '-0.03em' }}
+          >
+            {job.title}
+          </h1>
+          <p className="text-[#aaa] text-[0.85rem] mt-1">Posted on {formatDate(job.postedDate)}</p>
         </div>
         {job.status === 'active' ? (
           <button
             onClick={() => setShowCloseConfirmation(true)}
             disabled={isClosing}
-            className="px-4 py-2 border border-red-500/50 text-red-600 rounded-md text-sm font-medium hover:bg-red-500/10 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-5 py-2 border border-[#fee2e2] text-[#991b1b] rounded-full text-[0.82rem] font-medium hover:bg-[#fff5f5] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isClosing ? 'Closing...' : 'Close Job'}
           </button>
         ) : (
-          <span className="px-3 py-1 text-sm rounded-full bg-gray-100 text-gray-800">
+          <span className="px-4 py-1.5 text-[0.8rem] font-medium rounded-full bg-[#f3f0eb] text-[#888]">
             Closed
           </span>
         )}
       </div>
 
-      {/* Job Details */}
-      <div className="bg-[var(--background)] border border-gray-200 rounded-lg p-6">
-        <h2 className="text-lg font-semibold text-[var(--foreground)] mb-4">Job Details</h2>
-        
-        <div className="space-y-4">
+      {/* Job Details Card */}
+      <div className="bg-white border border-[#ede9e3] rounded-2xl p-6">
+        <h2
+          className="text-[1.1rem] font-extrabold text-[#111] mb-5"
+          style={{ ...syne, letterSpacing: '-0.02em' }}
+        >
+          Job Details
+        </h2>
+
+        <div className="space-y-5">
           <div>
-            <h3 className="text-sm font-medium text-gray-500 mb-1">Description</h3>
-            <p className="text-[var(--foreground)]">{job.description}</p>
+            <h3 className="text-[0.75rem] font-semibold text-[#bbb] uppercase tracking-wider mb-1.5">Description</h3>
+            <p className="text-[0.9rem] text-[#111] leading-relaxed">{job.description}</p>
           </div>
-          
+
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             <div>
-              <h3 className="text-sm font-medium text-gray-500 mb-1">Category</h3>
-              <p className="text-[var(--foreground)]">{job.category}</p>
+              <h3 className="text-[0.75rem] font-semibold text-[#bbb] uppercase tracking-wider mb-1.5">Category</h3>
+              <p className="text-[0.9rem] text-[#111]">{job.category}</p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-gray-500 mb-1">Budget</h3>
-              <p className="text-[var(--foreground)] font-semibold">₹{job.budget}</p>
+              <h3 className="text-[0.75rem] font-semibold text-[#bbb] uppercase tracking-wider mb-1.5">Budget</h3>
+              <p className="text-[0.9rem] text-[#111] font-semibold">&#8377;{job.budget}</p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-gray-500 mb-1">Duration</h3>
-              <p className="text-[var(--foreground)]">{job.duration}</p>
+              <h3 className="text-[0.75rem] font-semibold text-[#bbb] uppercase tracking-wider mb-1.5">Duration</h3>
+              <p className="text-[0.9rem] text-[#111]">{job.duration}</p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-gray-500 mb-1">Experience Level</h3>
-              <p className="text-[var(--foreground)] capitalize">{job.experienceLevel}</p>
+              <h3 className="text-[0.75rem] font-semibold text-[#bbb] uppercase tracking-wider mb-1.5">Experience Level</h3>
+              <p className="text-[0.9rem] text-[#111] capitalize">{job.experienceLevel}</p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-gray-500 mb-1">Applications</h3>
-              <p className="text-[var(--foreground)]">{applicationsList.length} total</p>
+              <h3 className="text-[0.75rem] font-semibold text-[#bbb] uppercase tracking-wider mb-1.5">Applications</h3>
+              <p className="text-[0.9rem] text-[#111]">{applicationsList.length} total</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Applications */}
+      {/* Applications Section */}
       <div>
-        <h2 className="text-xl font-semibold text-[var(--foreground)] mb-4">
+        <h2
+          className="text-[1.15rem] font-extrabold text-[#111] mb-4"
+          style={{ ...syne, letterSpacing: '-0.02em' }}
+        >
           Applications ({applicationsList.length})
         </h2>
 
         {job.status === 'closed' && (
-          <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
-            <p className="text-sm text-yellow-700">
+          <div className="mb-4 px-4 py-3 bg-[#fef9c3] border border-[#fde68a] rounded-xl">
+            <p className="text-[0.85rem] text-[#854d0e]">
               This job is closed. You can no longer accept or reject applications.
             </p>
           </div>
         )}
 
         {/* Tabs */}
-        <div className="flex gap-4 mb-6 border-b border-gray-200">
+        <div className="flex gap-5 mb-6 border-b border-[#ede9e3]">
           {tabs.map((tab) => (
             <button
               key={tab.value}
               onClick={() => setActiveTab(tab.value)}
-              className={`pb-2 px-1 transition-colors ${
+              className={`pb-2.5 px-1 text-[0.85rem] transition-colors ${
                 activeTab === tab.value
-                  ? 'border-b-2 border-[var(--foreground)] text-[var(--foreground)] font-medium'
-                  : 'text-gray-500 hover:text-[var(--foreground)]'
+                  ? 'border-b-2 border-[#e85d2f] text-[#e85d2f] font-medium'
+                  : 'text-[#aaa] hover:text-[#111]'
               }`}
             >
               {tab.label} ({tab.count})
@@ -292,38 +307,44 @@ export default function JobDetailsPage() {
         {/* Applications List */}
         <div className="space-y-4">
           {filteredApplications.length === 0 ? (
-            <div className="text-center py-8 bg-[var(--background)] border border-gray-200 rounded-lg">
-              <p className="text-gray-500">
-                {activeTab === 'all' 
-                  ? 'No applications yet' 
+            <div className="text-center py-10 bg-white border border-[#ede9e3] rounded-2xl">
+              <p className="text-[#bbb] font-light text-[0.9rem]">
+                {activeTab === 'all'
+                  ? 'No applications yet'
                   : `No ${activeTab} applications`}
               </p>
             </div>
           ) : (
             filteredApplications.map((application) => (
-              <div key={application._id} className="bg-[var(--background)] border border-gray-200 rounded-lg p-6">
+              <div key={application._id} className="bg-white border border-[#ede9e3] rounded-2xl p-6">
                 <div className="flex justify-between items-start mb-4">
                   <div>
-                    <h3 className="text-lg font-semibold text-[var(--foreground)]">
+                    <h3
+                      className="text-[1rem] font-extrabold text-[#111]"
+                      style={syne}
+                    >
                       {application.employeeName}
                     </h3>
-                    <p className="text-sm text-gray-500">
-                      {application.employeeEmail} • {application.employeeUniversity}
+                    <p className="text-[0.82rem] text-[#aaa] mt-0.5">
+                      {application.employeeEmail} &bull; {application.employeeUniversity}
                     </p>
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="text-[0.82rem] text-[#aaa] mt-0.5">
                       Applied {formatDate(application.appliedDate)}
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="text-lg font-semibold text-[var(--foreground)]">
-                      ₹{application.proposedRate}
+                    <p
+                      className="text-[1.05rem] font-extrabold text-[#111]"
+                      style={syne}
+                    >
+                      &#8377;{application.proposedRate}
                     </p>
-                    <span className={`inline-block mt-1 px-2 py-1 text-xs rounded-full ${
+                    <span className={`inline-block mt-1.5 px-3 py-1 text-[0.7rem] font-semibold rounded-full ${
                       application.status === 'pending'
-                        ? 'bg-yellow-100 text-yellow-800'
+                        ? 'bg-[#fef9c3] text-[#854d0e]'
                         : application.status === 'accepted'
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-red-100 text-red-800'
+                        ? 'bg-[#dcfce7] text-[#166534]'
+                        : 'bg-[#fee2e2] text-[#991b1b]'
                     }`}>
                       {application.status.charAt(0).toUpperCase() + application.status.slice(1)}
                     </span>
@@ -333,30 +354,30 @@ export default function JobDetailsPage() {
                 <div className="space-y-3">
                   {application.experience && (
                     <div>
-                      <h4 className="text-sm font-medium text-gray-500 mb-1">Experience</h4>
-                      <p className="text-sm text-[var(--foreground)]">{application.experience}</p>
+                      <h4 className="text-[0.75rem] font-semibold text-[#bbb] uppercase tracking-wider mb-1">Experience</h4>
+                      <p className="text-[0.85rem] text-[#111] leading-relaxed">{application.experience}</p>
                     </div>
                   )}
-                  
+
                   <div>
-                    <h4 className="text-sm font-medium text-gray-500 mb-1">Cover Letter</h4>
-                    <p className="text-sm text-[var(--foreground)]">{application.coverLetter}</p>
+                    <h4 className="text-[0.75rem] font-semibold text-[#bbb] uppercase tracking-wider mb-1">Cover Letter</h4>
+                    <p className="text-[0.85rem] text-[#111] leading-relaxed">{application.coverLetter}</p>
                   </div>
                 </div>
 
                 {application.status === 'pending' && job.status === 'active' && (
-                  <div className="flex gap-2 mt-4 pt-4 border-t border-gray-200">
-                    <button 
+                  <div className="flex gap-2.5 mt-5 pt-4 border-t border-[#ede9e3]">
+                    <button
                       onClick={() => handleStatusUpdate(application._id, 'accepted')}
                       disabled={processingId === application._id}
-                      className="px-4 py-2 bg-green-600 text-white rounded-md text-sm font-medium hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-5 py-2 bg-[#166534] text-white rounded-full text-[0.82rem] font-medium hover:bg-[#14532d] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {processingId === application._id ? 'Processing...' : 'Accept Application'}
                     </button>
-                    <button 
+                    <button
                       onClick={() => handleStatusUpdate(application._id, 'rejected')}
                       disabled={processingId === application._id}
-                      className="px-4 py-2 bg-red-600 text-white rounded-md text-sm font-medium hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-5 py-2 border border-[#fee2e2] text-[#991b1b] rounded-full text-[0.82rem] font-medium hover:bg-[#fff5f5] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {processingId === application._id ? 'Processing...' : 'Reject Application'}
                     </button>
@@ -370,25 +391,28 @@ export default function JobDetailsPage() {
 
       {/* Close Confirmation Dialog */}
       {showCloseConfirmation && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-[var(--background)] border border-gray-300 rounded-lg p-6 max-w-md w-full">
-            <h3 className="text-lg font-semibold text-[var(--foreground)] mb-3">
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+          <div className="bg-white border border-[#ede9e3] rounded-3xl p-7 max-w-md w-full shadow-xl">
+            <h3
+              className="text-[1.1rem] font-extrabold text-[#111] mb-3"
+              style={{ ...syne, letterSpacing: '-0.02em' }}
+            >
               Close Job
             </h3>
-            <p className="text-gray-600 mb-6">
+            <p className="text-[0.88rem] text-[#aaa] leading-relaxed mb-6">
               Are you sure you want to close this job? This action cannot be undone and the job will no longer accept applications.
             </p>
             <div className="flex gap-3 justify-end">
               <button
                 onClick={() => setShowCloseConfirmation(false)}
-                className="px-4 py-2 border border-gray-300 text-[var(--foreground)] rounded-md font-medium hover:bg-gray-50 transition-colors"
+                className="px-5 py-2.5 border border-[#ede9e3] text-[#111] rounded-full text-[0.85rem] font-medium hover:bg-[#f7f5f0] transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleCloseJob}
                 disabled={isClosing}
-                className="px-4 py-2 bg-red-600 text-white rounded-md font-medium hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-5 py-2.5 bg-[#991b1b] text-white rounded-full text-[0.85rem] font-medium hover:bg-[#7f1d1d] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isClosing ? 'Closing...' : 'Yes, Close Job'}
               </button>

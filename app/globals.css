@@ -1,12 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --foreground-rgb: 23, 23, 23;
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
-  --primary-light: #dbeafe;
+  --background: #f7f5f0;
+  --foreground: #111111;
+  --foreground-rgb: 17, 17, 17;
+  --primary: #e85d2f;
+  --primary-hover: #d14e23;
+  --primary-light: #fff7f4;
+  --border: #ede9e3;
+  --border-dark: #e5e2db;
+  --card-bg: rgba(255,255,255,0.85);
+  --muted: #888;
+  --muted-light: #bbb;
+  --muted-lighter: #aaa;
 }
 
 @theme inline {
@@ -15,12 +21,70 @@
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
   --color-primary-light: var(--primary-light);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-border: var(--border);
+  --font-sans: 'DM Sans', sans-serif;
+  --font-heading: 'Syne', sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* ── SHARED ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes chipFloat {
+  0%   { opacity: 0;    transform: translateY(0px);   }
+  10%  { opacity: 0.18; }
+  50%  { opacity: 0.18; transform: translateY(-16px); }
+  90%  { opacity: 0.18; }
+  100% { opacity: 0;    transform: translateY(0px);   }
+}
+
+/* ── FLOATING SKILL CHIPS ── */
+.chip {
+  position: absolute;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+  color: #111;
+  background: #fff;
+  border: 1.5px solid #e5e2db;
+  border-radius: 100px;
+  padding: 0.35rem 0.85rem;
+  opacity: 0;
+  animation: chipFloat linear infinite;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.chip:nth-child(1)  { top: 9%;  left: 5%;   animation-duration: 8s;   animation-delay: 0s;   }
+.chip:nth-child(2)  { top: 18%; right: 7%;  animation-duration: 10s;  animation-delay: 1.2s; }
+.chip:nth-child(3)  { top: 38%; left: 4%;   animation-duration: 9s;   animation-delay: 2.4s; }
+.chip:nth-child(4)  { top: 58%; right: 6%;  animation-duration: 7s;   animation-delay: 0.6s; }
+.chip:nth-child(5)  { top: 72%; left: 8%;   animation-duration: 11s;  animation-delay: 3.2s; }
+.chip:nth-child(6)  { top: 28%; left: 18%;  animation-duration: 8.5s; animation-delay: 1.8s; }
+.chip:nth-child(7)  { top: 48%; right: 14%; animation-duration: 9.5s; animation-delay: 2.8s; }
+.chip:nth-child(8)  { top: 83%; right: 18%; animation-duration: 10s;  animation-delay: 0.9s; }
+.chip:nth-child(9)  { top: 6%;  left: 38%;  animation-duration: 7.5s; animation-delay: 4.1s; }
+.chip:nth-child(10) { top: 68%; left: 28%;  animation-duration: 12s;  animation-delay: 1.5s; }
+.chip:nth-child(11) { top: 33%; right: 26%; animation-duration: 8s;   animation-delay: 3.8s; }
+.chip:nth-child(12) { top: 88%; left: 52%;  animation-duration: 9s;   animation-delay: 2.1s; }
+
+.chip:nth-child(3),
+.chip:nth-child(7),
+.chip:nth-child(11) {
+  color: #e85d2f;
+  border-color: #fdd5c7;
+  background: #fff7f4;
+}
+
+@media (max-width: 640px) {
+  .chip { display: none; }
 }

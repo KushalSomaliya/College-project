@@ -14,18 +14,15 @@ export default function DashboardPage() {
   useEffect(() => {
     if (searchParams.get('applied') === 'true') {
       setShowSuccessMessage(true)
-      // Clear the message after 5 seconds
-      const timer = setTimeout(() => {
-        setShowSuccessMessage(false)
-      }, 5000)
+      const timer = setTimeout(() => setShowSuccessMessage(false), 5000)
       return () => clearTimeout(timer)
     }
   }, [searchParams])
 
   if (!user) {
     return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <p className="text-gray-500">Loading...</p>
+      <div className="flex items-center justify-center min-h-[60vh] text-[#bbb] text-sm font-light">
+        Loading your dashboard...
       </div>
     )
   }
@@ -33,13 +30,15 @@ export default function DashboardPage() {
   return (
     <>
       {showSuccessMessage && (
-        <div className="mb-6 bg-green-50 border border-green-200 rounded-md p-4">
-          <p className="text-green-700">
-            Application submitted successfully! The employer will review your application and get back to you.
-          </p>
+        <div
+          className="flex items-center gap-3 bg-[#f0fdf4] border border-[#bbf7d0] rounded-xl px-5 py-4 mb-8"
+          style={{ animation: 'fadeUp 0.4s ease both' }}
+        >
+          <span>&#9989;</span>
+          <p className="text-sm text-[#166534] m-0">Application submitted! The employer will review it and get back to you.</p>
         </div>
       )}
-      
+
       {user.userType === 'employee' ? (
         <EmployeeDashboard user={user} />
       ) : (

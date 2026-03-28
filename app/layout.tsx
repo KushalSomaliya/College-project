@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import { AuthProvider } from './contexts/AuthContext'
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
-
 export const metadata: Metadata = {
-  title: 'Skill Orbit - Connect, Work, Grow',
+  title: 'Skill Orbit',
   description: 'Connect talent with freelance opportunities. Find jobs, build your portfolio, and earn while you learn.',
+  icons: {
+    icon: '/SO.ico',
+  },
 }
 
 export default function RootLayout({
@@ -17,7 +17,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+      </head>
+      <body>
         <AuthProvider>
           {children}
         </AuthProvider>
