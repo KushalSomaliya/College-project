@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useAuth } from "@/app/contexts/AuthContext";
 import { formatDate } from "@/app/lib/utils";
@@ -24,21 +24,22 @@ interface Job {
   experienceLevel: string
 }
 
-const applySchema = z.object({
-  experienceYears: z.number().min(0).max(50),
-  experienceMonths: z.number().min(0).max(11),
-  coverLetter: z
-    .string()
-    .min(1, "Cover letter is required")
-    .min(50, "Cover letter must be at least 50 characters")
-    .max(1000, "Cover letter cannot exceed 1000 characters"),
-  proposedRate: z
-    .number()
-    .min(5, "Proposed rate must be at least ₹5")
-    .max(1000000, "Proposed rate cannot exceed ₹10,00,000"),
-});
+const createApplySchema = (budget: number) =>
+  z.object({
+    experienceYears: z.number().min(0).max(50),
+    experienceMonths: z.number().min(0).max(11),
+    coverLetter: z
+      .string()
+      .min(1, "Cover letter is required")
+      .min(50, "Cover letter must be at least 50 characters")
+      .max(1000, "Cover letter cannot exceed 1000 characters"),
+    proposedRate: z
+      .number()
+      .min(5, "Proposed rate must be at least ₹5")
+      .max(budget, `Proposed rate cannot exceed the job budget of ₹${budget.toLocaleString("en-IN")}`),
+  });
 
-type ApplyFormData = z.infer<typeof applySchema>;
+type ApplyFormData = z.infer<ReturnType<typeof createApplySchema>>;
 
 export default function ApplyPage() {
   const params = useParams();
@@ -49,6 +50,11 @@ export default function ApplyPage() {
   const [job, setJob] = useState<Job | null>(null);
   const [alreadyApplied, setAlreadyApplied] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const applySchema = useMemo(
+    () => createApplySchema(job?.budget ?? 1000000),
+    [job?.budget]
+  );
 
   const {
     register,
@@ -378,7 +384,7 @@ export default function ApplyPage() {
               type="number"
               id="proposedRate"
               min="5"
-              max="10000"
+              max={job.budget}
               placeholder={`Budget: ₹${job.budget}`}
               className="w-full px-3.5 py-2.5 border-[1.5px] border-[#e5e2db] rounded-xl bg-white text-[#111] text-sm outline-none transition-all focus:border-[#e85d2f] focus:shadow-[0_0_0_3px_rgba(232,93,47,0.1)]"
             />
