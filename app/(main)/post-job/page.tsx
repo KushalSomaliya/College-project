@@ -35,7 +35,7 @@ const postJobSchema = z.object({
   category: z.string().min(1, "Category is required"),
   budget: z
     .number()
-    .min(5, "Budget must be at least ₹5")
+    .min(5, "Pay must be at least ₹5")
     .max(1000000, "Budget cannot exceed ₹10,00,000"),
   duration: z.string().min(1, "Duration is required"),
   experienceLevel: z.enum(["beginner", "intermediate", "advanced"]),
@@ -103,9 +103,9 @@ export default function PostJobPage() {
     "w-full px-3.5 py-2.5 border-[1.5px] border-[#e5e2db] rounded-xl bg-white text-[#111] focus:outline-none focus:border-[#e85d2f] focus:shadow-[0_0_0_3px_rgba(232,93,47,0.1)] transition-all";
 
   return (
-    <div className="max-w-3xl mx-auto">
+    <div className="max-w-[820px] mx-auto">
       <div
-        className="bg-white border border-[#ede9e3] rounded-3xl p-8"
+        className="bg-white border border-white rounded-3xl p-8"
         style={{ boxShadow: "0 8px 40px rgba(0,0,0,0.06)" }}
       >
         <h1
@@ -202,7 +202,7 @@ export default function PostJobPage() {
                 htmlFor="budget"
                 className="block text-[0.82rem] font-medium text-[#444] mb-1.5"
               >
-                Budget (Fixed Price) *
+                Pay (Fixed Price) *
               </label>
               <input
                 {...register("budget", { valueAsNumber: true })}

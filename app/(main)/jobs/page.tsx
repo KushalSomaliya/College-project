@@ -144,7 +144,7 @@ export default function JobsPage() {
           <div>
             <label
               htmlFor="search"
-              className="block text-[0.75rem] font-semibold text-[#bbb] uppercase tracking-wider mb-2"
+              className="block text-[0.75rem] font-semibold text-[#5c5c5c] uppercase tracking-wider mb-2"
             >
               Search jobs
             </label>
@@ -162,7 +162,7 @@ export default function JobsPage() {
           <div>
             <label
               htmlFor="category"
-              className="block text-[0.75rem] font-semibold text-[#bbb] uppercase tracking-wider mb-2"
+              className="block text-[0.75rem] font-semibold text-[#5c5c5c] uppercase tracking-wider mb-2"
             >
               Category
             </label>
@@ -183,7 +183,7 @@ export default function JobsPage() {
       </div>
 
       {/* Results Summary */}
-      <div className="text-[0.82rem] text-[#bbb] font-light">
+      <div className="text-[0.82rem] text-[#575757] font-light">
         Showing <span className="font-bold text-[#111]">{filteredJobs.length}</span>{" "}
         {filteredJobs.length === 1 ? "job" : "jobs"}
         {selectedCategory !== "all" && (
@@ -217,7 +217,7 @@ export default function JobsPage() {
           filteredJobs.map((job) => (
             <div
               key={job._id}
-              className="bg-white border border-[#ede9e3] rounded-2xl p-5 hover:-translate-y-0.5 hover:shadow-lg transition-all flex flex-col"
+              className="bg-white border border-[#ede9e3] rounded-2xl p-5 hover:-translate-y-0.5 hover:shadow-lg transition-all flex flex-col min-w-0"
             >
               {/* Job Header */}
               <div className="mb-3">
@@ -228,7 +228,7 @@ export default function JobsPage() {
                   >
                     {job.title}
                   </h3>
-                  <span className="text-[0.68rem] px-2.5 py-1 bg-[#f3f1ed] text-[#888] rounded-full whitespace-nowrap uppercase font-medium tracking-wide">
+                  <span className="text-[0.68rem] px-2.5 py-1 bg-[#f3f1ed] text-[#d68800] rounded-full whitespace-nowrap uppercase font-medium tracking-wide">
                     {job.category}
                   </span>
                 </div>
@@ -238,14 +238,14 @@ export default function JobsPage() {
               </div>
 
               {/* Description */}
-              <p className="text-[0.85rem] text-[#888] mb-4 line-clamp-3 flex-grow font-light leading-relaxed">
+              <p className="text-[0.85rem] text-[#636363] mb-4 line-clamp-3 flex-grow font-light leading-relaxed break-words">
                 {job.description}
               </p>
 
               {/* Job Details */}
               <div className="space-y-2 mb-4">
                 <div className="flex justify-between text-[0.85rem]">
-                  <span className="text-[#bbb] font-light">Budget</span>
+                  <span className="text-[#676767] font-light">Pay</span>
                   <span
                     className="font-bold text-[#111]"
                     style={{ fontFamily: "'Syne', sans-serif" }}
@@ -254,13 +254,13 @@ export default function JobsPage() {
                   </span>
                 </div>
                 <div className="flex justify-between text-[0.85rem]">
-                  <span className="text-[#bbb] font-light">Duration</span>
+                  <span className="text-[#676767] font-light">Duration</span>
                   <span className="text-[#111]">
                     {job.duration}
                   </span>
                 </div>
                 <div className="flex justify-between text-[0.85rem]">
-                  <span className="text-[#bbb] font-light">
+                  <span className="text-[#676767] font-light">
                     Experience
                   </span>
                   <span className="text-[#111] capitalize">
@@ -272,10 +272,10 @@ export default function JobsPage() {
               {/* Footer */}
               <div className="border-t border-[#f3f1ed] pt-4">
                 <div className="flex justify-between items-center mb-3">
-                  <span className="text-[0.75rem] text-[#bbb]">
+                  <span className="text-[0.75rem] text-[#696969]">
                     Posted {formatDate(job.postedDate)}
                   </span>
-                  <span className="text-[0.75rem] text-[#bbb]">
+                  <span className="text-[0.75rem] text-[#696969]">
                     {job.applicationsCount}{" "}
                     {job.applicationsCount === 1 ? "applicant" : "applicants"}
                   </span>

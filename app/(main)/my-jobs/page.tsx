@@ -160,7 +160,7 @@ export default function MyJobsPage() {
 
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4 text-sm">
                   <div>
-                    <p className="text-[0.75rem] text-[#bbb] uppercase tracking-wide mb-0.5">
+                    <p className="text-[0.75rem] text-[#696969] uppercase tracking-wide mb-0.5">
                       Applications
                     </p>
                     <p
@@ -171,8 +171,8 @@ export default function MyJobsPage() {
                     </p>
                   </div>
                   <div>
-                    <p className="text-[0.75rem] text-[#bbb] uppercase tracking-wide mb-0.5">
-                      Budget
+                    <p className="text-[0.75rem] text-[#696969] uppercase tracking-wide mb-0.5">
+                      Pay
                     </p>
                     <p
                       className="font-bold text-[#111]"
@@ -182,7 +182,7 @@ export default function MyJobsPage() {
                     </p>
                   </div>
                   <div>
-                    <p className="text-[0.75rem] text-[#bbb] uppercase tracking-wide mb-0.5">
+                    <p className="text-[0.75rem] text-[#696969] uppercase tracking-wide mb-0.5">
                       Posted
                     </p>
                     <p
@@ -247,14 +247,14 @@ export default function MyJobsPage() {
                         {job.description}
                       </p>
                     </div>
-                    <span className="px-3 py-1 bg-[#f3f1ed] text-[#888] text-xs font-medium rounded-full">
+                    <span className="px-3 py-1 bg-[#d69191] text-[#7c0d0df7] text-xs font-medium rounded-full">
                       {job.status === "completed" ? "Completed" : "Closed"}
                     </span>
                   </div>
 
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                     <div>
-                      <p className="text-[0.75rem] text-[#bbb] uppercase tracking-wide mb-0.5">
+                      <p className="text-[0.75rem] text-[#696969] uppercase tracking-wide mb-0.5">
                         Applications
                       </p>
                       <p
@@ -265,7 +265,7 @@ export default function MyJobsPage() {
                       </p>
                     </div>
                     <div>
-                      <p className="text-[0.75rem] text-[#bbb] uppercase tracking-wide mb-0.5">
+                      <p className="text-[0.75rem] text-[#696969] uppercase tracking-wide mb-0.5">
                         Budget
                       </p>
                       <p
@@ -276,7 +276,7 @@ export default function MyJobsPage() {
                       </p>
                     </div>
                     <div>
-                      <p className="text-[0.75rem] text-[#bbb] uppercase tracking-wide mb-0.5">
+                      <p className="text-[0.75rem] text-[#696969] uppercase tracking-wide mb-0.5">
                         Posted
                       </p>
                       <p
@@ -287,12 +287,12 @@ export default function MyJobsPage() {
                       </p>
                     </div>
                     <div className="md:text-right">
-                      <p className="text-[0.75rem] text-[#bbb] uppercase tracking-wide mb-0.5">
+                      <p className="text-[0.75rem] text-[#696969] uppercase tracking-wide mb-0.5">
                         &nbsp;
                       </p>
                       <Link
                         href={`/jobs/${job._id}`}
-                        className="text-sm text-[#111] hover:underline inline-block font-medium"
+                        className="text-[.82rem] text-[#e29222] hover:text-[#111] inline-block font-normal border-[1.5px] border-white transition-colors"
                       >
                         View Details →
                       </Link>

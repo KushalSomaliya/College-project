@@ -213,13 +213,13 @@ export default function JobDetailsPage() {
           >
             {job.title}
           </h1>
-          <p className="text-[#aaa] text-[0.85rem] mt-1">Posted on {formatDate(job.postedDate)}</p>
+          <p className="text-[#111111] text-[0.85rem] mt-1">Posted on {formatDate(job.postedDate)}</p>
         </div>
         {job.status === 'active' ? (
           <button
             onClick={() => setShowCloseConfirmation(true)}
             disabled={isClosing}
-            className="px-5 py-2 border border-[#fee2e2] text-[#991b1b] rounded-full text-[0.82rem] font-medium hover:bg-[#fff5f5] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-5 py-2 bg-[#b3171557] border border-[#fdd5c7] text-[#e85d2f] rounded-full text-[0.82rem] font-medium hover:bg-[#edaf98] hover:border-[#e85d2f] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isClosing ? 'Closing...' : 'Close Job'}
           </button>
@@ -241,29 +241,29 @@ export default function JobDetailsPage() {
 
         <div className="space-y-5">
           <div>
-            <h3 className="text-[0.75rem] font-semibold text-[#bbb] uppercase tracking-wider mb-1.5">Description</h3>
+            <h3 className="text-[0.75rem] font-semibold text-[#e26804] uppercase tracking-wider mb-1.5">Description</h3>
             <p className="text-[0.9rem] text-[#111] leading-relaxed">{job.description}</p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             <div>
-              <h3 className="text-[0.75rem] font-semibold text-[#bbb] uppercase tracking-wider mb-1.5">Category</h3>
+              <h3 className="text-[0.75rem] font-semibold text-[#e26804] uppercase tracking-wider mb-1.5">Category</h3>
               <p className="text-[0.9rem] text-[#111]">{job.category}</p>
             </div>
             <div>
-              <h3 className="text-[0.75rem] font-semibold text-[#bbb] uppercase tracking-wider mb-1.5">Budget</h3>
+              <h3 className="text-[0.75rem] font-semibold text-[#e26804] uppercase tracking-wider mb-1.5">Pay</h3>
               <p className="text-[0.9rem] text-[#111] font-semibold">&#8377;{job.budget}</p>
             </div>
             <div>
-              <h3 className="text-[0.75rem] font-semibold text-[#bbb] uppercase tracking-wider mb-1.5">Duration</h3>
+              <h3 className="text-[0.75rem] font-semibold text-[#e26804] uppercase tracking-wider mb-1.5">Duration</h3>
               <p className="text-[0.9rem] text-[#111]">{job.duration}</p>
             </div>
             <div>
-              <h3 className="text-[0.75rem] font-semibold text-[#bbb] uppercase tracking-wider mb-1.5">Experience Level</h3>
+              <h3 className="text-[0.75rem] font-semibold text-[#e26804] uppercase tracking-wider mb-1.5">Experience Level</h3>
               <p className="text-[0.9rem] text-[#111] capitalize">{job.experienceLevel}</p>
             </div>
             <div>
-              <h3 className="text-[0.75rem] font-semibold text-[#bbb] uppercase tracking-wider mb-1.5">Applications</h3>
+              <h3 className="text-[0.75rem] font-semibold text-[#e26804] uppercase tracking-wider mb-1.5">Applications</h3>
               <p className="text-[0.9rem] text-[#111]">{applicationsList.length} total</p>
             </div>
           </div>
@@ -325,10 +325,10 @@ export default function JobDetailsPage() {
                     >
                       {application.employeeName}
                     </h3>
-                    <p className="text-[0.82rem] text-[#aaa] mt-0.5">
+                    <p className="text-[0.82rem] text-[#5f5f5f] mt-0.5">
                       {application.employeeEmail} &bull; {application.employeeUniversity}
                     </p>
-                    <p className="text-[0.82rem] text-[#aaa] mt-0.5">
+                    <p className="text-[0.82rem] text-[#5f5f5f] mt-0.5">
                       Applied {formatDate(application.appliedDate)}
                     </p>
                   </div>
@@ -354,13 +354,13 @@ export default function JobDetailsPage() {
                 <div className="space-y-3">
                   {application.experience && (
                     <div>
-                      <h4 className="text-[0.75rem] font-semibold text-[#bbb] uppercase tracking-wider mb-1">Experience</h4>
+                      <h4 className="text-[0.75rem] font-semibold text-[#575757] uppercase tracking-wider mb-1">Experience</h4>
                       <p className="text-[0.85rem] text-[#111] leading-relaxed">{application.experience}</p>
                     </div>
                   )}
 
                   <div>
-                    <h4 className="text-[0.75rem] font-semibold text-[#bbb] uppercase tracking-wider mb-1">Cover Letter</h4>
+                    <h4 className="text-[0.75rem] font-semibold text-[#575757] uppercase tracking-wider mb-1">Cover Letter</h4>
                     <p className="text-[0.85rem] text-[#111] leading-relaxed">{application.coverLetter}</p>
                   </div>
                 </div>

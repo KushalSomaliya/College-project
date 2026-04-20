@@ -46,9 +46,9 @@ export default function SignInPage() {
 
   return (
     <div
-      className="border border-[#ede9e3] rounded-3xl p-10 sm:p-10"
+      className="w-full max-w-[920px] border border-[#ede9e3] rounded-3xl p-10 sm:p-10"
       style={{
-        background: 'rgba(255,255,255,0.85)',
+        background: 'rgba(247, 205, 180, 0.51)',
         backdropFilter: 'blur(10px)',
         boxShadow: '0 8px 40px rgba(0,0,0,0.06)',
         animation: 'fadeUp 0.5s ease both',
@@ -127,7 +127,7 @@ export default function SignInPage() {
       </div>
 
       {/* Demo Credentials */}
-      <div className="mt-6 bg-[#f7f5f0] border border-[#ede9e3] rounded-xl p-4">
+      {/* <div className="mt-6 bg-[#f7f5f0] border border-[#ede9e3] rounded-xl p-4">
         <div className="text-[0.72rem] font-semibold text-[#aaa] uppercase tracking-widest mb-2.5">
           Demo Accounts — click to fill
         </div>
@@ -152,7 +152,7 @@ export default function SignInPage() {
           <span className="text-xs font-semibold text-[#888]" style={{ fontFamily: "'Syne', sans-serif" }}>Admin</span>
           <span className="text-xs text-[#bbb] font-light group-hover:text-[#e85d2f] transition-colors">admin@skillorbit.com / admin@123</span>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

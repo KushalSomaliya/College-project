@@ -93,7 +93,7 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
           <h1 className="text-[1.75rem] font-extrabold text-[#111] mb-1" style={{ fontFamily: "'Syne', sans-serif", letterSpacing: '-0.03em' }}>
             Hey, <span className="text-[#e85d2f]">{user.name}</span> &#128075;
           </h1>
-          <p className="text-sm text-[#999] font-light">Manage your jobs and find talented students</p>
+          <p className="text-sm text-[#999] font-light">Manage your jobs and find talented employees</p>
         </div>
         <Link
           href="/post-job"
@@ -107,22 +107,22 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <div className="bg-white border border-[#ede9e3] rounded-2xl p-5 hover:-translate-y-0.5 hover:shadow-lg transition-all">
-          <div className="text-[0.75rem] font-semibold text-[#aaa] uppercase tracking-wider mb-2">Active Jobs</div>
+          <div className="text-[0.75rem] font-semibold text-[#494949] uppercase tracking-wider mb-2">Active Jobs</div>
           <div className="text-[1.75rem] font-extrabold text-[#e85d2f] leading-none" style={{ fontFamily: "'Syne', sans-serif", letterSpacing: '-0.03em' }}>{activeJobsCount}</div>
           <div className="text-xs text-[#bbb] font-light mt-1">Currently hiring</div>
         </div>
         <div className="bg-white border border-[#ede9e3] rounded-2xl p-5 hover:-translate-y-0.5 hover:shadow-lg transition-all">
-          <div className="text-[0.75rem] font-semibold text-[#aaa] uppercase tracking-wider mb-2">Total Applications</div>
+          <div className="text-[0.75rem] font-semibold text-[#494949] uppercase tracking-wider mb-2">Total Applications</div>
           <div className="text-[1.75rem] font-extrabold text-[#111] leading-none" style={{ fontFamily: "'Syne', sans-serif", letterSpacing: '-0.03em' }}>{totalApplications}</div>
           <div className="text-xs text-[#bbb] font-light mt-1">Across all jobs</div>
         </div>
         <div className="bg-white border border-[#ede9e3] rounded-2xl p-5 hover:-translate-y-0.5 hover:shadow-lg transition-all">
-          <div className="text-[0.75rem] font-semibold text-[#aaa] uppercase tracking-wider mb-2">Students Hired</div>
+          <div className="text-[0.75rem] font-semibold text-[#494949] uppercase tracking-wider mb-2">Employees Hired</div>
           <div className="text-[1.75rem] font-extrabold text-[#111] leading-none" style={{ fontFamily: "'Syne', sans-serif", letterSpacing: '-0.03em' }}>{user.totalHired || 0}</div>
           <div className="text-xs text-[#bbb] font-light mt-1">All time</div>
         </div>
         <div className="bg-white border border-[#ede9e3] rounded-2xl p-5 hover:-translate-y-0.5 hover:shadow-lg transition-all">
-          <div className="text-[0.75rem] font-semibold text-[#aaa] uppercase tracking-wider mb-2">Total Spent</div>
+          <div className="text-[0.75rem] font-semibold text-[#494949] uppercase tracking-wider mb-2">Total Spent</div>
           <div className="text-[1.75rem] font-extrabold text-[#111] leading-none" style={{ fontFamily: "'Syne', sans-serif", letterSpacing: '-0.03em' }}>&#8377;{totalSpent.toLocaleString()}</div>
           <div className="text-xs text-[#bbb] font-light mt-1">Completed jobs</div>
         </div>
@@ -144,8 +144,8 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
               <p className="text-[0.82rem] text-[#aaa] font-light leading-relaxed mb-3">{job.description}</p>
               <div className="flex justify-between items-center">
                 <div className="flex gap-6">
-                  <span className="text-[0.82rem] text-[#bbb] font-light"><b className="text-[#111] font-semibold">{job.applicationsCount}</b> applications</span>
-                  <span className="text-[0.82rem] text-[#bbb] font-light">Budget: <b className="text-[#111] font-semibold">&#8377;{job.budget}</b></span>
+                  <span className="text-[0.82rem] text-[#585858] font-light"><b className="text-[#111] font-semibold">{job.applicationsCount}</b> applications</span>
+                  <span className="text-[0.82rem] text-[#585858] font-light">Pay: <b className="text-[#111] font-semibold">&#8377;{job.budget}</b></span>
                 </div>
                 <Link href={`/jobs/${job._id}`} className="text-[0.82rem] text-[#e85d2f] no-underline font-medium hover:underline">View Details &rarr;</Link>
               </div>
@@ -168,11 +168,11 @@ export function EmployerDashboard({ user }: EmployerDashboardProps) {
           <table className="w-full border-collapse">
             <thead>
               <tr className="border-b border-[#f3f1ed]">
-                <th className="px-5 py-3.5 text-left text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">Student</th>
-                <th className="px-5 py-3.5 text-left text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">Job</th>
-                <th className="px-5 py-3.5 text-left text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">Proposed Rate</th>
-                <th className="px-5 py-3.5 text-left text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">Applied</th>
-                <th className="px-5 py-3.5 text-left text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">Action</th>
+                <th className="px-5 py-3.5 text-left text-[0.72rem] font-semibold text-[#de9000] uppercase tracking-wider">Employee</th>
+                <th className="px-5 py-3.5 text-left text-[0.72rem] font-semibold text-[#de9000] uppercase tracking-wider">Job</th>
+                <th className="px-5 py-3.5 text-left text-[0.72rem] font-semibold text-[#de9000] uppercase tracking-wider">Pay</th>
+                <th className="px-5 py-3.5 text-left text-[0.72rem] font-semibold text-[#de9000] uppercase tracking-wider">Applied</th>
+                <th className="px-5 py-3.5 text-left text-[0.72rem] font-semibold text-[#de9000] uppercase tracking-wider">Action</th>
               </tr>
             </thead>
             <tbody>

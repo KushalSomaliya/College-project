@@ -81,18 +81,18 @@ export default function SignUpPage() {
 
   return (
     <div
-      className="border border-[#ede9e3] rounded-3xl p-10"
+      className="w-full border border-white rounded-3xl p-10"
       style={{
-        background: 'rgba(255,255,255,0.85)',
+        background: 'rgba(247, 205, 180, 0.46)',
         backdropFilter: 'blur(10px)',
         boxShadow: '0 8px 40px rgba(0,0,0,0.06)',
         animation: 'fadeUp 0.5s ease both',
-        maxWidth: 460,
+        maxWidth: 960,
       }}
     >
       {/* Header */}
       <div className="text-center mb-8">
-        <div className="inline-block bg-[#fff7f4] border border-[#fdd5c7] text-[#e85d2f] text-xs font-semibold px-3 py-1 rounded-full mb-4 uppercase tracking-wider">
+        <div className="inline-block bg-white border border-white text-[#e85d2f] text-xs font-semibold px-3 py-1 rounded-full mb-4 uppercase tracking-wider" style={{ maxWidth: 920 }}>
           Join Skill Orbit
         </div>
         <h2 className="text-[1.75rem] font-extrabold text-[#111] tracking-tight" style={{ fontFamily: "'Syne', sans-serif", letterSpacing: '-0.03em' }}>

@@ -31,7 +31,7 @@ export default function DashboardLayout({
   return (
     <div className="min-h-screen" style={{ background: '#f7f5f0' }}>
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 border-b border-black/[0.07]" style={{ background: 'rgba(247,245,240,0.9)', backdropFilter: 'blur(12px)' }}>
+      <nav className="sticky top-0 z-50 border-b border-black/[0.07]" style={{ background: 'rgba(247, 205, 180, 0.46)', backdropFilter: 'blur(12px)' }}>
         <div className="max-w-[1100px] mx-auto px-8 h-16 flex justify-between items-center">
 
           {/* Left: Logo + Links */}

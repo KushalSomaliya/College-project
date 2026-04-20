@@ -35,7 +35,7 @@ const createApplySchema = (budget: number) =>
       .max(1000, "Cover letter cannot exceed 1000 characters"),
     proposedRate: z
       .number()
-      .min(5, "Proposed rate must be at least ₹5")
+      .min(5, "Pay must be at least ₹5")
       .max(budget, `Proposed rate cannot exceed the job budget of ₹${budget.toLocaleString("en-IN")}`),
   });
 
@@ -242,23 +242,23 @@ export default function ApplyPage() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
           <div>
-            <p className="text-[#aaa]">Budget</p>
+            <p className="text-[#5c5c5c]">Pay</p>
             <p className="font-semibold text-[#111]">
               ₹{job.budget}
             </p>
           </div>
           <div>
-            <p className="text-[#aaa]">Duration</p>
+            <p className="text-[#5c5c5c]">Duration</p>
             <p className="text-[#111]">{job.duration}</p>
           </div>
           <div>
-            <p className="text-[#aaa]">Experience</p>
+            <p className="text-[#5c5c5c]">Experience</p>
             <p className="text-[#111] capitalize">
               {job.experienceLevel}
             </p>
           </div>
           <div>
-            <p className="text-[#aaa]">Posted</p>
+            <p className="text-[#5c5c5c]">Posted</p>
             <p className="text-[#111]">
               {formatDate(job.postedDate)}
             </p>
@@ -377,7 +377,7 @@ export default function ApplyPage() {
               htmlFor="proposedRate"
               className="block text-[0.82rem] font-medium text-[#444] mb-1.5"
             >
-              Proposed Rate (₹)
+              Your Pay (₹)
             </label>
             <input
               {...register("proposedRate", { valueAsNumber: true })}
@@ -385,7 +385,7 @@ export default function ApplyPage() {
               id="proposedRate"
               min="5"
               max={job.budget}
-              placeholder={`Budget: ₹${job.budget}`}
+              placeholder={`Pay: ₹${job.budget}`}
               className="w-full px-3.5 py-2.5 border-[1.5px] border-[#e5e2db] rounded-xl bg-white text-[#111] text-sm outline-none transition-all focus:border-[#e85d2f] focus:shadow-[0_0_0_3px_rgba(232,93,47,0.1)]"
             />
             {errors.proposedRate && (
@@ -394,7 +394,7 @@ export default function ApplyPage() {
               </p>
             )}
             <p className="mt-1 text-sm text-[#aaa]">
-              The employer's budget for this job is ₹{job.budget}
+              The employer's pay for this job is ₹{job.budget}
             </p>
           </div>
         </div>

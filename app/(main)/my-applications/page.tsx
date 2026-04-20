@@ -114,7 +114,7 @@ export default function MyApplicationsPage() {
       {/* Stats Overview */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="bg-white border border-[#ede9e3] rounded-2xl p-4">
-          <p className="text-[0.75rem] text-[#aaa] uppercase tracking-wide mb-1">Total Applications</p>
+          <p className="text-[0.75rem] text-[#575757] uppercase tracking-wide mb-1">Total Applications</p>
           <p
             className="text-[1.75rem] font-extrabold text-[#111]"
             style={{ fontFamily: "'Syne', sans-serif" }}
@@ -123,7 +123,7 @@ export default function MyApplicationsPage() {
           </p>
         </div>
         <div className="bg-white border border-[#ede9e3] rounded-2xl p-4">
-          <p className="text-[0.75rem] text-[#aaa] uppercase tracking-wide mb-1">Pending Review</p>
+          <p className="text-[0.75rem] text-[#575757] uppercase tracking-wide mb-1">Pending Review</p>
           <p
             className="text-[1.75rem] font-extrabold text-[#854d0e]"
             style={{ fontFamily: "'Syne', sans-serif" }}
@@ -132,7 +132,7 @@ export default function MyApplicationsPage() {
           </p>
         </div>
         <div className="bg-white border border-[#ede9e3] rounded-2xl p-4">
-          <p className="text-[0.75rem] text-[#aaa] uppercase tracking-wide mb-1">Accepted</p>
+          <p className="text-[0.75rem] text-[#575757] uppercase tracking-wide mb-1">Accepted</p>
           <p
             className="text-[1.75rem] font-extrabold text-[#166534]"
             style={{ fontFamily: "'Syne', sans-serif" }}
@@ -141,7 +141,7 @@ export default function MyApplicationsPage() {
           </p>
         </div>
         <div className="bg-white border border-[#ede9e3] rounded-2xl p-4">
-          <p className="text-[0.75rem] text-[#aaa] uppercase tracking-wide mb-1">Rejected</p>
+          <p className="text-[0.75rem] text-[#575757] uppercase tracking-wide mb-1">Rejected</p>
           <p
             className="text-[1.75rem] font-extrabold text-[#991b1b]"
             style={{ fontFamily: "'Syne', sans-serif" }}
@@ -195,7 +195,7 @@ export default function MyApplicationsPage() {
                     >
                       {job.title}
                     </h3>
-                    <p className="text-sm text-[#bbb] font-light">
+                    <p className="text-sm text-[#595959] font-light">
                       {job.company} &bull; {job.employerName}
                     </p>
                     <p className="text-sm text-[#bbb] font-light mt-1">
@@ -224,19 +224,19 @@ export default function MyApplicationsPage() {
                 {/* Job Details */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 text-sm">
                   <div>
-                    <p className="text-[0.75rem] text-[#bbb] uppercase tracking-wide">Category</p>
+                    <p className="text-[0.75rem] text-[#797979] uppercase tracking-wide">Category</p>
                     <p className="text-[#111]">{job.category}</p>
                   </div>
                   <div>
-                    <p className="text-[0.75rem] text-[#bbb] uppercase tracking-wide">Budget</p>
+                    <p className="text-[0.75rem] text-[#797979] uppercase tracking-wide">Pay</p>
                     <p className="text-[#111]">&#8377;{job.budget}</p>
                   </div>
                   <div>
-                    <p className="text-[0.75rem] text-[#bbb] uppercase tracking-wide">Duration</p>
+                    <p className="text-[0.75rem] text-[#797979] uppercase tracking-wide">Duration</p>
                     <p className="text-[#111]">{job.duration}</p>
                   </div>
                   <div>
-                    <p className="text-[0.75rem] text-[#bbb] uppercase tracking-wide">Experience</p>
+                    <p className="text-[0.75rem] text-[#797979] uppercase tracking-wide">Experience</p>
                     <p className="text-[#111] capitalize">{job.experienceLevel}</p>
                   </div>
                 </div>
@@ -245,13 +245,13 @@ export default function MyApplicationsPage() {
                 <div className="border-t border-[#f3f1ed] pt-4 space-y-3">
                   {application.experience && (
                     <div>
-                      <h4 className="text-sm font-medium text-[#aaa] mb-1">Your Experience</h4>
+                      <h4 className="text-sm font-medium text-[#d87d4d] mb-1">Your Experience</h4>
                       <p className="text-sm text-[#111]">{application.experience}</p>
                     </div>
                   )}
 
                   <div>
-                    <h4 className="text-sm font-medium text-[#aaa] mb-1">Your Cover Letter</h4>
+                    <h4 className="text-sm font-medium text-[#d87d4d] mb-1">Your Cover Letter</h4>
                     <p className="text-sm text-[#111]">{application.coverLetter}</p>
                   </div>
 
@@ -259,7 +259,7 @@ export default function MyApplicationsPage() {
                   {application.status === 'accepted' && (
                     <div className="mt-4 p-3 bg-[#f0fdf4] border border-[#bbf7d0] rounded-xl">
                       <p className="text-sm text-[#166534]">
-                        Congratulations! Your application has been accepted. The employer will contact you with next steps.
+                        Congratulations! Your application has been accepted. The employer will contact you via email with next steps.
                       </p>
                     </div>
                   )}
@@ -267,7 +267,7 @@ export default function MyApplicationsPage() {
                   {application.status === 'rejected' && (
                     <div className="mt-4 p-3 bg-[#fff5f5] border border-[#fecaca] rounded-xl">
                       <p className="text-sm text-[#991b1b]">
-                        Unfortunately, your application was not selected for this job. Keep applying to other opportunities!
+                        Your application was not selected this time. Keep applying, the right opportunity is out there!
                       </p>
                     </div>
                   )}

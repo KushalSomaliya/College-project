@@ -37,7 +37,7 @@ export default function HomePage() {
           className="inline-block bg-[#fff7f4] border border-[#fdd5c7] text-[#e85d2f] text-xs font-semibold px-3.5 py-1.5 rounded-full mb-7 uppercase tracking-wider"
           style={{ animation: 'fadeUp 0.5s ease both', letterSpacing: '0.04em' }}
         >
-          College Freelance Platform
+          A Freelance Platform For Everyone
         </div>
         <h1
           className="text-[clamp(2.5rem,5vw,3.75rem)] font-extrabold text-[#111] leading-[1.08] mb-5"
@@ -92,7 +92,7 @@ export default function HomePage() {
 
       <hr className="relative z-[1] max-w-[900px] mx-auto mb-12 border-t border-[#ede9e3]" />
       <footer className="relative z-[1] text-center pb-8 text-xs text-[#bbb]">
-        &copy; 2026 Skill Orbit &middot; Built for college students
+        &copy; 2026 Skill Orbit &middot; Built for Everyone
       </footer>
     </div>
   )

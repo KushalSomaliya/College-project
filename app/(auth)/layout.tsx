@@ -4,7 +4,7 @@ export default function AuthLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="min-h-screen flex flex-col relative overflow-hidden" style={{ background: '#f7f5f0' }}>
+    <div className="min-h-screen flex flex-col relative overflow-hidden" style={{ background: '#ffffff' }}>
 
       {/* FLOATING CHIPS */}
       <div className="fixed inset-0 pointer-events-none z-0">
@@ -20,9 +20,7 @@ export default function AuthLayout({
 
       {/* FORM AREA */}
       <div className="relative z-[1] flex-1 flex items-center justify-center p-6 sm:p-12">
-        <div className="w-full max-w-[420px]">
-          {children}
-        </div>
+        {children}
       </div>
     </div>
   )

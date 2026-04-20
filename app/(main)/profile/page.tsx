@@ -231,7 +231,7 @@ export default function ProfilePage() {
         {/* Details section */}
         <div className="border-t border-[#ede9e3] pt-7">
           <h2
-            className="text-[0.75rem] font-semibold text-[#aaa] uppercase tracking-wider mb-5 m-0"
+            className="text-[0.75rem] font-semibold text-[#f08725] uppercase tracking-wider mb-5 m-0"
             style={{ fontFamily: "'DM Sans', sans-serif" }}
           >
             {user.userType === 'employee' ? 'Employee Details' : 'Employer Details'}
@@ -278,7 +278,7 @@ export default function ProfilePage() {
 
                 {/* Stats: Completed Jobs & Member Since */}
                 <div className="bg-[#f7f5f0] rounded-xl px-5 py-4">
-                  <h3 className="text-[0.75rem] font-semibold text-[#aaa] uppercase tracking-wider mb-1 m-0" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                  <h3 className="text-[0.75rem] font-semibold text-[#f08725] uppercase tracking-wider mb-1 m-0" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                     Completed Jobs
                   </h3>
                   <p style={{ fontFamily: "'Syne', sans-serif" }} className="text-[1.75rem] font-extrabold text-[#111] m-0 leading-tight">
@@ -287,7 +287,7 @@ export default function ProfilePage() {
                 </div>
 
                 <div className="bg-[#f7f5f0] rounded-xl px-5 py-4">
-                  <h3 className="text-[0.75rem] font-semibold text-[#aaa] uppercase tracking-wider mb-1 m-0" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                  <h3 className="text-[0.75rem] font-semibold text-[#f08725] uppercase tracking-wider mb-1 m-0" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                     Member Since
                   </h3>
                   <p style={{ fontFamily: "'Syne', sans-serif" }} className="text-[1.75rem] font-extrabold text-[#111] m-0 leading-tight">
@@ -330,7 +330,7 @@ export default function ProfilePage() {
 
                 {/* Stats: Total Hired & Member Since */}
                 <div className="bg-[#f7f5f0] rounded-xl px-5 py-4">
-                  <h3 className="text-[0.75rem] font-semibold text-[#aaa] uppercase tracking-wider mb-1 m-0" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                  <h3 className="text-[0.75rem] font-semibold text-[#f08725] uppercase tracking-wider mb-1 m-0" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                     Total Hired
                   </h3>
                   <p style={{ fontFamily: "'Syne', sans-serif" }} className="text-[1.75rem] font-extrabold text-[#111] m-0 leading-tight">
@@ -339,7 +339,7 @@ export default function ProfilePage() {
                 </div>
 
                 <div className="bg-[#f7f5f0] rounded-xl px-5 py-4">
-                  <h3 className="text-[0.75rem] font-semibold text-[#aaa] uppercase tracking-wider mb-1 m-0" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                  <h3 className="text-[0.75rem] font-semibold text-[#f08725] uppercase tracking-wider mb-1 m-0" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                     Member Since
                   </h3>
                   <p style={{ fontFamily: "'Syne', sans-serif" }} className="text-[1.75rem] font-extrabold text-[#111] m-0 leading-tight">
@@ -366,7 +366,7 @@ export default function ProfilePage() {
               {user.skills.map((skill, index) => (
                 <span
                   key={index}
-                  className="px-3.5 py-1.5 bg-[#fff7f4] text-[#e85d2f] text-sm font-medium rounded-full border border-[#fdd5c7]"
+                  className="px-3.5 py-1.5 bg-[#82f0661f] text-[#67e414] text-sm font-medium rounded-full border border-[#6ba618c2]"
                   style={{ fontFamily: "'DM Sans', sans-serif" }}
                 >
                   {skill}

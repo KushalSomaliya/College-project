@@ -130,22 +130,22 @@ export default function AdminUsersPage() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-[#f3f1ed]">
-                  <th className="px-6 py-3 text-left text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-[0.72rem] font-semibold text-[#c06f22] uppercase tracking-wider">
                     User
                   </th>
-                  <th className="px-6 py-3 text-left text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-[0.72rem] font-semibold text-[#c06f22] uppercase tracking-wider">
                     Type
                   </th>
-                  <th className="px-6 py-3 text-left text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-[0.72rem] font-semibold text-[#c06f22] uppercase tracking-wider">
                     Details
                   </th>
-                  <th className="px-6 py-3 text-left text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-[0.72rem] font-semibold text-[#c06f22] uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-left text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-[0.72rem] font-semibold text-[#c06f22] uppercase tracking-wider">
                     Joined
                   </th>
-                  <th className="px-6 py-3 text-right text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">
+                  <th className="px-6 py-3 text-right text-[0.72rem] font-semibold text-[#c06f22] uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>

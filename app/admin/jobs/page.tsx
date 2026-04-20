@@ -132,7 +132,7 @@ export default function AdminJobsPage() {
         >
           Jobs
         </h1>
-        <p className="text-sm text-[#aaa] mt-1 font-light">
+        <p className="text-sm text-[#363636] mt-1 font-light">
           Manage all job listings across the platform
         </p>
       </div>
@@ -174,25 +174,25 @@ export default function AdminJobsPage() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-[#f3f1ed]">
-                  <th className="px-6 py-3.5 text-left text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">
+                  <th className="px-6 py-3.5 text-left text-[0.72rem] font-semibold text-[#c06f22] uppercase tracking-wider">
                     Job
                   </th>
-                  <th className="px-6 py-3.5 text-left text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">
+                  <th className="px-6 py-3.5 text-left text-[0.72rem] font-semibold text-[#c06f22] uppercase tracking-wider">
                     Employer
                   </th>
-                  <th className="px-6 py-3.5 text-left text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">
-                    Budget
+                  <th className="px-6 py-3.5 text-left text-[0.72rem] font-semibold text-[#c06f22] uppercase tracking-wider">
+                    Pay
                   </th>
-                  <th className="px-6 py-3.5 text-left text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">
+                  <th className="px-6 py-3.5 text-left text-[0.72rem] font-semibold text-[#c06f22] uppercase tracking-wider">
                     Apps
                   </th>
-                  <th className="px-6 py-3.5 text-left text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">
+                  <th className="px-6 py-3.5 text-left text-[0.72rem] font-semibold text-[#c06f22] uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3.5 text-left text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">
+                  <th className="px-6 py-3.5 text-left text-[0.72rem] font-semibold text-[#c06f22] uppercase tracking-wider">
                     Posted
                   </th>
-                  <th className="px-6 py-3.5 text-right text-[0.72rem] font-semibold text-[#bbb] uppercase tracking-wider">
+                  <th className="px-6 py-3.5 text-right text-[0.72rem] font-semibold text-[#c06f22] uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>

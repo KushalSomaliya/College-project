@@ -95,22 +95,22 @@ export function EmployeeDashboard({ user }: EmployeeDashboardProps) {
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <div className="bg-white border border-[#ede9e3] rounded-2xl p-5 hover:-translate-y-0.5 hover:shadow-lg transition-all">
-          <div className="text-[0.75rem] font-semibold text-[#aaa] uppercase tracking-wider mb-2">Active Applications</div>
+          <div className="text-[0.75rem] font-semibold text-[#757575] uppercase tracking-wider mb-2">Active Applications</div>
           <div className="text-[1.75rem] font-extrabold text-[#e85d2f] leading-none" style={{ fontFamily: "'Syne', sans-serif", letterSpacing: '-0.03em' }}>{activeApplications}</div>
           <div className="text-xs text-[#bbb] font-light mt-1">Awaiting response</div>
         </div>
         <div className="bg-white border border-[#ede9e3] rounded-2xl p-5 hover:-translate-y-0.5 hover:shadow-lg transition-all">
-          <div className="text-[0.75rem] font-semibold text-[#aaa] uppercase tracking-wider mb-2">Completed Jobs</div>
+          <div className="text-[0.75rem] font-semibold text-[#757575] uppercase tracking-wider mb-2">Completed Jobs</div>
           <div className="text-[1.75rem] font-extrabold text-[#111] leading-none" style={{ fontFamily: "'Syne', sans-serif", letterSpacing: '-0.03em' }}>{user.completedJobs || 0}</div>
           <div className="text-xs text-[#bbb] font-light mt-1">All time</div>
         </div>
         <div className="bg-white border border-[#ede9e3] rounded-2xl p-5 hover:-translate-y-0.5 hover:shadow-lg transition-all">
-          <div className="text-[0.75rem] font-semibold text-[#aaa] uppercase tracking-wider mb-2">Total Earnings</div>
+          <div className="text-[0.75rem] font-semibold text-[#757575] uppercase tracking-wider mb-2">Total Earnings</div>
           <div className="text-[1.75rem] font-extrabold text-[#111] leading-none" style={{ fontFamily: "'Syne', sans-serif", letterSpacing: '-0.03em' }}>&#8377;{totalEarnings.toLocaleString()}</div>
           <div className="text-xs text-[#bbb] font-light mt-1">From accepted jobs</div>
         </div>
         <div className="bg-white border border-[#ede9e3] rounded-2xl p-5 hover:-translate-y-0.5 hover:shadow-lg transition-all">
-          <div className="text-[0.75rem] font-semibold text-[#aaa] uppercase tracking-wider mb-2">Rating</div>
+          <div className="text-[0.75rem] font-semibold text-[#757575] uppercase tracking-wider mb-2">Rating</div>
           <div className="text-[1.75rem] font-extrabold text-[#111] leading-none" style={{ fontFamily: "'Syne', sans-serif", letterSpacing: '-0.03em' }}>{user.rating || '\u2014'}</div>
           <div className="text-xs text-[#bbb] font-light mt-1">Client reviews</div>
         </div>
@@ -162,7 +162,7 @@ export function EmployeeDashboard({ user }: EmployeeDashboardProps) {
               <div key={application._id} className="bg-white border border-[#ede9e3] rounded-[14px] px-5 py-4 flex justify-between items-center gap-4">
                 <div>
                   <div className="text-[0.9rem] font-bold text-[#111] mb-0.5" style={{ fontFamily: "'Syne', sans-serif" }}>{job.title}</div>
-                  <div className="text-xs text-[#bbb] font-light">{job.company} &middot; Applied {new Date(application.appliedDate).toLocaleDateString('en-GB')}</div>
+                  <div className="text-xs text-[#727272] font-light">{job.company} &middot; Applied {new Date(application.appliedDate).toLocaleDateString('en-GB')}</div>
                 </div>
                 <span className={`text-[0.72rem] font-semibold px-3 py-1 rounded-full whitespace-nowrap ${getBadgeClass(application.status)}`}>
                   {application.status.charAt(0).toUpperCase() + application.status.slice(1)}
